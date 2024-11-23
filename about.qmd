@@ -4,6 +4,6 @@ title: "About"
 
 About this site
 
-```{r}
-1 + 1
+```{r echo=TRUE, install.packages('usethis')}
+library(usethis)
 ```
