@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "cv/index.html",
+    "href": "cv/index.html",
+    "title": "Curriculum vitae",
+    "section": "",
+    "text": "Download current CV\n  \n\n\n  \n\n\nView the tutorial for this template (+ download link)"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -7,10 +14,59 @@
     "text": "About this site\n\nlibrary(usethis)"
   },
   {
+    "objectID": "photography/index.html",
+    "href": "photography/index.html",
+    "title": "Photography",
+    "section": "",
+    "text": "As a wizard and scholar of Middle-earth, I have been studying the magic of the natural world for centuries. Through my self-portraits, I aim to capture the essence of my own being and reflect on my own journey through time. Each photograph is a reflection of my own experiences and emotions. Through my photography, I hope to offer a glimpse into my life as a scholar and adventurer, and inspire others to reflect on their own journeys through the world.\n\n\n\n\n\n\n \n\n\n\n\nView the tutorial for this template (+ download link)"
+  },
+  {
+    "objectID": "Publications/index.html",
+    "href": "Publications/index.html",
+    "title": "Publications",
+    "section": "",
+    "text": "## Improved clinical symptoms and mortality among patients with severe or critical COVID-19 after convalescent plasma transfusion.\narXiv Preprint | Code &lt;."
+  },
+  {
+    "objectID": "Publications/index.html#identification-of-cell-surface-markers-for-acute-myeloid-leukemia-prognosis-based-on-multi-model-analysis",
+    "href": "Publications/index.html#identification-of-cell-surface-markers-for-acute-myeloid-leukemia-prognosis-based-on-multi-model-analysis",
+    "title": "Publications",
+    "section": "",
+    "text": "## Improved clinical symptoms and mortality among patients with severe or critical COVID-19 after convalescent plasma transfusion.\narXiv Preprint | Code &lt;."
+  },
+  {
+    "objectID": "Publications/index.html#the-history-of-the-war-of-the-ring",
+    "href": "Publications/index.html#the-history-of-the-war-of-the-ring",
+    "title": "Publications",
+    "section": "The History of the War of the Ring",
+    "text": "The History of the War of the Ring\n\narXiv Preprint | Code\n\nView the tutorial for this template (+ download link)"
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "arXiv Preprint | Code &lt;."
+  },
+  {
+    "objectID": "projects/index.html#publications",
+    "href": "projects/index.html#publications",
+    "title": "Projects",
+    "section": "",
+    "text": "arXiv Preprint | Code &lt;."
+  },
+  {
+    "objectID": "projects/index.html#the-history-of-the-war-of-the-ring",
+    "href": "projects/index.html#the-history-of-the-war-of-the-ring",
+    "title": "Projects",
+    "section": "The History of the War of the Ring",
+    "text": "The History of the War of the Ring\n\narXiv Preprint | Code\n\nView the tutorial for this template (+ download link)"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Muto65.github.io",
+    "title": "Welcome to my website!",
     "section": "",
-    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "X\n  \n  \n    \n     Github\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     Email\n  \n\n\n\n\nWelcome to my website!\nI have had an opportunity of working in the fields of Biomedical laboratory diagnostics and Medical Devices. Acquiring a great deal of knowledge on service and preventive maintenance and software applications of the laboratory and medical devices.\nDuring my Masters, I focused on leveraging bioinformatics tools such as single-cell technologies and microfluidics to further my understanding of cancer genomics and infectious diseases by either application of the available tools or by embarking on working with various teams to build new technologies.\nIn my current research I am using Biophotonics tools such as Optical Coherency Tomography, Confocal Microscopy, Light Sheet Fluorescence microscopy in combination with deep learning and machine learning to further my understanding of congenital heart defects (CHDs)\nNot only am I a researcher, but I am also an entrepreneur and businessman. Over the years, I have had a privilege of building businesses spanning many areas including agriculture, technology and media.I have found myself working with many collaborators across the globe, granting me an opportunity to learn and share knowledge and experience to the next generation young entrepreneurs and businessmen and women. I have a particular interest in the education, and scientific research because I believe that science is the only way to human evolution.\nI believe in collaboration and building strong partnerships for effective project research, Process Improvement, innovation and sustainable development both on an individual level and on an organization level.\nToday’s World problems require us putting aside our differences and working together to advance humanity. Feel free to reach out for any opportunity, I will be more than grateful to contribute impact-fully.”\nOn this website, you will find a selection of my published works, including scholarly articles. You will also find news and updates on my current research projects, as well as information on upcoming events and links to my social media handles. Please feel free to contact me if you have any questions or would like to discuss potential projects."
   }
 ]

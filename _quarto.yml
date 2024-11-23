@@ -1,20 +1,68 @@
+# website settings
+website:
+  title: "Bosco Bakwatanisa"                           
+  description: "I am Bosco Bosco Bakwatanisa, a second year BME PhD Student.
+    image: img/bosco.jpeg"
+  favicon: img/IMG_6931.JPG
+  
+  # start of the navigation bar at the top of the website
+  navbar:
+    pinned: true
+    logo: /img/IMG_6931.JPG
+    
+    # your sub-pages
+    left:
+    #  - text: "Projects"
+    #    href: projects/index.qmd
+      - text: "Photography"
+        href: photography/index.qmd
+      - text: "CV"
+        href: cv/index.qmd
+      - text: "Education"
+      
+    # your social media handles
+    right:
+      - icon: x
+        href: https://x.com/bakwatanisamuto?s=11&t=G0DoPfVhmPjJTooCrau8vA
+      - icon: linkedin
+        href: https://www.linkedin.com/in/bakwatanisa-bosco-25b063102/
+      - icon: envelope
+        aria-label: email
+        href: "mailto:mail.bakwabosco12@gmail.com"  
+  
+  
+
+# Don't touch unless you know what you are doing :) ------------
+  search: 
+    location: navbar
+    type: textbox
+  page-footer: 
+    left: |
+      <span class="faux-block">&#169; 2024 Bosco Bakwatanisa CC BY-SA 4.0</span>
+    
 project:
   type: website
   output-dir: docs
 
-website:
-  title: "Muto65.github.io"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  preview: 
+    port: 22223
+    browser: true
+    watch-inputs: true
+    navigate: true
+
+execute:
+  freeze: true
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
-    toc: true
-
-editor: visual
-
+    fontsize: 1.1em
+    theme: 
+      - pulse
+      - html/styles.scss
+    toc: false
+    page-layout: full
+    code-link: true
+    anchor-sections: true
+    fig-cap-location: margin
+    reference-location: margin
+    footnotes-hover: true

@@ -1,0 +1,27 @@
+---
+title: Publications
+---
+## Identification of cell surface markers for acute myeloid leukemia prognosis based on multi-model analysis
+
+<Publications src="Identification of cell surface markers for acute myeloid leukemia prognosis based on multi-model analysis-2.pdf" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('http://www.jbr-pub.org.cn/en/article/doi/10.7555/JBR.38.20240065', 'blank');"/>
+## Improved clinical symptoms and mortality among patients with severe or critical COVID-19 after convalescent plasma transfusion.
+
+<a href="http://dx.doi.org/10.1038/s41467-023-41318-2" target="_blank">arXiv Preprint</a> | <a href="https://ashpublications.org/blood/article/136/6/755/461103/Improved-clinical-symptoms-and-mortality-among" target="_blank">Code</a><br>
+<.
+
+----
+
+## The History of the War of the Ring
+
+<img src="project_2_banner.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://arxiv.org/abs/2112.08866', 'blank');"/>
+
+<a href="https://arxiv.org/abs/2112.08866" target="_blank">arXiv Preprint</a> | <a href="https://github.com/marvinschmitt/ModelMisspecificationBF" target="_blank">Code</a><br>
+
+
+
+
+```{=html}
+<div  style="margin: 30px; text-align: center;">
+<a class="btn btn-primary" href="https://www.marvinschmitt.com/blog/website-tutorial-quarto/" role="button" target="_blank" style="padding: 15px 30px;">View the tutorial for this template (+ download link)</a>
+</div>
+```

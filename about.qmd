@@ -1,5 +1,6 @@
 ---
 title: "About"
+description: "I am Bosco Bosco Bakwatanisa, a second year BME PhD Student"
 ---
 
 About this site

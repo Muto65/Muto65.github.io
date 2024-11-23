@@ -1,9 +1,38 @@
 ---
-title: "Muto65.github.io"
+about:
+  template: jolla
+  id: about-block
+  image: "img/bosco.jpeg"
+  links:
+    - icon: X
+      text: X
+      href: https://x.com/bakwatanisamuto?s=11&t=G0DoPfVhmPjJTooCrau8vA
+    - icon: github
+      text: Github
+      href: https://github.com/Muto65
+    - icon: linkedin
+      text: LinkedIn
+      href:  https://www.linkedin.com/in/bakwatanisa-bosco-25b063102/
+    - icon: envelope
+      text: Email
+      href: "mailto:mail.bakwabosco12@gmail.com"  
 ---
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+::: {#about-block}
+:::
 
-```{r}
-1 + 1
-```
+# Welcome to my website!
+
+I have had an opportunity of working in the fields of Biomedical laboratory diagnostics and Medical Devices. Acquiring a great deal of knowledge on service and preventive maintenance and software applications of the laboratory and medical devices.
+
+During my Masters, I focused on leveraging bioinformatics tools such as single-cell technologies and microfluidics to further my understanding of cancer genomics and infectious diseases by either application of the available tools or by embarking on working with various teams to build new technologies.
+
+In my current research I am using Biophotonics tools such as Optical Coherency Tomography, Confocal Microscopy, Light Sheet Fluorescence microscopy in combination with deep learning and machine learning to further my understanding of congenital heart defects (CHDs)
+
+Not only am I a researcher, but I am also an entrepreneur and businessman. Over the years, I have had a privilege of building businesses spanning many areas including agriculture, technology and media.I have found myself working with many collaborators across the globe, granting me an opportunity to learn and share knowledge and experience to the next generation young entrepreneurs and businessmen and women. I have a particular interest in the education, and scientific research because I believe that science is the only way to human evolution.
+
+I believe in collaboration and building strong partnerships for effective project research, Process Improvement, innovation and sustainable development both on an individual level and on an organization level.
+
+Today’s World problems require us putting aside our differences and working together to advance humanity. Feel free to reach out for any opportunity, I will be more than grateful to contribute impact-fully."
+
+On this website, you will find a selection of my published works, including scholarly articles. You will also find news and updates on my current research projects, as well as information on upcoming events and links to my social media handles. Please feel free to [contact me](mailto:mail.bakwabosco12@gmail.com) if you have any questions or would like to discuss potential projects.
