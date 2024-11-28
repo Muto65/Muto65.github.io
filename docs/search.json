@@ -67,7 +67,7 @@
     "href": "education/index.html#masters",
     "title": "Education",
     "section": "Masters",
-    "text": "Masters"
+    "text": "Masters\nI obtained as MSc. in Biomedical Engineering from Nanjing Medical University, China. My masters research mainly focused on Bioinformatics research and Cancer Genomics researching Leukemia and Breast cancer."
   },
   {
     "objectID": "photography/index.html",
@@ -89,5 +89,75 @@
     "title": "Exploring Sociodemographic and Health Associations in the NHANES 2017–March 2020 Dataset: Insights from Multivariable and Comparative Analyses",
     "section": "",
     "text": "#load required R libraries\nlibrary(nhanesA)\nlibrary(forcats)\nlibrary(boot)\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(kableExtra)\nlibrary(janitor)\nlibrary(naniar)\nlibrary(patchwork)\nlibrary(gridExtra)\nlibrary(broom.mixed)\nlibrary(Epi)\nlibrary(vcd)\nlibrary(xfun)\nlibrary(epitools)\nlibrary(tidyverse)\ntheme_set(theme_light())  \nknitr::opts_chunk$set(comment=NA)"
+  },
+  {
+    "objectID": "education/index.html",
+    "href": "education/index.html",
+    "title": "Education",
+    "section": "",
+    "text": "I am currently a second year BME PhD student in the BME Department at Case Western Reserve University. My research focuses on understanding Congenital Heart Defects (CHDs) using Biomedical Optics Imaging Technologies such Optical Coherence Tomography (OCT), Light Sheet Fluorescence Microscopy, and Confocal Flouresence Microscopy."
+  },
+  {
+    "objectID": "education/index.html#phd",
+    "href": "education/index.html#phd",
+    "title": "Education",
+    "section": "",
+    "text": "I am currently a second year BME PhD student in the BME Department at Case Western Reserve University. My research focuses on understanding Congenital Heart Defects (CHDs) using Biomedical Optics Imaging Technologies such Optical Coherence Tomography (OCT), Light Sheet Fluorescence Microscopy, and Confocal Flouresence Microscopy."
+  },
+  {
+    "objectID": "education/index.html#undergraduate",
+    "href": "education/index.html#undergraduate",
+    "title": "Education",
+    "section": "Undergraduate",
+    "text": "Undergraduate\nI did my undergraduate from Makerere University, Kampala, Uganda"
+  },
+  {
+    "objectID": "Publications/index.html",
+    "href": "Publications/index.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Identification of cell surface markers for acute myeloid leukemia prognosis based on multi-model analysis. ## Article 2 Improved clinical symptoms and mortality among patients with severe or critical COVID-19 after convalescent plasma transfusion."
+  },
+  {
+    "objectID": "Publications/index.html#article-1",
+    "href": "Publications/index.html#article-1",
+    "title": "Publications",
+    "section": "",
+    "text": "Identification of cell surface markers for acute myeloid leukemia prognosis based on multi-model analysis. ## Article 2 Improved clinical symptoms and mortality among patients with severe or critical COVID-19 after convalescent plasma transfusion."
+  },
+  {
+    "objectID": "Publications/index.html#article-2",
+    "href": "Publications/index.html#article-2",
+    "title": "Publications",
+    "section": "Article 2",
+    "text": "Article 2\nImproved clinical symptoms and mortality among patients with severe or critical COVID-19 after convalescent plasma transfusion.’https://ashpublications.org/blood/article/136/6/755/461103/Improved-clinical-symptoms-and-mortality-among’"
+  },
+  {
+    "objectID": "Publications/index.html#article-3",
+    "href": "Publications/index.html#article-3",
+    "title": "Publications",
+    "section": "Article 3",
+    "text": "Article 3\nSingle-cell analysis reveals the chemotherapy-induced cellular reprogramming and novel therapeutic targets in relapsed/refractory acute myeloid leukemia."
+  },
+  {
+    "objectID": "Publications/index.html#article-6",
+    "href": "Publications/index.html#article-6",
+    "title": "Publications",
+    "section": "Article 6",
+    "text": "Article 6\nSingle-nuclei RNA sequencing uncovers heterogenous transcriptional signatures in Parkinson’s disease associated with nuclear receptor-related factor 1 defect."
+  },
+  {
+    "objectID": "Publications/index.html#article-4",
+    "href": "Publications/index.html#article-4",
+    "title": "Publications",
+    "section": "Article 4",
+    "text": "Article 4\nSingle-cell transcriptome analysis indicates fatty acid metabolism-mediated metastasis and immunosuppression in male breast cancer."
+  },
+  {
+    "objectID": "Publications/index.html#article-5",
+    "href": "Publications/index.html#article-5",
+    "title": "Publications",
+    "section": "Article 5",
+    "text": "Article 5\nDynamic changes in anti-SARS-CoV-2 antibodies during SARS-CoV-2 infection and recovery from COVID-19."
   }
 ]

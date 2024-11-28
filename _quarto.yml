@@ -14,6 +14,8 @@ website:
     left:
       - text: "Education"
         href: education/index.qmd
+      - text: "Publications"
+        href: Publications/index.qmd
       - text: "Photography"
         href: photography/index.qmd
       - text: "CV"
