@@ -3,7 +3,10 @@ title: Education
 ---
 
 ## PhD 
-
-
+I am currently a second year BME PhD student in the BME Department at Case Western Reserve University. My research focuses on understanding Congenital Heart Defects (CHDs) using Biomedical Optics Imaging Technologies such Optical Coherence Tomography (OCT), Light Sheet Fluorescence Microscopy, and Confocal Flouresence Microscopy.
 
 ## Masters
+I obtained as MSc. in Biomedical Engineering from Nanjing Medical University, China. My masters research mainly focused on Bioinformatics research and Cancer Genomics researching Leukemia and Breast cancer.
+
+## Undergraduate
+I did my undergraduate from Makerere University, Kampala, Uganda

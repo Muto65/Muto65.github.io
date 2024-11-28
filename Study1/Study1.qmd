@@ -6,8 +6,8 @@ format:
  html:
     fig-responsive: true
     fig-align: center
-    fig-width: 9
-    fig-height: 9
+    fig-width: 8
+    fig-height: 8
     page-layout: full
     embed-resources: true
     number_sections: TRUE
@@ -234,115 +234,111 @@ In order to have a clear understanding of the data variables in terms data distr
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.height=9}
 
-par(mfrow = c(2, 2))
- ggplot(analysisA_data, aes(x = BPXOSY1)) +
+ p1 <- ggplot(analysisA_data, aes(x = BPXOSY1)) +
   geom_histogram(fill = "slateblue", col = "white",
                  bins = 20) + 
   labs(title = "Systolic BP First Reading in `NHANES`",
        x = "Systolic BP First Reading (mm Hg)")+
    theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 
-ggplot(analysisA_data, aes(x = BPXOSY2)) +
+p2 <-ggplot(analysisA_data, aes(x = BPXOSY2)) +
   geom_histogram(fill = "orange", col = "white",
                  bins = 20) + 
   labs(title = "Systolic BP Second Reading in `NHANES`",
        x = "Systolic BP Second Reading (mm Hg)")+
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 
- ggplot(analysisA_data, aes(x = "", y = BPXOSY1)) +
+ p3 <-ggplot(analysisA_data, aes(x = "", y = BPXOSY1)) +
   geom_boxplot(fill = "slateblue", outlier.size = 2,
                outlier.color = "slateblue") +
   coord_flip() + 
   labs(y = "Systolic BP First Reading(`BPXOSY1`)")+
    theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+        
 
- ggplot(analysisA_data, aes(x = "", y = BPXOSY2)) +
+ p4 <- ggplot(analysisA_data, aes(x = "", y = BPXOSY2)) +
   geom_boxplot(fill = "orange", outlier.size = 2,
                outlier.color = "orange") +
-  coord_flip() + 
+  #coord_flip() + 
   labs(y = "Systolic BP Second Reading (`BPXOSY2`)")+
    theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 
-
+p1+p2+p3+p4
 ggsave("Histogram_and_Boxplots.png")
 
 ```
 
 From the visualizations above, the data
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=7}
-par(mfrow =c(2,2))
-ggplot(analysisA_data, aes(x = log(BPXOSY1))) +
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=9}
+
+p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1))) +
   geom_histogram(fill = "slateblue", col = "white",
                  bins = 20) + 
   labs(title = "LogTransformed-Systolic BP First Reading in `NHANES`",
        x = "log(Systolic BP First Reading (mm Hg))")+
-   theme_classic(base_size = 18) +
+   theme_classic(base_size = 10) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 
-ggplot(analysisA_data, aes(x = log(BPXOSY2))) +
+p2 <-ggplot(analysisA_data, aes(x = log(BPXOSY2))) +
   geom_histogram(fill = "orange", col = "white",
                  bins = 20) + 
   labs(title = "Systolic BP Second Reading in `NHANES`",
        x = "log(Systolic BP Second Reading(mm Hg))")+
-   theme_classic(base_size = 18) +
+   theme_classic(base_size = 10) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 
-ggplot(analysisA_data, aes(x = "", y = log(BPXOSY1))) +
+
+p3 <-ggplot(analysisA_data, aes(x = "", y = log(BPXOSY1))) +
   geom_boxplot(fill = "slateblue", outlier.size = 2,
                outlier.color = "slateblue") +
   #coord_flip() + 
   labs(y = "log(Systolic BP First Reading (mm Hg))")+
-   theme_classic(base_size = 14) +
+   theme_classic(base_size = 10) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+     
 
-ggplot(analysisA_data, aes(x = "", y = log(BPXOSY2)))+
+p4 <-ggplot(analysisA_data, aes(x = "", y = log(BPXOSY2)))+
   geom_boxplot(fill = "orange", outlier.size = 2,
                outlier.color = "orange") +
   #coord_flip() + 
   labs(y = "log(Systolic BP Second Reading(mm Hg))")+
-   theme_classic(base_size = 14) +
+   theme_classic(base_size = 10) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+       
+p1 +p2 + p3 + p4
 
 ggsave("LogTransHistogram_and_Boxplots.png")
 ```
@@ -350,32 +346,31 @@ ggsave("LogTransHistogram_and_Boxplots.png")
 ##### 4.2.1.2. Q-Q Plot
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.height=7}
-par(mfrow = c(1, 2))
-ggplot(analysisA_data, aes(sample = log(BPXOSY1))) +
+
+p1 <-ggplot(analysisA_data, aes(sample = log(BPXOSY1))) +
   geom_qq(col = "slateblue") + 
   geom_qq_line(col = "magenta") + 
   theme(aspect.ratio = 1) + 
   labs(title = "Normal Q-Q: NHANES log(BPXOSY1)")+
-   theme_classic(base_size = 18) +
+   theme_classic(base_size = 10) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 
-ggplot(analysisA_data, aes(sample = log(BPXOSY2))) +
+p2 <-ggplot(analysisA_data, aes(sample = log(BPXOSY2))) +
   geom_qq(col = "orange") + 
   geom_qq_line(col = "black") + 
   theme(aspect.ratio = 1) + 
-  labs(title = "Normal Q-Q: NHANES log(BPXOSY2)")+ theme_classic(base_size = 18) +
+  labs(title = "Normal Q-Q: NHANES log(BPXOSY2)")+ theme_classic(base_size = 10) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
-
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+      
+p1+p2
 ggsave("Q-QPlots_for_systolic_blood_pressure.png")
 ```
 
@@ -383,36 +378,37 @@ From the Q-Q plot we see that our data is still right skewed even after log-tran
 
 ##### 4.2.1.3 Scatter Plot Paired Sample Box plots
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=7}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6, fig.width=9}
 
 # Scatter plot of paired data
-ggplot(analysisA_data, aes(x = log(BPXOSY1), y = log(BPXOSY2))) +
+p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1), y = log(BPXOSY2))) +
   geom_point(alpha = 0.6) +
   geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
-  labs(title = "Systolic Blood Pressure (First Reading vs Second Reading)",
+  labs(title = "SBP(1st Reading vs 2nd Reading)",
        x = "BPXOSY1 (First Reading)", y = "BPXOSY2 (Second Reading)") +
-  theme_classic(base_size = 18) +
+  theme_classic(base_size = 12) +
   theme(
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 9),
+        axis.title.y = element_text(face = "bold", size = 9),
+        axis.title.x = element_text(face = "bold", size = 9),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+     
 
 # Paired boxplot
-analysisA_data %>% mutate(log_sbp1 = log(BPXOSY1), log_sbp2 = log(BPXOSY2))%>%
+p2 <-analysisA_data %>% mutate(log_sbp1 = log(BPXOSY1), log_sbp2 = log(BPXOSY2))%>%
   pivot_longer(cols = c(log_sbp1, log_sbp2), names_to = "ReadingSession", values_to = "SystolicBloodPressure") %>%
-  ggplot(aes(x = ReadingSession, y = SystolicBloodPressure, fill = ReadingSession)) +
+ ggplot(aes(x = ReadingSession, y = SystolicBloodPressure, fill = ReadingSession)) +
   geom_boxplot() +
   labs(title = "Distribution of Blood Pressure (Paired Sessions)",
        x = "Reading-Session", y = "Blood Pressure (mmHg)") +
-   theme_classic(base_size = 18) +
+   theme_classic(base_size = 10) +
   theme(legend.position = "left",
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+p1 + p2
 ggsave("scatter plot_bp_sessions.png")
 ggsave("Boxplot_Blood_Pressure_Sessions.png")
 write.csv(analysisA_data, "data/Paired_Systolic_BP_data.csv")
@@ -501,59 +497,57 @@ analysisB_data %>%
 
 Here, I use a histogram, Q-Q plot, Boxplot, and the density plot to visualize the data distribution and assessment for normality.
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=7}
-par(mfrow = c(2, 2))
-ggplot(analysisB_data, aes(x = BMI)) +
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=8}
+
+p1 <-ggplot(analysisB_data, aes(x = BMI)) +
   geom_histogram(fill = "slateblue", col = "white",
                  bins = 20) + 
-  labs(title = "Body Mass Index Distribution in `NHANES`",
+  labs(title = "BMI Distribution in `NHANES`",
        x = "Body Mass Index")+
-  theme_classic(base_size = 18) +
+  theme_classic(base_size = 10) +
   theme(legend.position = "left",
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
 
-ggplot(analysisB_data, aes(sample = BMI)) +
+p2 <- ggplot(analysisB_data, aes(sample = BMI)) +
   geom_qq(col = "slateblue") + 
   geom_qq_line(col = "magenta") + 
   theme(aspect.ratio = 1) + 
   labs(title = "Normal Q-Q: NHANES BMI")+
-  theme_classic(base_size = 18) +
+  theme_classic(base_size = 12) +
   theme(legend.position = "none",
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
 #Boxplot
-ggplot(analysisB_data, aes(x = Gender, y = BMI, fill = Gender)) +
+p3 <-ggplot(analysisB_data, aes(x = Gender, y = BMI, fill = Gender)) +
   geom_boxplot() + coord_flip()+
   labs(title = "Comparison of BMI by Gender",
        x = "Gender",
        y = "Body Mass Index (BMI)") +
-theme_classic(base_size = 18) +
+theme_classic(base_size = 12) +
   theme(legend.position = "left",
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 #density plot
-ggplot(analysisB_data, aes(x = BMI, fill = Gender)) +
+p4 <-ggplot(analysisB_data, aes(x = BMI, fill = Gender)) +
   geom_density(alpha = 0.5) +
   labs(title = "BMI Distribution by Gender",
        x = "Body Mass Index (BMI)",
        y = "Density") +
- theme_classic(base_size = 18) +
+ theme_classic(base_size = 12) +
   theme(legend.position = "left",
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18))
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+       
+p1 +p2 +p3 +p4
 
 ```
 
@@ -601,11 +595,11 @@ print(boot_ci)
 
 I used the Boxplot/Violin plot to display the mean difference for better comparison
 
-```{r echo=TRUE, warning=FALSE, message=FALSE ,fig.height=9}
+```{r echo=TRUE, warning=FALSE, message=FALSE ,fig.height=7}
 
   ggplot(analysisB_data, aes(x = Gender, y = BMI, fill = Gender)) +
   geom_violin(trim = FALSE, alpha = 0.4, color = "coral", lwd = 0.5) + 
-  geom_boxplot(width = 0.4, outlier.shape = NA, alpha = 0.7, color = "gray20") + 
+  geom_boxplot(width = 0.3, outlier.shape = NA, alpha = 0.7, color = "gray20") + 
   stat_summary(fun = mean, geom = "point", shape = 23, size = 4, color = "black", fill = "yellow") +
   stat_summary(fun = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = 0.3, color = "black")+   
     coord_flip() +
@@ -613,13 +607,13 @@ I used the Boxplot/Violin plot to display the mean difference for better compari
        caption = "Data Source: NHANES 2017-March 2020",
        x = "Gender", 
        y = "Body Mass Index (BMI)") +
-  theme_classic(base_size = 18) +
+  theme_classic(base_size = 12) +
   theme(legend.position = "none",
-        axis.text = element_text(face = "bold",size = 18),
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20),
-        plot.subtitle = element_text(hjust = 0.5,size = 18)) +
+        axis.text = element_text(face = "bold",size = 12),
+        axis.title.y = element_text(face = "bold", size = 12),
+        axis.title.x = element_text(face = "bold", size = 12),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+        plot.subtitle = element_text(hjust = 0.5,size = 12)) +
   scale_fill_brewer(palette = "Paired")
 ```
 
@@ -651,7 +645,7 @@ There is a significant association between smoking status (current smoker vs. no
 
 ### 6.2. Describing The Data
 
-Refer to the codebook in section 3 for the description of the variable SMQ020 and Body Mass Index (BMXBMI). However, for this analysis BMI was converted into a binary variable with people having BMI \> 30 considered to be obese and those with BMI \< 30 considered non-obese and as earlier descibed smoking was binarized into non-smoker and smoker. Here, I ran a data exploratory analysis and described the distribution of each of the two variables by looking at their statistical summaries, 2x2 table and continued to provide some visualization graphics including bar plot, mosaic plot, and boxplots to provide a better understanding of the data.
+Refer to the codebook in section 3 for the description of the variable SMQ020 and Body Mass Index (BMXBMI). However, for this analysis BMI was converted into a binary variable with people having BMI \> 30 considered to be obese and those with BMI \< 30 considered non-obese and as earlier described smoking was binarized into non-smoker and smoker. Here, I ran a data exploratory analysis and described the distribution of each of the two variables by looking at their statistical summaries, 2x2 table and continued to provide some visualization graphics including bar plot, mosaic plot, and boxplots to provide a better understanding of the data.
 
 #### **6.2.1. Data Summaries**
 
@@ -678,12 +672,12 @@ ggplot(analysisD_data, aes(x = Smoking, fill = Obesity))+
     y = "Count",
     fill = "Obesity"
   )+
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(legend.position = "right",
-        axis.title.y = element_text(face = "bold", size = 18),
-        axis.text = element_text(face ="bold", size = 16),
-        axis.title.x = element_text(face = "bold", size = 18),
-        plot.title = element_text(face = "bold", hjust = 0.5, size =))
+        axis.title.y = element_text(face = "bold", size = 12),
+        axis.text = element_text(face ="bold", size = 12),
+        axis.title.x = element_text(face = "bold", size = 12),
+        plot.title = element_text(face = "bold", hjust = 0.5, size =14))
 ```
 
 The analysis examined the association between smoking status (smoker vs. non-smoker) and obesity (obese vs. non-obese) using NHANES 2017-March 2020 data. The contingency table revealed a total of3217 smokers and 4515 non-smokers, 3390 obese people and 4342 non-obese people.
@@ -783,7 +777,7 @@ It was observed that Mexican American had the least education with at least 26.4
 
 I used the Bar graph to show the distribution of of education level frequency/count across the different races.
 
-```{r echo=TRUE, warning=FALSE, message=FALSE,fig.height=9}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.dim=6}
 
 ggplot(analysisE_data, aes(x = Race, fill = Education))+
   geom_bar(position = "dodge")+
@@ -793,28 +787,28 @@ ggplot(analysisE_data, aes(x = Race, fill = Education))+
     y = "Count",
     fill = "Education level"
   )+
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 14) +
   theme(legend.position = "left",
-        axis.title.y = element_text(face = "bold", size = 16),
-        axis.text = element_text(face ="bold", size = 16),
-        axis.title.x = element_text(face = "bold", size = 16),
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 16),
-        plot.subtitle = element_text(hjust = 0.5,size = 16))
+        axis.title.y = element_text(face = "bold", size = 12),
+        axis.text = element_text(face ="bold", size = 12),
+        axis.title.x = element_text(face = "bold", size = 12),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+        plot.subtitle = element_text(hjust = 0.5,size = 12))
   
 ```
 
 ##### 7.2.2.2 Mosaic plot
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=14}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=9}
 # Create a mosaic plot with `vcd::mosaic`
 mosaic(
   ~ Race + Education, 
   data = as.data.frame(analysisE_data),
   shade = TRUE,
   labeling_args = list(
-    gp_labels = gpar(fontsize = 20),    # Increase cell label size
-    gp_varnames = gpar(fontsize = 20), # Increase axis labels size
-    gp_main = gpar(fontsize = 20)      # Increase title size
+    gp_labels = gpar(fontsize = 10),    # Increase cell label size
+    gp_varnames = gpar(fontsize = 10), # Increase axis labels size
+    gp_main = gpar(fontsize = 10)      # Increase title size
   ),
   main = "Race vs Education Level"
 )
@@ -841,7 +835,7 @@ print(residuals)
 
 #### 7.3.2. Convert residuals to a Heatmap
 
-```{r echo=TRUE, warning=FALSE, message=FALSE }
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=7 }
 residuals_df <- as.data.frame(residuals)
 colnames(residuals_df) <- c("Race", "Education", "Residual")
 
@@ -849,7 +843,13 @@ ggplot(residuals_df, aes(x = Education, y = Race, fill = Residual)) +
   geom_tile(color = "white") +
   scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
   labs(title = "Standardized Residuals Heatmap", x = "Education Level", y = "Race") +
-  theme_minimal()
+   theme_classic(base_size = 12) +
+  theme(legend.position = "left",
+        axis.title.y = element_text(face = "bold", size = 12),
+        axis.text = element_text(face ="bold", size = 12),
+        axis.title.x = element_text(face = "bold", size = 12),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+        plot.subtitle = element_text(hjust = 0.5,size = 12))
 
 ```
 
