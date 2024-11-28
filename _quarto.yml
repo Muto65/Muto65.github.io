@@ -22,6 +22,8 @@ website:
         href: cv/index.qmd
       - text: "Study1"
         href: Study1/Study1.qmd
+      - text: "Study2"
+        href: Study2/Study2.qmd
      
       
     # your social media handles

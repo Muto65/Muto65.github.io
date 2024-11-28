@@ -1,0 +1,5 @@
+---
+title: "Study2"
+author: "Bosco Bakwatanisa"
+editor: visual
+---
