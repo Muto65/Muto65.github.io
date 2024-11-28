@@ -10,15 +10,17 @@ website:
     pinned: true
     logo: /img/IMG_6931.JPG
     
-    # your sub-pages
+    # your sub-pages 
     left:
-    #  - text: "Projects"
-    #    href: projects/index.qmd
+      - text: "Education"
+        href: education/index.qmd
       - text: "Photography"
         href: photography/index.qmd
       - text: "CV"
         href: cv/index.qmd
-      - text: "Education"
+      - text: "Study1"
+        href: Study1/Study1.qmd
+     
       
     # your social media handles
     right:
