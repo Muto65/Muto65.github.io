@@ -12,6 +12,11 @@ format:
     embed-resources: true
     number_sections: TRUE
     date-format: iso
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
 ---
 
 ## 1. Setup and Data Ingest
@@ -28,6 +33,7 @@ library(ggpubr)
 library(kableExtra)
 library(janitor)
 library(naniar)
+library(datawizard)
 library(patchwork)
 library(gridExtra)
 library(broom.mixed)
@@ -44,7 +50,7 @@ knitr::opts_chunk$set(comment=NA)
 
 ### 2.1. Data preparation
 
-I downloaded the Blood Pressure data and Demographics data from 2017-March 2020 NHANES data
+Here I prepared a tibble containing all the data variables necessary for all study 1 analyses
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 # pull in data from P_BPXO from NHANES and save it
@@ -59,7 +65,7 @@ saveRDS(bp_raw, file = "data/P_BPXO.rds")
 bp_raw <- readRDS(file = "data/P_BPXO.rds")
 demo_raw <- readRDS("data/P_DEMO.rds")
 DEMO <- demo_raw%>%
-  select(., SEQN,RIAGENDR,RIDAGEYR,DMDEDUC2,RIDRETH3,DMDMARTZ )
+  select(., SEQN,RIDSTATR,RIAGENDR,RIDAGEYR,DMDEDUC2,RIDRETH3,DMDMARTZ )
 BPX <- bp_raw%>%
   select(., SEQN, BPXOSY1,BPXOSY2)
 Analysis_1Data <- left_join(DEMO, BPX, by = "SEQN")
@@ -73,7 +79,7 @@ AnalysisB_data <- left_join(Analysis_1Data, BMXBMI, by = "SEQN")
 saveRDS(AnalysisB_data, file = "data/AnalysisB_data.rds")
 #Analysis C uses same dataset as above
 #analysisD data download
-SMQ_raw <- nhanes("P_SMQ")
+SMQ_raw <- nhanes("P_SMQ")|> tibble()
 AnalysisB_data <- readRDS('data/AnalysisB_data.rds')
 smoke_data <- SMQ_raw%>% select(SEQN,SMQ020)
 AnalysisD_data <- left_join(AnalysisB_data, smoke_data, by = "SEQN")
@@ -138,7 +144,7 @@ saveRDS(analysisC_data, 'data/analysisC.rds')
 AnalysesData <- readRDS('data/AnalysesData.rds')
 analysisD_data <- AnalysesData %>% rename(Smoking = SMQ020, BMI = BMXBMI)%>%
   select(Smoking,BMI) %>%                 # Select relevant columns
-  filter(Smoking %in% c('Yes', 'No'), complete.cases(Smoking,BMI)) %>% filter(BMI > 0)%>%# Keep 'Yes' and 'No'.
+  filter(Smoking %in% c('Yes', 'No'), complete.cases(Smoking,BMI)) %>% filter(BMI > 0)%>%# Keep 'Yes' and 'No'
   mutate(
     Smoking = ifelse(Smoking =="Yes","Smoker","Non_Smoker"),    # Recode 'Yes' to 'Smoker' and 'No' to 'Non-Smoker'
     Obesity = ifelse(BMI >= 30, "Obese", "Non_Obese") # Define obesity based on BMI
@@ -176,6 +182,7 @@ saveRDS(analysisE_data, 'data/analysisE.rds')
 variable_description <- tibble::tribble(
   ~Variable_Name, ~Role_in_Analysis,~Type, ~Original_Code, ~Definition, ~Cutpoints_or_Units, ~Year_Measured,
   "SEQN",  "ID",   "numeric",   " Respondent sequence number", "Unique Identifier to identify any persons involved in the study" ,  "N/A",      "2017-March 2020",
+  "RIDSTATR","Interview/Examination status","Categorical","RIDSTATR","Variable used to show whether a participant was either interviewed only or both interviewed and MEC Examined","Number of persons","2017-March 2020",
   "Gender",  "Analysis B Variable", "Categorical", "RIAGENDR","Gender of the participant","Persons (Male or Female)",      "2017-March 2020",
   "RIDAGEYR", "Used to select Adult persons aged 21-79 years","numeric","RIDAGEYR", "Participant's Age in years at the time of screening ",   "21 -79 years","2017-March 2020",   "Education",   "Analysis E variable",  "Categorical" ,  "DMDEDUC2",    "This variable is the highest grade or level of education completed by adults 20 years and older. 
 The response categories are: less than 9th grade education, 9-11th grade education (includes 12th grade and no diploma), High school graduate/GED, some college or associates (AA) degree, and college graduate or higher.",  "Education level - Adults 20+, from less than 9th-grade to College graduate", "2017-March 2020",
@@ -186,7 +193,7 @@ All other non-Hispanic participants would then be categorized based on their sel
   "BPXOSY2","Analysis A-variable",  "numeric", "BPXOSY2", "Systolic - 2nd oscillometric reading","(mm Hg)", "2017-March 2020",
   "BMI","Analysis variable", "numeric", "BMXBMI", "Body Mass Index (BMI) was calculated as weight in kilograms divided by height in meters squared, and then rounded to one decimal place.",  "(kg/m**2)", "2017-March 2020",
   "Smoking", "Analysis D-variable",  "Categorical(yes, no)", "SMQ020", "Smoked at least 100 cigarettes in life, (yes for smoked, no never smoked","Number of participants interviewed", "2017-March 2020")
-variable_description |> kbl() |> kable_styling()
+variable_description |> kbl() |> kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 ## **4. Analysis A**
@@ -487,7 +494,7 @@ analysisB_data %>%
     SD_BMI = sd(BMI),
     IQR_BMI = IQR(BMI),
     n = n()
-  )%>% kable(digits = 3)%>% kable_styling()
+  )%>% kable(digits = 3)%>% kable_styling(bootstrap_options = "striped", full_width = F)
 
 ```
 
@@ -561,7 +568,7 @@ From the histogram and the Q-Q Normal plot, we observe that Body Mass index is r
 set.seed(112724)
 #perform Wilcoxon Rank-sum test
 wilcox_test = wilcox.test(BMI ~ Gender, data = analysisB_data)
-glance(wilcox_test)%>% kable(digits = 3)%>% kable_styling()
+glance(wilcox_test)%>% kable(digits = 3)%>% kable_styling(bootstrap_options = "striped", full_width = F)
 
 ```
 
@@ -655,7 +662,7 @@ tabyl(Smoking,Obesity) |>
 adorn_totals("row") |>
 adorn_percentages("row") |>
 adorn_pct_formatting() |>
-adorn_ns(position = "front")%>% kable()%>%kable_styling()
+adorn_ns(position = "front")%>% kable()%>%kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 #### **6.2.2. Data Visualization**
@@ -702,7 +709,7 @@ Now, it’s helpful to show our 2 x 2 table. We see there were 1,442 (44.8%) of 
 ```{r echo=TRUE,, warning=FALSE, message=FALSE}
 #contigency_table <- analysisD_data %>% tabyl(Smoking, Obesity)
 chiSq_test <-chisq.test(contigency_table)
-glance(chiSq_test) %>% kable(digits = 3) %>% kable_styling()
+glance(chiSq_test) %>% kable(digits = 3) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 
 ```
 
@@ -766,7 +773,7 @@ tabyl(Race,Education) |>
 adorn_totals("row") |>
 adorn_percentages("row") |>
 adorn_pct_formatting() |>
-adorn_ns(position = "front")%>% kable()%>%kable_styling()
+adorn_ns(position = "front")%>% kable()%>%kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 It was observed that Mexican American had the least education with at least 26.4% having 9th grade or below whereas Non-Hispanic Asians were the most educated with at least 55.5% of all Non-Hispanic Asian being a college graduate. This can be clearly visualized on the bar plot and the mosaic plots below.
@@ -825,7 +832,7 @@ Basically, I applied the Chi-Square Test of independence to assess whether there
 analysisE_contigency_table <- analysisE_data %>% tabyl(Race, Education)
 cell_counts <- as.data.frame(analysisE_contigency_table)
 analysisE_chisq <- chisq.test(analysisE_contigency_table)
-analysisE_chisq %>% glance() %>% kable()%>%kable_styling()
+analysisE_chisq %>% glance() %>% kable()%>%kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
