@@ -9,9 +9,13 @@ format:
     fig-width: 8
     fig-height: 8
     page-layout: full
+    theme: flatly
     embed-resources: true
     number_sections: TRUE
     date-format: iso
+    code-fold: false
+    toc: true
+    toc-depth: 3
 execute:
   echo: true
   warning: false

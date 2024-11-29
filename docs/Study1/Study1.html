@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Bosco Bakwatanisa">
-<meta name="dcterms.date" content="2024-11-28">
+<meta name="dcterms.date" content="2024-11-29">
 
 <title>Exploring Sociodemographic and Health Associations in the NHANES 2017–March 2020 Dataset: Insights from Multivariable and Comparative Analyses – Bosco Bakwatanisa</title>
 <style>
@@ -5171,9 +5171,54 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup-and-data-ingest" id="toc-setup-and-data-ingest" class="nav-link active" data-scroll-target="#setup-and-data-ingest">1. Setup and Data Ingest</a>
+  <ul class="collapse">
+  <li><a href="#loading-r-packages" id="toc-loading-r-packages" class="nav-link" data-scroll-target="#loading-r-packages">1.1. Loading R packages</a></li>
+  </ul></li>
+  <li><a href="#cleaning-the-data" id="toc-cleaning-the-data" class="nav-link" data-scroll-target="#cleaning-the-data">2. Cleaning the Data</a>
+  <ul class="collapse">
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">2.1. Data preparation</a></li>
+  </ul></li>
+  <li><a href="#codebook-and-data-description" id="toc-codebook-and-data-description" class="nav-link" data-scroll-target="#codebook-and-data-description">3. Codebook and Data Description</a></li>
+  <li><a href="#analysis-a" id="toc-analysis-a" class="nav-link" data-scroll-target="#analysis-a"><strong>4. Analysis A</strong></a>
+  <ul class="collapse">
+  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">4.1. Research Question</a></li>
+  <li><a href="#describing-the-data" id="toc-describing-the-data" class="nav-link" data-scroll-target="#describing-the-data">4.2. Describing The Data</a></li>
+  <li><a href="#main-analysis" id="toc-main-analysis" class="nav-link" data-scroll-target="#main-analysis"><strong>4.3. Main Analysis</strong></a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><strong>4.4. Conclusions</strong></a></li>
+  </ul></li>
+  <li><a href="#analysis-b" id="toc-analysis-b" class="nav-link" data-scroll-target="#analysis-b">5. Analysis B</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">5.1. Question</a></li>
+  <li><a href="#describing-the-data-1" id="toc-describing-the-data-1" class="nav-link" data-scroll-target="#describing-the-data-1">5.2. Describing The Data</a></li>
+  <li><a href="#main-analysis-1" id="toc-main-analysis-1" class="nav-link" data-scroll-target="#main-analysis-1">5.3. Main Analysis</a></li>
+  <li><a href="#conclusions-1" id="toc-conclusions-1" class="nav-link" data-scroll-target="#conclusions-1"><strong>5.4. Conclusions</strong></a></li>
+  </ul></li>
+  <li><a href="#analysis-d" id="toc-analysis-d" class="nav-link" data-scroll-target="#analysis-d">6. Analysis D</a>
+  <ul class="collapse">
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">6.1. Question</a></li>
+  <li><a href="#describing-the-data-2" id="toc-describing-the-data-2" class="nav-link" data-scroll-target="#describing-the-data-2">6.2. Describing The Data</a></li>
+  <li><a href="#main-analysis-2" id="toc-main-analysis-2" class="nav-link" data-scroll-target="#main-analysis-2">6.3. Main Analysis</a></li>
+  <li><a href="#conclusions." id="toc-conclusions." class="nav-link" data-scroll-target="#conclusions.">6.4. Conclusions.</a></li>
+  </ul></li>
+  <li><a href="#analysis-e" id="toc-analysis-e" class="nav-link" data-scroll-target="#analysis-e">7. Analysis E</a>
+  <ul class="collapse">
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">7.1. Question</a></li>
+  <li><a href="#describing-the-data-3" id="toc-describing-the-data-3" class="nav-link" data-scroll-target="#describing-the-data-3">7.2. Describing The Data</a></li>
+  <li><a href="#main-analysis-3" id="toc-main-analysis-3" class="nav-link" data-scroll-target="#main-analysis-3">7.3. Main Analysis</a></li>
+  <li><a href="#conclusions-2" id="toc-conclusions-2" class="nav-link" data-scroll-target="#conclusions-2">7.4. Conclusions</a></li>
+  </ul></li>
+  <li><a href="#session-information" id="toc-session-information" class="nav-link" data-scroll-target="#session-information">8. Session Information</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -5182,7 +5227,7 @@ window.Quarto = {
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -5194,7 +5239,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-11-28</p>
+      <p class="date">2024-11-29</p>
     </div>
   </div>
   
