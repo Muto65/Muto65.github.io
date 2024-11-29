@@ -159,5 +159,110 @@
     "title": "Publications",
     "section": "Article 5",
     "text": "Article 5\nDynamic changes in anti-SARS-CoV-2 antibodies during SARS-CoV-2 infection and recovery from COVID-19."
+  },
+  {
+    "objectID": "Study2/Study2.html",
+    "href": "Study2/Study2.html",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "",
+    "text": "#load required R libraries\nlibrary(nhanesA)\nlibrary(forcats)\nlibrary(boot)\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(kableExtra)\nlibrary(janitor)\nlibrary(naniar)\nlibrary(patchwork)\nlibrary(gridExtra)\nlibrary(mice)\nlibrary(broom.mixed)\nlibrary(Epi)\nlibrary(vcd)\nlibrary(xfun)\nlibrary(epitools)\nlibrary(tidyverse)\ntheme_set(theme_light())  \nknitr::opts_chunk$set(comment=NA)"
+  },
+  {
+    "objectID": "Study2/Study2.html#loading-r-packages",
+    "href": "Study2/Study2.html#loading-r-packages",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "",
+    "text": "#load required R libraries\nlibrary(nhanesA)\nlibrary(forcats)\nlibrary(boot)\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(kableExtra)\nlibrary(janitor)\nlibrary(naniar)\nlibrary(patchwork)\nlibrary(gridExtra)\nlibrary(mice)\nlibrary(broom.mixed)\nlibrary(Epi)\nlibrary(vcd)\nlibrary(xfun)\nlibrary(epitools)\nlibrary(tidyverse)\ntheme_set(theme_light())  \nknitr::opts_chunk$set(comment=NA)"
+  },
+  {
+    "objectID": "Study2/Study2.html#data-preparation",
+    "href": "Study2/Study2.html#data-preparation",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "2.1. Data preparation",
+    "text": "2.1. Data preparation\n\n# pull in data from P_BPXO from NHANES and save it\n\nBMX_raw &lt;- nhanes(\"P_BMX\")|&gt; tibble() \nsaveRDS(BMX_raw, file = \"data/P_BMX.rds\")\ndemo_raw &lt;- nhanes('P_DEMO') |&gt; tibble()\nsaveRDS(demo_raw, file = \"data/P_DEMO.rds\")\nSMQ_raw &lt;- nhanes(\"P_SMQ\")|&gt; tibble()\nsaveRDS(SMQ_raw, file = 'data/SMQ.rds')\ndemo_raw &lt;- readRDS(\"data/P_DEMO.rds\")\nBMX_raw&lt;- readRDS(\"data/P_BMX.rds\")\nDEMO &lt;- demo_raw%&gt;%\n  select(., SEQN,RIDSTATR,RIAGENDR,RIDAGEYR,RIDRETH3 )\n\nBMXBMI &lt;- BMX_raw%&gt;%select(SEQN,BMXBMI)\nanalysis_tibble&lt;- left_join(DEMO, BMXBMI, by = \"SEQN\")\nSMQ_raw &lt;- readRDS(\"data/SMQ.rds\")\nsmoke_data &lt;- SMQ_raw%&gt;% select(SEQN,SMQ020)\nAnalysis2Data &lt;- left_join(analysis_tibble, smoke_data, by = \"SEQN\")\n\nanalysis2Data &lt;- Analysis2Data%&gt;% filter( RIDAGEYR &gt;=21 &  RIDAGEYR&lt;= 79)%&gt;%\n  rename(BMI = BMXBMI, Age = RIDAGEYR, Gender =RIAGENDR, Race = RIDRETH3, Smoking = SMQ020 )%&gt;%\n  mutate(Race = factor(\n    Race,\n    levels = c(\"Mexican American\",\"Other Hispanic\",\"Non-Hispanic White\",    \"Non-Hispanic Black\",\"Non-Hispanic Asian\"),\n    labels = c(\"Mexican\",\"Hispanic\", \"White\",\"Black\", \"Asian\")),Gender = ifelse(Gender == \"Male\", 1,2))%&gt;%filter(BMI &gt; 0)%&gt;%filter(Smoking %in% c('Yes', 'No')) %&gt;%  mutate(\n    Smoking = ifelse(Smoking ==\"Yes\",\"Smoker\",\"Non_Smoker\"))%&gt;% select(SEQN, Age, Gender, Race, Smoking, BMI)%&gt;% mutate(Gender = factor(\n      Gender, levels = c(1,2),labels =c(\"Male\",\"Female\")),Smoking = factor(Smoking,levels = c(\"Smoker\",\"Non_Smoker\"), labels =c(\"Smoker\",\"Non_Smoker\")\n    ))\n\nsaveRDS(analysis2Data, file = 'data/Analyses2Data.rds')\n\n\n# Check for missing values\nmissing_summary &lt;- colSums(is.na(analysis2Data))\n\n# Imputation using `mice`\nimputed_data &lt;- mice(analysis2Data, m = 1, method = 'pmm', maxit = 5)\n\n\n iter imp variable\n  1   1  Race\n  2   1  Race\n  3   1  Race\n  4   1  Race\n  5   1  Race\n\ncomplete_data &lt;- complete(imputed_data)\n\n# Display summary\nkable(head(complete_data)) %&gt;%\n  kable_styling(bootstrap_options = \"striped\", full_width = F)\n\n\n\n\nSEQN\nAge\nGender\nRace\nSmoking\nBMI\n\n\n\n\n109266\n29\nFemale\nAsian\nNon_Smoker\n37.8\n\n\n109271\n49\nMale\nWhite\nSmoker\n29.7\n\n\n109273\n36\nMale\nWhite\nSmoker\n21.9\n\n\n109274\n68\nMale\nBlack\nNon_Smoker\n30.2\n\n\n109282\n76\nMale\nWhite\nSmoker\n26.6\n\n\n109284\n44\nFemale\nMexican\nNon_Smoker\n39.1"
+  },
+  {
+    "objectID": "Study2/Study2.html#quality-of-fit",
+    "href": "Study2/Study2.html#quality-of-fit",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "9.1. Quality of Fit",
+    "text": "9.1. Quality of Fit\n\n# R-Squared and Adjusted R-Squared\nr_squared_big &lt;- summary(big_model)$r.squared\nadj_r_squared_big &lt;- summary(big_model)$adj.r.squared\n\nr_squared_small &lt;- summary(small_model)$r.squared\nadj_r_squared_small &lt;- summary(small_model)$adj.r.squared\n\n# AIC and BIC\naic_big &lt;- AIC(big_model)\nbic_big &lt;- BIC(big_model)\n\naic_small &lt;- AIC(small_model)\nbic_small &lt;- BIC(small_model)\n\n# Log-Likelihood\nloglik_big &lt;- logLik(big_model)\nloglik_small &lt;- logLik(small_model)\n\n# Create a summary table\nquality_of_fit &lt;- data.frame(\n  Model = c(\"Big Model\", \"Small Model\"),\n  R_Squared = c(r_squared_big, r_squared_small),\n  Adjusted_R_Squared = c(adj_r_squared_big, adj_r_squared_small),\n  AIC = c(aic_big, aic_small),\n  BIC = c(bic_big, bic_small),\n  Log_Likelihood = c(loglik_big, loglik_small)\n)\n\n# Print the table\nprint(quality_of_fit)\n\n        Model   R_Squared Adjusted_R_Squared      AIC      BIC Log_Likelihood\n1   Big Model 0.058714506         0.05749522 37218.59 37277.96      -18600.29\n2 Small Model 0.006270614         0.00608693 37500.02 37519.81      -18747.01"
+  },
+  {
+    "objectID": "Study2/Study2.html#posterior-predictive-checks",
+    "href": "Study2/Study2.html#posterior-predictive-checks",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "9.2. Posterior Predictive Checks",
+    "text": "9.2. Posterior Predictive Checks"
+  },
+  {
+    "objectID": "Study2/Study2.html#assessing-assumptions",
+    "href": "Study2/Study2.html#assessing-assumptions",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "9.3. Assessing Assumptions",
+    "text": "9.3. Assessing Assumptions"
+  },
+  {
+    "objectID": "Study2/Study2.html#comparing-the-models",
+    "href": "Study2/Study2.html#comparing-the-models",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "9.4. Comparing the Models",
+    "text": "9.4. Comparing the Models\n\ncomparison &lt;- data.frame(\n  Model = c(\"Big Model\", \"Small Model\"),\n  R_squared = c(summary(big_model)$r.squared, summary(small_model)$r.squared),\n  AIC = c(AIC(big_model), AIC(small_model)),\n  BIC = c(BIC(big_model), BIC(small_model))\n)\n\nkable(comparison) %&gt;%\n  kable_styling(bootstrap_options = \"striped\", full_width = F)\n\n\n\n\nModel\nR_squared\nAIC\nBIC\n\n\n\n\nBig Model\n0.0587145\n37218.59\n37277.96\n\n\nSmall Model\n0.0062706\n37500.02\n37519.81"
+  },
+  {
+    "objectID": "Study2/Study2.html#calculating-prediction-errors",
+    "href": "Study2/Study2.html#calculating-prediction-errors",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "10.1. Calculating Prediction Errors",
+    "text": "10.1. Calculating Prediction Errors\n\n\n\n\n\nModel\nRMSPE\nMAPE\nR2\n\n\n\n\nBig Model\n7.251789\n5.400531\n0.0660446\n\n\nSmall Model\n7.469028\n5.632456\n0.0090505\n\n\n\n\n\n\n\n\n# Calculate residuals for both models\nresiduals_big &lt;- testing_data$BMI - test_predictions_big\nresiduals_small &lt;- testing_data$BMI - test_predictions_small\n\n# Mean Absolute Error (MAE)\nmae_big &lt;- mean(abs(residuals_big))\nmae_small &lt;- mean(abs(residuals_small))\n\n# Root Mean Squared Error (RMSE)\nrmse_big &lt;- sqrt(mean(residuals_big^2))\nrmse_small &lt;- sqrt(mean(residuals_small^2))\n\n# R-squared for predictions\nsst &lt;- sum((testing_data$BMI - mean(testing_data$BMI))^2)  # Total Sum of Squares\nsse_big &lt;- sum(residuals_big^2)  # Sum of Squared Errors for big model\nsse_small &lt;- sum(residuals_small^2)  # Sum of Squared Errors for small model\n\nr_squared_big &lt;- 1 - (sse_big / sst)\nr_squared_small &lt;- 1 - (sse_small / sst)\n\n# Create a summary table\ncomparison_table &lt;- data.frame(\n  Model = c(\"Big Model\", \"Small Model\"),\n  MAE = c(mae_big, mae_small),\n  RMSE = c(rmse_big, rmse_small),\n  R_Squared = c(r_squared_big, r_squared_small)\n)\n\n# Print the table\nprint(comparison_table)\n\n        Model      MAE     RMSE  R_Squared\n1   Big Model 5.400531 7.251789 0.06482646\n2 Small Model 5.632456 7.469028 0.00795793"
+  },
+  {
+    "objectID": "Study2/Study2.html#visualizing-the-predictions",
+    "href": "Study2/Study2.html#visualizing-the-predictions",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "10.2. Visualizing the Predictions",
+    "text": "10.2. Visualizing the Predictions\n\nlibrary(ggplot2)\n\n# Combine predictions and observed data\ntesting_data$Pred_Big &lt;- test_predictions_big\ntesting_data$Pred_Small &lt;- test_predictions_small\n\n# Plot for Big Model\nggplot(testing_data, aes(x = Pred_Big, y = BMI)) +\n  geom_point(color = \"blue\", alpha = 0.5) +\n  geom_abline(slope = 1, intercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"Predicted vs Observed: Big Model\",\n       x = \"Predicted BMI (Big Model)\",\n       y = \"Observed BMI\") +\n  theme_minimal()\n\n\n\n\n\n\n\n# Plot for Small Model\nggplot(testing_data, aes(x = Pred_Small, y = BMI)) +\n  geom_point(color = \"green\", alpha = 0.5) +\n  geom_abline(slope = 1, intercept = 0, color = \"red\", linetype = \"dashed\") +\n  labs(title = \"Predicted vs Observed: Small Model\",\n       x = \"Predicted BMI (Small Model)\",\n       y = \"Observed BMI\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "Study2/Study2.html#summarizing-the-errors",
+    "href": "Study2/Study2.html#summarizing-the-errors",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "10.3. Summarizing the Errors",
+    "text": "10.3. Summarizing the Errors"
+  },
+  {
+    "objectID": "Study2/Study2.html#comparing-the-models-1",
+    "href": "Study2/Study2.html#comparing-the-models-1",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "10.4. Comparing the Models",
+    "text": "10.4. Comparing the Models"
+  },
+  {
+    "objectID": "Study2/Study2.html#chosen-model",
+    "href": "Study2/Study2.html#chosen-model",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "11.1. Chosen Model",
+    "text": "11.1. Chosen Model"
+  },
+  {
+    "objectID": "Study2/Study2.html#answering-my-question",
+    "href": "Study2/Study2.html#answering-my-question",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "11.2. Answering My Question",
+    "text": "11.2. Answering My Question"
+  },
+  {
+    "objectID": "Study2/Study2.html#next-steps",
+    "href": "Study2/Study2.html#next-steps",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "11.3. Next Steps",
+    "text": "11.3. Next Steps"
+  },
+  {
+    "objectID": "Study2/Study2.html#reflection",
+    "href": "Study2/Study2.html#reflection",
+    "title": "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses",
+    "section": "11.4. Reflection",
+    "text": "11.4. Reflection"
   }
 ]

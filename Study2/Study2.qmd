@@ -1,5 +1,480 @@
 ---
-title: "Study2"
+title: "Predicting Health Outcomes Using NHANES Data: Insights from Multivariable Analyses"
 author: "Bosco Bakwatanisa"
+date: last-modified
+format: 
+ html:
+    fig-responsive: true
+    fig-align: center
+    fig-width: 8
+    fig-height: 8
+    page-layout: full
+    theme: flatly
+    embed-resources: true
+    number_sections: TRUE
+    date-format: iso
+    code-fold: false
+    toc: true
+    toc-depth: 3
+execute:
+  echo: true
+  warning: false
+  message: false
 editor: visual
 ---
+
+# 1. Setup and Data Ingest
+
+## 1.1. Loading R packages
+
+```{r echo=TRUE, warning=FALSE, message=FALSE, install.packages('nhanesA')}
+#load required R libraries
+library(nhanesA)
+library(forcats)
+library(boot)
+library(ggplot2)
+library(ggpubr)
+library(kableExtra)
+library(janitor)
+library(naniar)
+library(patchwork)
+library(gridExtra)
+library(mice)
+library(broom.mixed)
+library(Epi)
+library(vcd)
+library(xfun)
+library(epitools)
+library(tidyverse)
+theme_set(theme_light())  
+knitr::opts_chunk$set(comment=NA)
+```
+
+# 2. Cleaning the Data
+
+## 2.1. Data preparation
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+# pull in data from P_BPXO from NHANES and save it
+
+BMX_raw <- nhanes("P_BMX")|> tibble() 
+saveRDS(BMX_raw, file = "data/P_BMX.rds")
+demo_raw <- nhanes('P_DEMO') |> tibble()
+saveRDS(demo_raw, file = "data/P_DEMO.rds")
+SMQ_raw <- nhanes("P_SMQ")|> tibble()
+saveRDS(SMQ_raw, file = 'data/SMQ.rds')
+demo_raw <- readRDS("data/P_DEMO.rds")
+BMX_raw<- readRDS("data/P_BMX.rds")
+DEMO <- demo_raw%>%
+  select(., SEQN,RIDSTATR,RIAGENDR,RIDAGEYR,RIDRETH3 )
+
+BMXBMI <- BMX_raw%>%select(SEQN,BMXBMI)
+analysis_tibble<- left_join(DEMO, BMXBMI, by = "SEQN")
+SMQ_raw <- readRDS("data/SMQ.rds")
+smoke_data <- SMQ_raw%>% select(SEQN,SMQ020)
+Analysis2Data <- left_join(analysis_tibble, smoke_data, by = "SEQN")
+
+analysis2Data <- Analysis2Data%>% filter( RIDAGEYR >=21 &  RIDAGEYR<= 79)%>%
+  rename(BMI = BMXBMI, Age = RIDAGEYR, Gender =RIAGENDR, Race = RIDRETH3, Smoking = SMQ020 )%>%
+  mutate(Race = factor(
+    Race,
+    levels = c("Mexican American","Other Hispanic","Non-Hispanic White",    "Non-Hispanic Black","Non-Hispanic Asian"),
+    labels = c("Mexican","Hispanic", "White","Black", "Asian")),Gender = ifelse(Gender == "Male", 1,2))%>%filter(BMI > 0)%>%filter(Smoking %in% c('Yes', 'No')) %>%  mutate(
+    Smoking = ifelse(Smoking =="Yes","Smoker","Non_Smoker"))%>% select(SEQN, Age, Gender, Race, Smoking, BMI)%>% mutate(Gender = factor(
+      Gender, levels = c(1,2),labels =c("Male","Female")),Smoking = factor(Smoking,levels = c("Smoker","Non_Smoker"), labels =c("Smoker","Non_Smoker")
+    ))
+
+saveRDS(analysis2Data, file = 'data/Analyses2Data.rds')
+
+```
+
+```{r}
+# Check for missing values
+missing_summary <- colSums(is.na(analysis2Data))
+
+# Imputation using `mice`
+imputed_data <- mice(analysis2Data, m = 1, method = 'pmm', maxit = 5)
+complete_data <- complete(imputed_data)
+
+# Display summary
+kable(head(complete_data)) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+
+```
+
+# 3. Codebook and Data Description
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+variable_description <- tibble::tribble(
+  ~Variable_Name, ~Role_in_Analysis,~Type, ~Original_Code, ~Definition, ~Cutpoints_or_Units, ~Year_Measured,
+  "SEQN",  "ID",   "numeric",   " Respondent sequence number", "Unique Identifier to identify any persons involved in the study" ,  "N/A",      "2017-March 2020",
+  "RIDSTATR","Interview/Examination status","Categorical","RIDSTATR","Variable used to show whether a participant was either interviewed only or both interviewed and MEC Examined","Number of persons","2017-March 2020",
+  "Gender",  "Analysis Key Predictor", "Categorical", "RIAGENDR","Gender of the participant","Persons (Male or Female)",      "2017-March 2020",
+  "RIDAGEYR", "Analysis key predictor and used to select Adult persons aged 21-79 years","numeric","RIDAGEYR", "Participant's Age in years at the time of screening ",   "21 -79 years","2017-March 2020",   
+  "Race/Ethnicity", "Analysis Predictor",  "Categorical", "RIDRETH3 ", "RIDRETH3: This is the race-ethnicity variable included in the demographics file since the 2011-2012 survey cycle to accommodate the oversample of Asian Americans. It was derived from responses to the survey questions on race and Hispanic origin.
+Respondents who self-identified as “Mexican American” were coded as such (i.e., RIDRETH3=1) regardless of their other race-ethnicity identities. Otherwise, self-identified “Hispanic” ethnicity would result in code “2, Other Hispanic” in the RIDRETH3 variable.
+All other non-Hispanic participants would then be categorized based on their self-reported races: non-Hispanic white (RIDRETH3=3), non-Hispanic black (RIDRETH3=4), non-Hispanic Asian (RIDRETH3=6)", "Number of participants who identified as Race/Hispanic origin w/ NH Asian", "2017-March 2020",
+  "BMI","Analysis Outocome", "numeric", "BMXBMI", "Body Mass Index (BMI) was calculated as weight in kilograms divided by height in meters squared, and then rounded to one decimal place.",  "(kg/m**2)", "2017-March 2020",
+  "Smoking", "Analysis Predictor",  "Categorical(yes, no)", "SMQ020", "Smoked at least 100 cigarettes in life, (yes for smoked, no never smoked","Number of participants interviewed", "2017-March 2020")
+variable_description |> kbl() |> kable_styling()
+
+```
+
+# 4. My Research Question
+
+### **4.1. Problem Statement** 
+
+Body Mass Index (BMI) is a widely used indicator for assessing body fat based on height and weight. Gender differences in BMI may arise due to biological, hormonal, and societal factors influencing body composition, metabolism, lifestyle behaviors among others. Understanding how BMI varies with gender within a population while taking into account other confounding factors such as age, race/ethnicity, and smoking status may provide us with insights on how this association may influence the gender based health outcomes within the United States population.
+
+### 4.2. Research Question
+
+Is there significant relationship between Body Mass Index (BMI) and gender, while adjusting for an individual's age, race/ethnicity, and smoking status?
+
+# 5. Partitioning the Data
+
+Here, I divide my analysis data into training and testing data sets in the ratio of 70% to 30%. This provides us with an oppo
+
+```{r}
+# Split analysis data into training (70%) and testing (30%)
+set.seed(112724)
+training_data <- complete_data %>% slice_sample(prop = 0.7)
+testing_data <- anti_join(complete_data, training_data, by = "SEQN")
+
+# Confirm split
+nrow(training_data)
+nrow(testing_data)
+
+```
+
+# 6. Transforming the Outcome
+
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=8}
+# Histogram and Q-Q Plot
+p1 <- ggplot(training_data, aes(x = BMI)) +
+  geom_histogram(bins = 50,binwidth = 3, fill = "blue", alpha = 0.7) +
+  labs(title = "BMI Distribution")+
+  theme_classic(base_size = 10) +
+  theme(legend.position = "left",
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+p2 <- ggplot(training_data, aes(sample = BMI)) +
+  geom_qq(col = "slateblue") + 
+  geom_qq_line(col = "magenta") + 
+  theme(aspect.ratio = 1) + 
+  labs(title = "Normal Q-Q: NHANES BMI")+
+  theme_classic(base_size = 12) +
+  theme(legend.position = "none",
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+p1 + p2
+
+
+```
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+# Histogram and Q-Q Plot for log transformed BMI
+p1 <- ggplot(training_data, aes(x = log(BMI))) +
+  geom_histogram(bin = 50,binwidth = .08, fill = "blue", alpha = 0.7) +
+  labs(title = "log(BMI) Distribution")+
+  theme_classic(base_size = 10) +
+  theme(legend.position = "left",
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+p2 <- ggplot(training_data, aes(sample = log(BMI))) +
+  geom_qq(col = "slateblue") + 
+  geom_qq_line(col = "magenta") + 
+  theme(aspect.ratio = 1) + 
+  labs(title = "Normal Q-Q: NHANES log(BMI)")+
+  theme_classic(base_size = 12) +
+  theme(legend.position = "none",
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+p1 + p2
+```
+
+# 7. The Big Model
+
+Using the training data, I fitted a multivariate linear regression model as a means of assessing the association between Gender and Body mass index and other confounding variables of age, race/ethnicity, and smoking status
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+# Big Model
+big_model <- lm(BMI ~ Gender + Age + Race + Smoking, data = training_data)
+summary(big_model)
+
+
+```
+
+```{r}
+tidy(big_model)%>% kable(digits = 3)%>%kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+```{r}
+glance(big_model)%>% kable(digits = 3)%>% kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+#Extracting the residuals from the model
+residuals <- resid(big_model)
+fitted_values <- fitted(big_model)
+```
+
+Diagnostic Plots
+
+To check whether the fitted model meets the linearity assumption, normality of residuals, homoscedasticity, and influential points, I extracted the residuals and their fitted values to plot the 'Residuals vs. Fitted Plot', normality Q-Q plot, Scale-location plot, and the residuals vs. leverage plot as shown below.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=5}
+# Residuals vs Fitted Plot
+p1<- ggplot(data = data.frame(fitted_values, residuals), aes(x = fitted_values, y = residuals)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Residuals vs Fitted",
+       x = "Fitted Values",
+       y = "Residuals") +
+  theme_classic(base_size = 12) +
+  theme(
+        axis.text = element_text(face = "bold",size = 9),
+        axis.title.y = element_text(face = "bold", size = 9),
+        axis.title.x = element_text(face = "bold", size = 9),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+# Normal Q-Q Plot
+p2 <- ggplot(data = data.frame(residuals), aes(sample = residuals)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  labs(title = "Normal Q-Q Plot",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles") +
+  theme_classic(base_size = 12) +
+  theme(
+        axis.text = element_text(face = "bold",size = 9),
+        axis.title.y = element_text(face = "bold", size = 9),
+        axis.title.x = element_text(face = "bold", size = 9),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+# Scale-Location Plot
+sqrt_abs_residuals <- sqrt(abs(residuals))
+p3 <- ggplot(data = data.frame(fitted_values, sqrt_abs_residuals), aes(x = fitted_values, y = sqrt_abs_residuals)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  geom_smooth(method = "loess", color = "red", se = FALSE) +
+  labs(title = "Scale-Location Plot",
+       x = "Fitted Values",
+       y = "√|Residuals|") +
+    theme_classic(base_size = 12) +
+  theme(
+        axis.text = element_text(face = "bold",size = 9),
+        axis.title.y = element_text(face = "bold", size = 9),
+        axis.title.x = element_text(face = "bold", size = 9),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+# Residuals vs Leverage Plot
+leverage <- hatvalues(big_model)
+p4 <- ggplot(data = data.frame(leverage, residuals), aes(x = leverage, y = residuals)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Residuals vs Leverage",
+       x = "Leverage",
+       y = "Residuals") +
+   theme_classic(base_size = 12) +
+  theme(
+        axis.text = element_text(face = "bold",size = 9),
+        axis.title.y = element_text(face = "bold", size = 9),
+        axis.title.x = element_text(face = "bold", size = 9),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 10))
+
+p1 + p2 + p3 + p4
+     
+
+```
+
+From the residuals vs. Fitted plot, I observed that the residuals do not appear to ne randomly scattered around the red dashed horizontal line at zero and there are clusters indicating non-linearity. The spread of residuals seemed to increase slightly for higher fitted values, suggesting heteroscedasticity. The normal Q-Q plot shows that residuals deviate from the red line, particularly in the top tail, indicating that residuals are not normally distributed, hence suggesting skewness. Additionally, from the Scale-location plot, the red trend line shows a slight upward slope, suggesting increasing variance of residuals with fitted values. This altogether points to violation of assumptions for homoscedasticity, linearity, normality of residuals.
+
+# 8. The Smaller Model
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+# Smaller Model
+small_model <- lm(BMI ~ Gender, data = training_data)
+summary(small_model)
+
+
+```
+
+# 9. In-Sample Comparison
+
+```{}
+```
+
+## 9.1. Quality of Fit
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+
+# R-Squared and Adjusted R-Squared
+r_squared_big <- summary(big_model)$r.squared
+adj_r_squared_big <- summary(big_model)$adj.r.squared
+
+r_squared_small <- summary(small_model)$r.squared
+adj_r_squared_small <- summary(small_model)$adj.r.squared
+
+# AIC and BIC
+aic_big <- AIC(big_model)
+bic_big <- BIC(big_model)
+
+aic_small <- AIC(small_model)
+bic_small <- BIC(small_model)
+
+# Log-Likelihood
+loglik_big <- logLik(big_model)
+loglik_small <- logLik(small_model)
+
+# Create a summary table
+quality_of_fit <- data.frame(
+  Model = c("Big Model", "Small Model"),
+  R_Squared = c(r_squared_big, r_squared_small),
+  Adjusted_R_Squared = c(adj_r_squared_big, adj_r_squared_small),
+  AIC = c(aic_big, aic_small),
+  BIC = c(bic_big, bic_small),
+  Log_Likelihood = c(loglik_big, loglik_small)
+)
+
+# Print the table
+print(quality_of_fit)
+
+```
+
+## 9.2. Posterior Predictive Checks
+
+## 9.3. Assessing Assumptions
+
+## 9.4. Comparing the Models
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+comparison <- data.frame(
+  Model = c("Big Model", "Small Model"),
+  R_squared = c(summary(big_model)$r.squared, summary(small_model)$r.squared),
+  AIC = c(AIC(big_model), AIC(small_model)),
+  BIC = c(BIC(big_model), BIC(small_model))
+)
+
+kable(comparison) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+
+
+```
+
+# 10. Model Validation
+
+## 10.1. Calculating Prediction Errors
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Predictions
+test_predictions_big <- predict(big_model, testing_data)
+test_predictions_small <- predict(small_model, testing_data)
+
+# Calculate errors
+errors <- data.frame(
+  Model = c("Big Model", "Small Model"),
+  RMSPE = c(sqrt(mean((testing_data$BMI - test_predictions_big)^2)),
+            sqrt(mean((testing_data$BMI - test_predictions_small)^2))),
+  MAPE = c(mean(abs(testing_data$BMI - test_predictions_big)),
+           mean(abs(testing_data$BMI - test_predictions_small))),
+  R2 = c(cor(testing_data$BMI, test_predictions_big)^2,
+         cor(testing_data$BMI, test_predictions_small)^2)
+)
+
+kable(errors) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+
+```
+
+```{r}
+# Calculate residuals for both models
+residuals_big <- testing_data$BMI - test_predictions_big
+residuals_small <- testing_data$BMI - test_predictions_small
+
+# Mean Absolute Error (MAE)
+mae_big <- mean(abs(residuals_big))
+mae_small <- mean(abs(residuals_small))
+
+# Root Mean Squared Error (RMSE)
+rmse_big <- sqrt(mean(residuals_big^2))
+rmse_small <- sqrt(mean(residuals_small^2))
+
+# R-squared for predictions
+sst <- sum((testing_data$BMI - mean(testing_data$BMI))^2)  # Total Sum of Squares
+sse_big <- sum(residuals_big^2)  # Sum of Squared Errors for big model
+sse_small <- sum(residuals_small^2)  # Sum of Squared Errors for small model
+
+r_squared_big <- 1 - (sse_big / sst)
+r_squared_small <- 1 - (sse_small / sst)
+
+# Create a summary table
+comparison_table <- data.frame(
+  Model = c("Big Model", "Small Model"),
+  MAE = c(mae_big, mae_small),
+  RMSE = c(rmse_big, rmse_small),
+  R_Squared = c(r_squared_big, r_squared_small)
+)
+
+# Print the table
+print(comparison_table)
+
+```
+
+## 10.2. Visualizing the Predictions
+
+```{r}
+library(ggplot2)
+
+# Combine predictions and observed data
+testing_data$Pred_Big <- test_predictions_big
+testing_data$Pred_Small <- test_predictions_small
+
+# Plot for Big Model
+ggplot(testing_data, aes(x = Pred_Big, y = BMI)) +
+  geom_point(color = "blue", alpha = 0.5) +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  labs(title = "Predicted vs Observed: Big Model",
+       x = "Predicted BMI (Big Model)",
+       y = "Observed BMI") +
+  theme_minimal()
+
+# Plot for Small Model
+ggplot(testing_data, aes(x = Pred_Small, y = BMI)) +
+  geom_point(color = "green", alpha = 0.5) +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  labs(title = "Predicted vs Observed: Small Model",
+       x = "Predicted BMI (Small Model)",
+       y = "Observed BMI") +
+  theme_minimal()
+
+```
+
+## 10.3. Summarizing the Errors
+
+## 10.4. Comparing the Models
+
+# 11. Discussion
+
+## 11.1. Chosen Model
+
+## 11.2. Answering My Question
+
+## 11.3. Next Steps
+
+## 11.4. Reflection
+
+# 12. Session Information
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+session_info()
+
+```
