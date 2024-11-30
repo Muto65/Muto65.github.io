@@ -356,7 +356,7 @@ ggsave("LogTransHistogram_and_Boxplots.png")
 
 ##### 4.2.1.2. Q-Q Plot
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.height=7}
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.height=}
 
 p1 <-ggplot(analysisA_data, aes(sample = log(BPXOSY1))) +
   geom_qq(col = "slateblue") + 

@@ -1,0 +1,13 @@
+---
+title: "Exploring Insights  in Sociodemographic and Health Associations from the NHANES 2017–March 2020 Dataset"
+author: "Bosco Bakwatanisa"
+date: last-modified
+format:
+  html: 
+  theme: cosmo
+page-layout: full
+sidebar: true
+execute:
+  echo: true
+editor: visual
+---
