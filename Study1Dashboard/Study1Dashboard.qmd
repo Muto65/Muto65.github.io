@@ -1,7 +1,7 @@
 ---
 title: "Interactive Dashboard: Exploring Insights  in Sociodemographic and Health Associations from the NHANES 2017–March 2020 Dataset"
 
-    
+  
 ---
 
 # NHANES Interactive Dashboard

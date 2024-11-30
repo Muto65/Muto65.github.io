@@ -25,7 +25,7 @@ website:
       - text: "Study2"
         href: Study2/Study2.qmd
       - text: "Study1Dashboard"
-        href: https://boscommuto92.shinyapps.io/Study1Dashboard/
+        href: Study1Dashboard.qmd
      
       
     # your social media handles
