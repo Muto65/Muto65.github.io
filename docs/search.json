@@ -268,9 +268,9 @@
   {
     "objectID": "Study1Dashboard/Study1Dashboard.html",
     "href": "Study1Dashboard/Study1Dashboard.html",
-    "title": "Interactive Dashboard: Exploring Insights in Sociodemographic and Health Associations from the NHANES 2017–March 2020 Dataset",
+    "title": "NHANES Interactive Dashboard: Exploring Insights in Sociodemographic and Health Associations from the NHANES 2017–March 2020 Dataset",
     "section": "",
-    "text": "NHANES Interactive Dashboard\nThis dashboard allows you to interactively explore insights from the NHANES 2017–March 2020 dataset. Use the sidebar controls to customize the analysis and visualize the results."
+    "text": "This dashboard allows you to interactively explore insights from the NHANES 2017–March 2020 dataset. Use the sidebar controls to customize the analysis and visualize the results."
   },
   {
     "objectID": "Study1Dashboard/Study1Dashboard.html#sidebar-inputs",
