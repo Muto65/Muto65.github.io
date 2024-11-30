@@ -60,6 +60,11 @@ project:
 
 execute:
   freeze: true
+  
+publish:
+  type: gh-pages
+  branch: gh-pages
+  dir: docs
 
 format:
   html:
