@@ -25,7 +25,7 @@ website:
       - text: "Study2"
         href: Study2/Study2.qmd
       - text: "Study1Dashboard"
-        href: Study1Dashboard.qmd
+        href: Study1Dashboard/Study1Dashboard.qmd
      
       
     # your social media handles
