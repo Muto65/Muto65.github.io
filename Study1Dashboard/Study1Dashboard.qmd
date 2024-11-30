@@ -17,7 +17,6 @@ format:
     code-fold: false
     toc: true
     toc-depth: 3
-runtime: shiny
 execute:
   echo: true
   warning: false
