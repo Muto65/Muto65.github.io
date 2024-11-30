@@ -144,7 +144,7 @@ testing_data <- anti_join(complete_data, training_data, by = "SEQN")
 nrow(training_data)
 nrow(testing_data)
 saveRDS(training_data, file = "data/training_data.rds")
-saveRDS(testing_data, file = "data/training_data.rds")
+saveRDS(testing_data, file = "data/testing_data.rds")
 ```
 
 # 6. Transforming the Outcome
