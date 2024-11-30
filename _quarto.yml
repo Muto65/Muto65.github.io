@@ -12,6 +12,8 @@ website:
     
     # your sub-pages 
     left:
+      - text: Blog
+        href: Blog.qmd
       - text: "Education"
         href: education/index.qmd
       - text: "Publications"
