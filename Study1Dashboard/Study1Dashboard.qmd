@@ -1,27 +1,7 @@
 ---
 title: "Interactive Dashboard: Exploring Insights  in Sociodemographic and Health Associations from the NHANES 2017–March 2020 Dataset"
-author: "Bosco Bakwatanisa"
-date: last-modified
-format: 
-  html:
-    fig-responsive: true
-    fig-align: center
-    fig-width: 8
-    fig-height: 8
-    page-layout: full
-    sidebar: true
-    theme: flatly
-    embed-resources: true
-    number_sections: true
-    date-format: iso
-    code-fold: false
-    toc: true
-    toc-depth: 3
-execute:
-  echo: true
-  warning: false
-  message: false
-editor: visual
+
+    
 ---
 
 # NHANES Interactive Dashboard
