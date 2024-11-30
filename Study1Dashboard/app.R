@@ -223,18 +223,6 @@ server <- function(input, output) {
           axis.title.y = element_text(face = "bold", size = 10),
           axis.title.x = element_text(face = "bold", size = 10),
           plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
-      
-   mosaic(
-        ~ Race + Education, 
-        data = as.data.frame(analysisE_data),
-        shade = TRUE,
-        labeling_args = list(
-          gp_labels = gpar(fontsize = 10),    # Increase cell label size
-          gp_varnames = gpar(fontsize = 10), # Increase axis labels size
-          gp_main = gpar(fontsize = 10)      # Increase title size
-        ),
-        main = "Race vs Education Level"
-      )
    
     }
   })
