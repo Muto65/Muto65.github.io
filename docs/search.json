@@ -282,49 +282,49 @@
   {
     "objectID": "Blog.html",
     "href": "Blog.html",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "",
-    "text": "title: “Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard” author: “Your Name” date: “YYYY-MM-DD” categories: [Blog] format: html editor: visual\nData analysis often goes beyond just crunching numbers—it’s a story of discovery and visualization. This blog dives into Study 1, Study 2, and the development of an interactive dashboard, offering a window into how structured analyses and tools like Quarto and Shiny brought data to life."
+    "text": "Data analysis often goes beyond just crunching numbers—it’s a story of discovery and visualization. This blog dives into Study 1, Study 2, and the development of an interactive dashboard, offering a window into how structured analyses and tools like Quarto and Shiny brought data to life."
   },
   {
     "objectID": "Blog.html#study-1-blood-pressure-and-health-insights",
     "href": "Blog.html#study-1-blood-pressure-and-health-insights",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Study 1: Blood Pressure and Health Insights",
     "text": "Study 1: Blood Pressure and Health Insights"
   },
   {
     "objectID": "Blog.html#research-focus",
     "href": "Blog.html#research-focus",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Research Focus",
     "text": "Research Focus\nStudy 1 explored systolic blood pressure readings to uncover variability between paired measurements. Using data from the NHANES 2017–March 2020 dataset, the aim was to identify trends, outliers, and potential biases between two oscillometric readings."
   },
   {
     "objectID": "Blog.html#steps-undertaken",
     "href": "Blog.html#steps-undertaken",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Steps Undertaken",
     "text": "Steps Undertaken\n\nData Cleaning:\nThe dataset was filtered to ensure valid readings for both BPXOSY1 (first reading) and BPXOSY2 (second reading). Missing values and extreme outliers were removed.\n\n\nDescriptive Statistics:\nKey metrics such as mean, standard deviation, and interquartile range were calculated. Histograms and boxplots provided a clear visualization of distribution differences.\n\n\nStatistical Testing:\nA Wilcoxon signed-rank test assessed if the differences between BPXOSY1 and BPXOSY2 were statistically significant. Bootstrap confidence intervals validated the results.\n\n\nKey Findings:\nStatistically significant differences between the two readings were observed, likely reflecting measurement variability or physiological changes during sessions."
   },
   {
     "objectID": "Blog.html#research-focus-1",
     "href": "Blog.html#research-focus-1",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Research Focus",
     "text": "Research Focus\nStudy 2 broadened the scope, investigating relationships between:\nBody Mass Index (BMI) by Gender Smoking Status and Obesity Race and Education Levels"
   },
   {
     "objectID": "Blog.html#steps-undertaken-1",
     "href": "Blog.html#steps-undertaken-1",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Steps Undertaken",
     "text": "Steps Undertaken\n\nData Cleaning:\nEach variable of interest (e.g., BMI, Smoking, Education) was filtered to ensure completeness. BMI thresholds categorized participants as obese or non-obese, while education levels were stratified across racial groups.\n\nVisualization and Analysis:\nGender vs. BMI:\nBoxplots and density plots highlighted BMI distributions across genders. A Wilcoxon rank-sum test revealed statistically significant differences between male and female BMI. Smoking and Obesity: Contingency tables were constructed for smoking status and obesity categories. A Chi-square test measured the association, with mosaic plots visualizing trends. Race and Education: A Chi-square test examined relationships between racial groups and educational attainment. Heatmaps of standardized residuals emphasized over- and under-representation in education levels across racial categories.\n\n\n\nKey Findings:\nSignificant gender differences in BMI were detected, with females having higher average BMI. No strong statistical association was found between smoking status and obesity. Racial disparities in education attainment were evident, with Non-Hispanic Asians being overrepresented in higher education.\n\n\nInteractive Dashboard: Bringing the Analyses to Life Purpose\nThe dashboard provides an interactive interface for exploring the results from Study 1 and Study 2, enabling stakeholders to visualize trends dynamically and tailor insights to their needs."
   },
   {
     "objectID": "Blog.html#deployment",
     "href": "Blog.html#deployment",
-    "title": "Study 2: BMI, Smoking, and Education Insights",
+    "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Deployment:",
     "text": "Deployment:\nThe app was deployed using ShinyApps.io. The interactive dashboard was then embedded into a Quarto website hosted on GitHub Pages.\nTechnical Challenges and Solutions:\n\nManaging dependencies: Ensured all required libraries and datasets were properly installed and loaded.\n\n\n\nVisual consistency: Fine-tuned plot dimensions and styling for a professional appearance.\nEmbedding in Quarto: Used an iframe to integrate the Shiny app seamlessly into the website."
   }

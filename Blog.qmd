@@ -1,10 +1,14 @@
 ---
-
 title: "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard"
-author: "Your Name"
-date: "YYYY-MM-DD"
+author: "Bosco Bakwatanisa"
+date: last-modified
 categories: \[Blog\]
-format: html
+format:
+ html:
+  date-format: iso
+  code-fold: false
+  toc: true
+  toc-depth: 3
 editor: visual
 
 ---
