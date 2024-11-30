@@ -57,20 +57,56 @@ library(ggplot2)
 ```
 
 ## Sidebar Inputs
-
 ```{r}
-fluidPage( sidebarLayout( sidebarPanel( selectInput( inputId = "analysis_type", label = "Select Analysis Type:", choices = c("Systolic BP Analysis" = "bp_analysis", "BMI by Gender" = "bmi_gender", "Smoking and Obesity" = "smoking_obesity", "Race vs Education" = "race_education"), selected = "bp_analysis" ), conditionalPanel( condition = "input.analysis_type == 'bmi_gender'", sliderInput("bmi_range", "Filter BMI Range:", min = 10, max = 50, value = c(15, 35)) ), conditionalPanel( condition = "input.analysis_type == 'race_education'", selectInput( "race_filter", "Select Race/Ethnicity:", choices = c("All", "Mexican", "Hispanic", "White", "Black", "Asian"), selected = "All" ) ), conditionalPanel( condition = "input.analysis_type == 'smoking_obesity'", radioButtons( "smoking_filter", "Smoking Status:", choices = c("All", "Smoker", "Non-Smoker"), selected = "All" ) ) ), mainPanel( tabsetPanel( type = "tabs", tabPanel("Visualization", plotOutput("main_plot")), tabPanel("Data Summary", tableOutput("summary_table")) ) ) ) )
-```
 
-```{r echo=TRUE, warning=FALSE, message=FALSE}
+# Load the data
 analysisA_data <- readRDS("data/AnalysisA.rds")
 analysisB_data <- readRDS("data/analysisB.rds")
 analysisD_data <- readRDS("data/analysisD.rds")
 analysisE_data <- readRDS("data/analysisE.rds")
 
-shinyServer(function(input, output) {
+# Define UI
+ui <- fluidPage(
+  titlePanel("Interactive Data Analysis Dashboard"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("analysis_type", "Select Analysis Type:",
+                  choices = list(
+                    "Blood Pressure Analysis" = "bp_analysis",
+                    "BMI by Gender" = "bmi_gender",
+                    "Smoking vs Obesity" = "smoking_obesity",
+                    "Race vs Education" = "race_education"
+                  )),
+      conditionalPanel(
+        condition = "input.analysis_type == 'bmi_gender'",
+        sliderInput("bmi_range", "Select BMI Range:",
+                    min = 15, max = 50, value = c(20, 30))
+      ),
+      conditionalPanel(
+        condition = "input.analysis_type == 'race_education'",
+        selectInput("race_filter", "Filter by Race:",
+                    choices = c("All", unique(analysisE_data$Race)))
+      ),
+      conditionalPanel(
+        condition = "input.analysis_type == 'smoking_obesity'",
+        selectInput("smoking_filter", "Filter by Smoking Status:",
+                    choices = c("All", unique(analysisD_data$Smoking)))
+      )
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Summary", tableOutput("summary_table")),
+        tabPanel("Plot", plotOutput("main_plot")),
+        tabPanel("Statistical Results", verbatimTextOutput("stat_results"))
+      )
+    )
+  )
+)
+
+# Define Server
+server <- function(input, output) {
   
-  # Filter data based on user inputs
+  # Reactive filtering of data
   filtered_data <- reactive({
     if (input$analysis_type == "bmi_gender") {
       analysisB_data %>% 
@@ -92,7 +128,7 @@ shinyServer(function(input, output) {
     }
   })
   
-  # Main plot
+  # Main Plot
   output$main_plot <- renderPlot({
     data <- filtered_data()
     if (input$analysis_type == "bp_analysis") {
@@ -101,43 +137,97 @@ shinyServer(function(input, output) {
         geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
         labs(title = "Systolic BP: 1st vs 2nd Readings",
              x = "1st Reading (mmHg)", y = "2nd Reading (mmHg)") +
-        theme_minimal()
+        theme(
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
     } else if (input$analysis_type == "bmi_gender") {
       ggplot(data, aes(x = Gender, y = BMI, fill = Gender)) +
         geom_boxplot() +
         coord_flip() +
         labs(title = "BMI Distribution by Gender",
              x = "Gender", y = "BMI") +
-        theme_minimal()
+        theme(
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
     } else if (input$analysis_type == "smoking_obesity") {
       ggplot(data, aes(x = Smoking, fill = Obesity)) +
         geom_bar(position = "dodge") +
         labs(title = "Smoking vs Obesity",
              x = "Smoking Status", y = "Count") +
-        theme_minimal()
+        theme(
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
     } else if (input$analysis_type == "race_education") {
       ggplot(data, aes(x = Race, fill = Education)) +
         geom_bar(position = "dodge") +
         labs(title = "Race vs Education",
              x = "Race/Ethnicity", y = "Count") +
-        theme_minimal()
+        theme(
+        axis.text = element_text(face = "bold",size = 10),
+        axis.title.y = element_text(face = "bold", size = 10),
+        axis.title.x = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
     }
   })
   
-  # Summary table
+  # Summary Table
   output$summary_table <- renderTable({
     data <- filtered_data()
     if (input$analysis_type == "bp_analysis") {
-      summary(data)
-    } else {
       data %>% 
-        group_by(across(everything())) %>% 
-        summarise(n = n(), .groups = "drop")
+        summarise(
+          Mean_BP1 = mean(BPXOSY1, na.rm = TRUE),
+          Mean_BP2 = mean(BPXOSY2, na.rm = TRUE),
+          SD_BP1 = sd(BPXOSY1, na.rm = TRUE),
+          SD_BP2 = sd(BPXOSY2, na.rm = TRUE),
+          N = n()
+        )
+    } else if (input$analysis_type == "bmi_gender") {
+      data %>% 
+        group_by(Gender) %>% 
+        summarise(
+          Mean_BMI = mean(BMI, na.rm = TRUE),
+          SD_BMI = sd(BMI, na.rm = TRUE),
+          N = n()
+        )
+    } else if (input$analysis_type == "smoking_obesity") {
+      data %>% 
+        count(Smoking, Obesity) %>% 
+        spread(Obesity, n, fill = 0)
+    } else if (input$analysis_type == "race_education") {
+      data %>% 
+        count(Race, Education) %>% 
+        spread(Education, n, fill = 0)
     }
   })
-})
+  
+  # Statistical Results
+  output$stat_results <- renderPrint({
+    data <- filtered_data()
+    if (input$analysis_type == "bp_analysis") {
+      # Wilcoxon signed-rank test
+      wilcox.test(data$BPXOSY1, data$BPXOSY2, paired = TRUE)
+    } else if (input$analysis_type == "bmi_gender") {
+      # Wilcoxon rank-sum test
+      wilcox.test(BMI ~ Gender, data = data)
+    } else if (input$analysis_type == "smoking_obesity") {
+      # Chi-square test
+      chisq.test(table(data$Smoking, data$Obesity))
+    } else if (input$analysis_type == "race_education") {
+      # Chi-square test
+      chisq.test(table(data$Race, data$Education))
+    }
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
 
 ```
-
-
 
