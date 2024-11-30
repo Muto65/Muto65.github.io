@@ -327,5 +327,12 @@
     "title": "Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard",
     "section": "Deployment:",
     "text": "Deployment:\nThe app was deployed using ShinyApps.io. The interactive dashboard was then embedded into a Quarto website hosted on GitHub Pages.\nTechnical Challenges and Solutions:\n\nManaging dependencies: Ensured all required libraries and datasets were properly installed and loaded.\n\n\n\nVisual consistency: Fine-tuned plot dimensions and styling for a professional appearance.\nEmbedding in Quarto: Used an iframe to integrate the Shiny app seamlessly into the website."
+  },
+  {
+    "objectID": "Study2Dashboard/Study2Dashboard.html",
+    "href": "Study2Dashboard/Study2Dashboard.html",
+    "title": "Comparative Analysis Dashboard: Multivariate and Simple Models for BMI Prediction",
+    "section": "",
+    "text": "This dashboard allows you to interactively explore the relationship between BMI and Gender from the NHANES 2017–March 2020 dataset. Use the sidebar controls to customize the analysis and visualize the results."
   }
 ]

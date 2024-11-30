@@ -1,25 +1,30 @@
+# Load required libraries
+install.packages('shinycssloaders')
 library(shiny)
-library(tidyverse)
-library(mice)
-library(broom.mixed)
-library(janitor)
+library(shinythemes)
+library(shinycssloaders)
+library(DT)
 library(ggplot2)
-library(gridExtra)
-# Load Data
-complete_data <- readRDS("data/Analyses2Data.rds")
+library(plotly)
+library(dplyr)
+library(magrittr)
 
-# Imputation for Missing Data
-imputed_data <- mice(complete_data, m = 1, method = 'pmm', maxit = 5)
-complete_data <- complete(imputed_data)
+# Load the data
+training_data <- readRDS("data/training_data.rds")
+testing_data <- readRDS("data/testing_data.rds")
 
-# Split Data into Training and Testing
-set.seed(112724)
-training_data <- complete_data %>% slice_sample(prop = 0.7)
-testing_data <- anti_join(complete_data, training_data, by = "SEQN")
+# Fit the models
+big_model <- lm(BMI ~ Gender + Age + Race + Smoking, data = training_data)
+small_model <- lm(BMI ~ Gender, data = training_data)
 
 # Define UI
 ui <- fluidPage(
-  titlePanel("Comparison of Big Model and Small Model"),
+  theme = shinytheme("flatly"),  # Add modern theme
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")  # Link custom CSS
+  ),
+  titlePanel("Enhanced Study Dashboard"),
+  
   sidebarLayout(
     sidebarPanel(
       selectInput("analysis_type", "Select Analysis Type:",
@@ -28,14 +33,21 @@ ui <- fluidPage(
                     "Visualizations" = "visualizations",
                     "Prediction Performance" = "prediction_performance",
                     "Diagnostic Plots" = "diagnostic_plots"
-                  ))
+                  )),
+      conditionalPanel(
+        condition = "input.analysis_type == 'visualizations'",
+        selectInput("visualization_type", "Select Visualization:",
+                    choices = list("BMI by Gender" = "bmi_gender",
+                                   "BMI Distribution" = "bmi_distribution"))
+      )
     ),
+    
     mainPanel(
       tabsetPanel(
-        tabPanel("Summary", tableOutput("summary_table")),
-        tabPanel("Visualizations", plotOutput("main_plot")),
-        tabPanel("Prediction Performance", tableOutput("prediction_performance_table")),
-        tabPanel("Diagnostic Plots", plotOutput("diagnostic_plots")),
+        tabPanel("Summary", withSpinner(DTOutput("summary_table"), color = "#007bff")),
+        tabPanel("Visualizations", plotlyOutput("main_plot") %>% withSpinner(color = "#007bff")),
+        tabPanel("Prediction Performance", withSpinner(DTOutput("prediction_performance_table"), color = "#007bff")),
+        tabPanel("Diagnostic Plots", plotOutput("diagnostic_plots") %>% withSpinner(color = "#007bff")),
         tabPanel("Statistical Results", verbatimTextOutput("stat_results"))
       )
     )
@@ -43,98 +55,114 @@ ui <- fluidPage(
 )
 
 # Define Server
-server <- function(input, output) {
+server <- function(input, output, session) {
   
-  # Fit Models
-  big_model <- reactive({
-    lm(BMI ~ Gender + Age + Race + Smoking, data = training_data)
-  })
-  
-  small_model <- reactive({
-    lm(BMI ~ Gender, data = training_data)
+  # Reactive filtered data for visualizations
+  filtered_data <- reactive({
+    if (input$visualization_type == "bmi_gender") {
+      training_data
+    } else {
+      training_data
+    }
   })
   
   # Summary Table
-  output$summary_table <- renderTable({
-    if (input$analysis_type == "summary") {
-      training_data %>% 
-        summarise(
-          Mean_BMI = mean(BMI, na.rm = TRUE),
-          SD_BMI = sd(BMI, na.rm = TRUE),
-          Min_BMI = min(BMI, na.rm = TRUE),
-          Max_BMI = max(BMI, na.rm = TRUE),
-          N = n()
-        )
-    }
+  output$summary_table <- renderDT({
+    training_data %>%
+      summarise(
+        Mean_BMI = mean(BMI, na.rm = TRUE),
+        SD_BMI = sd(BMI, na.rm = TRUE),
+        Min_BMI = min(BMI, na.rm = TRUE),
+        Max_BMI = max(BMI, na.rm = TRUE),
+        N = n()
+      ) %>%
+      datatable(options = list(pageLength = 5))
   })
   
   # Visualizations
-  output$main_plot <- renderPlot({
-    if (input$analysis_type == "visualizations") {
-      ggplot(training_data, aes(x = Gender, y = BMI, fill = Gender)) +
+  output$main_plot <- renderPlotly({
+    data <- filtered_data()
+    if (input$visualization_type == "bmi_gender") {
+      p <- ggplot(data, aes(x = Gender, y = BMI, fill = Gender)) +
         geom_boxplot() +
-        labs(title = "BMI by Gender (Training Data)",
-             x = "Gender", y = "BMI") +
+        coord_flip() +
+        labs(title = "BMI by Gender", x = "Gender", y = "BMI") +
         theme_minimal()
+      ggplotly(p)
+    } else {
+      p <- ggplot(data, aes(x = BMI)) +
+        geom_histogram(fill = "blue", alpha = 0.7, bins = 30) +
+        labs(title = "BMI Distribution", x = "BMI", y = "Frequency") +
+        theme_minimal()
+      ggplotly(p)
     }
   })
   
-  # Prediction Performance
-  output$prediction_performance_table <- renderTable({
-    if (input$analysis_type == "prediction_performance") {
-      
-      # Align factor levels for testing data
-      testing_data$Race <- factor(testing_data$Race, levels = levels(training_data$Race))
-      testing_data$Smoking <- factor(testing_data$Smoking, levels = levels(training_data$Smoking))
-      
-      # Generate Predictions
-      big <- big_model()
-      small <- small_model()
-      testing_data$Pred_Big <- predict(big, newdata = testing_data)
-      testing_data$Pred_Small <- predict(small, newdata = testing_data)
-      
-      # Calculate Performance Metrics
-      residuals_big <- testing_data$BMI - testing_data$Pred_Big
-      residuals_small <- testing_data$BMI - testing_data$Pred_Small
-      
-      mae_big <- mean(abs(residuals_big), na.rm = TRUE)
-      mae_small <- mean(abs(residuals_small), na.rm = TRUE)
-      
-      rmse_big <- sqrt(mean(residuals_big^2, na.rm = TRUE))
-      rmse_small <- sqrt(mean(residuals_small^2, na.rm = TRUE))
-      
-      r_squared_big <- cor(testing_data$BMI, testing_data$Pred_Big, use = "complete.obs")^2
-      r_squared_small <- cor(testing_data$BMI, testing_data$Pred_Small, use = "complete.obs")^2
-      
-      # Return Performance Table
-      data.frame(
-        Model = c("Big Model", "Small Model"),
-        MAE = c(mae_big, mae_small),
-        RMSE = c(rmse_big, rmse_small),
-        R_Squared = c(r_squared_big, r_squared_small)
-      )
-    }
+  # Prediction Performance Table
+  output$prediction_performance_table <- renderDT({
+    # Predict on testing data
+    test_predictions_big <- predict(big_model, testing_data)
+    test_predictions_small <- predict(small_model, testing_data)
+    
+    # Calculate errors
+    residuals_big <- testing_data$BMI - test_predictions_big
+    residuals_small <- testing_data$BMI - test_predictions_small
+    
+    data.frame(
+      Model = c("Big Model", "Small Model"),
+      MAE = c(mean(abs(residuals_big)), mean(abs(residuals_small))),
+      RMSE = c(sqrt(mean(residuals_big^2)), sqrt(mean(residuals_small^2))),
+      R_squared = c(cor(testing_data$BMI, test_predictions_big)^2,
+                    cor(testing_data$BMI, test_predictions_small)^2)
+    ) %>%
+      datatable(options = list(pageLength = 5))
   })
   
   # Diagnostic Plots
   output$diagnostic_plots <- renderPlot({
     if (input$analysis_type == "diagnostic_plots") {
-      big <- big_model()
+      residuals <- resid(big_model)
+      fitted_values <- fitted(big_model)
       
-      par(mfrow = c(2, 2))
-      plot(big, which = 1:4, col = "blue", pch = 19, lwd = 2, cex = 0.7)
+      # Residuals vs Fitted Plot
+      p1 <- ggplot(data = data.frame(fitted_values, residuals), aes(x = fitted_values, y = residuals)) +
+        geom_point(color = "blue", alpha = 0.6) +
+        geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+        labs(title = "Residuals vs Fitted", x = "Fitted Values", y = "Residuals") +
+        theme_minimal()
+      
+      # Normal Q-Q Plot
+      p2 <- ggplot(data = data.frame(residuals), aes(sample = residuals)) +
+        stat_qq() +
+        stat_qq_line(color = "red") +
+        labs(title = "Normal Q-Q Plot", x = "Theoretical Quantiles", y = "Sample Quantiles") +
+        theme_minimal()
+      
+      # Scale-Location Plot
+      p3 <- ggplot(data = data.frame(fitted_values, sqrt(abs(residuals))), aes(x = fitted_values, y = sqrt(abs(residuals)))) +
+        geom_point(color = "blue", alpha = 0.6) +
+        geom_smooth(method = "loess", color = "red", se = FALSE) +
+        labs(title = "Scale-Location Plot", x = "Fitted Values", y = "√|Residuals|") +
+        theme_minimal()
+      
+      # Residuals vs Leverage Plot
+      leverage <- hatvalues(big_model)
+      p4 <- ggplot(data = data.frame(leverage, residuals), aes(x = leverage, y = residuals)) +
+        geom_point(color = "blue", alpha = 0.6) +
+        geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+        labs(title = "Residuals vs Leverage", x = "Leverage", y = "Residuals") +
+        theme_minimal()
+      
+      # Combine the plots
+      gridExtra::grid.arrange(p1, p2, p3, p4, nrow = 2)
     }
   })
   
   # Statistical Results
   output$stat_results <- renderPrint({
-    if (input$analysis_type == "summary") {
-      summary(big_model())
-    } else if (input$analysis_type == "prediction_performance") {
-      summary(small_model())
-    }
+    summary(big_model)
   })
 }
 
-# Run the Application
+# Run the application
 shinyApp(ui = ui, server = server)
