@@ -1,13 +1,11 @@
 ---
----
-title: "NHANES Interactive Dashboard: Exploring Insights  in Sociodemographic and Health Associations from the NHANES 2017–March 2020 Dataset"
+title: "Comparative Analysis Dashboard: Multivariate and Simple Models for BMI Prediction"
+subtitle: "Interactive Dashboard: Comparing Big and Small Models for BMI Prediction"
 author: "Bosco Bakwatanisa"
 visual:
-  
----
-This dashboard allows you to interactively explore insights from the NHANES 2017–March 2020 dataset. Use the sidebar controls to customize the analysis and visualize the results.
-
-<iframe src="https://boscommuto92.shinyapps.io/Study1Dashboard/" width="100%" height="600px" style="border: none;"></iframe>
 ---
 
-<https://boscommuto92.shinyapps.io/Study2Dashboard/>
+This dashboard allows you to interactively explore the relationship between BMI  and Gender from the NHANES 2017–March 2020 dataset. Use the sidebar controls to customize the analysis and visualize the results.
+
+<iframe src="https://boscommuto92.shinyapps.io/Study2Dashboard/" width="100%" height="600px" style="border: none;">
+</iframe>
