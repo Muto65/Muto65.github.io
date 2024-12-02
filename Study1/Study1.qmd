@@ -182,6 +182,8 @@ saveRDS(analysisE_data, 'data/analysisE.rds')
 
 ## 3. Codebook and Data Description
 
+This codebook shown in the table below describes variables chosen for this analysis from 8428 participants aged 21-79 years of age who had complete data from NHANES 2017-March 2020.
+
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 variable_description <- tibble::tribble(
   ~Variable_Name, ~Role_in_Analysis,~Type, ~Original_Code, ~Definition, ~Cutpoints_or_Units, ~Year_Measured,

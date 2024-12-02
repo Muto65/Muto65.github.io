@@ -106,16 +106,14 @@ kable(head(complete_data)) %>%
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 variable_description <- tibble::tribble(
-  ~Variable_Name, ~Role_in_Analysis,~Type, ~Original_Code, ~Definition, ~Cutpoints_or_Units, ~Year_Measured,
-  "SEQN",  "ID",   "numeric",   " Respondent sequence number", "Unique Identifier to identify any persons involved in the study" ,  "N/A",      "2017-March 2020",
-  "RIDSTATR","Interview/Examination status","Categorical","RIDSTATR","Variable used to show whether a participant was either interviewed only or both interviewed and MEC Examined","Number of persons","2017-March 2020",
-  "Gender",  "Analysis Key Predictor", "Categorical", "RIAGENDR","Gender of the participant","Persons (Male or Female)",      "2017-March 2020",
-  "RIDAGEYR", "Analysis key predictor and used to select Adult persons aged 21-79 years","numeric","RIDAGEYR", "Participant's Age in years at the time of screening ",   "21 -79 years","2017-March 2020",   
-  "Race/Ethnicity", "Analysis Predictor",  "Categorical", "RIDRETH3 ", "RIDRETH3: This is the race-ethnicity variable included in the demographics file since the 2011-2012 survey cycle to accommodate the oversample of Asian Americans. It was derived from responses to the survey questions on race and Hispanic origin.
-Respondents who self-identified as “Mexican American” were coded as such (i.e., RIDRETH3=1) regardless of their other race-ethnicity identities. Otherwise, self-identified “Hispanic” ethnicity would result in code “2, Other Hispanic” in the RIDRETH3 variable.
-All other non-Hispanic participants would then be categorized based on their self-reported races: non-Hispanic white (RIDRETH3=3), non-Hispanic black (RIDRETH3=4), non-Hispanic Asian (RIDRETH3=6)", "Number of participants who identified as Race/Hispanic origin w/ NH Asian", "2017-March 2020",
-  "BMI","Analysis Outocome", "numeric", "BMXBMI", "Body Mass Index (BMI) was calculated as weight in kilograms divided by height in meters squared, and then rounded to one decimal place.",  "(kg/m**2)", "2017-March 2020",
-  "Smoking", "Analysis Predictor",  "Categorical(yes, no)", "SMQ020", "Smoked at least 100 cigarettes in life, (yes for smoked, no never smoked","Number of participants interviewed", "2017-March 2020")
+  ~Variable_Name, ~Role_in_Analysis,~Type, ~Original_Code, 
+  "SEQN",  "ID",   "Quant",   " Respondent sequence number", 
+  "RIDSTATR","Interview/Examination status","X-cat","RIDSTATR",
+  "Gender",  "Analysis Key Predictor", "Binary", "RIAGENDR",
+  "RIDAGEYR", "Analysis key predictor and used to select Adult persons aged 21-79 years","Quant","RIDAGEYR",
+  "Race/Ethnicity", "Analysis Predictor",  "X-cat", "RIDRETH3 ",
+  "BMI","Analysis Outocome", "Quant", "BMXBMI",
+  "Smoking", "Analysis Predictor",  "X-cat", "SMQ020")
 variable_description |> kbl() |> kable_styling()
 
 ```
