@@ -45,12 +45,12 @@ ui <- fluidPage(
       conditionalPanel(
         condition = "input.analysis_type == 'race_education'",
         selectInput("race_filter", "Filter by Race:",
-                    choices = c("All", unique(analysisE_data$Race)))
+                    choices = c("All", levels(analysisE_data$Race)))
       ),
       conditionalPanel(
         condition = "input.analysis_type == 'smoking_obesity'",
         selectInput("smoking_filter", "Filter by Smoking Status:",
-                    choices = c("All", unique(analysisD_data$Smoking)))
+                    choices = c("All", levels(analysisD_data$Smoking)))
       )
     ),
     mainPanel(
@@ -263,16 +263,16 @@ server <- function(input, output) {
     data <- filtered_data()
     if (input$analysis_type == "bp_analysis") {
       # Wilcoxon signed-rank test
-      wilcox.test(data$BPXOSY1, data$BPXOSY2, paired = TRUE)
+      wilcox.test(data$BPXOSY1, data$BPXOSY2, paired = TRUE)%>% glance()%>% kable(digits = 3)%>%kable_styling()
     } else if (input$analysis_type == "bmi_gender") {
       # Wilcoxon rank-sum test
-      wilcox.test(BMI ~ Gender, data = data)
+      wilcox.test(BMI ~ Gender, data = data)%>% glance()%>% kable(digits = 3)%>%kable_styling()
     } else if (input$analysis_type == "smoking_obesity") {
       # Chi-square test
-      chisq.test(table(data$Smoking, data$Obesity))
+      chisq.test(table(data$Smoking, data$Obesity))%>% glance()%>% kable(digits = 3)%>% kable_styling()
     } else if (input$analysis_type == "race_education") {
       # Chi-square test
-      chisq.test(table(data$Race, data$Education))
+      chisq.test(table(data$Race, data$Education))%>% glance()%>% kable(digits = 3)%>% kable_styling()
     }
   })
 }

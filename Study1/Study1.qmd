@@ -79,73 +79,63 @@ AnalysisB_data <- readRDS('data/AnalysisB_data.rds')
 smoke_data <- SMQ_raw%>% select(SEQN,SMQ020)
 AnalysisD_data <- left_join(AnalysisB_data, smoke_data, by = "SEQN")
 AnalysisData <- AnalysisD_data%>% filter( RIDAGEYR >=21 &  RIDAGEYR<= 79)
-
-saveRDS(AnalysisData, file = 'data/AnalysesData.rds')
+analysisTibble <- AnalysisData%>% select(SEQN, RIDAGEYR,RIAGENDR, BMXBMI,RIDRETH3,DMDEDUC2,SMQ020,BPXOSY1,BPXOSY2)%>% drop_na()%>%
+  filter(BPXOSY1 >0, BPXOSY2 > 0, BMXBMI >0, SMQ020 %in% c("Yes","No"), RIDRETH3 %in% c('Mexican American', 'Other Hispanic','Non-Hispanic White','Non-Hispanic Black','Non-Hispanic Asian'),
+         DMDEDUC2 %in% c('Less than 9th grade','9-11th grade (Includes 12th grade with no diploma)','High school graduate/GED or equivalent','Some college or AA degree','College graduate or above'))%>% 
+  rename(Gender  =RIAGENDR,Age = RIDAGEYR, BMI =BMXBMI, Race =RIDRETH3, Education = DMDEDUC2, Smoking = SMQ020)%>% 
+  mutate(Gender = ifelse(Gender=="Male",1,2),Race = factor(Race,levels = c("Mexican American","Other Hispanic","Non-Hispanic White","Non-Hispanic Black","Non-Hispanic Asian"),
+                                                           labels = c("Mexican","Hispanic", "White","Black", "Asian")), Smoking = ifelse(Smoking=="Yes","Smoker","Non_Smoker"),Obesity =  ifelse(BMI >=30, "Obese","Non_Obese"),
+         Education = factor(
+           Education,
+           levels = c("Less than 9th grade","9-11th grade (Includes 12th grade with no diploma)", "High school graduate/GED or equivalent", "Some college or AA degree","College graduate or above"),
+           labels = c( "less_9th_grade","9_12th_grade", "High_school","Some_College", "College_graduate" )))%>% mutate(Smoking = factor(Smoking, levels = c("Smoker","Non_Smoker")), Obesity = factor(Obesity, levels = c("Obese","Non_Obese")), Gender = factor(Gender, levels = c(1,2)))
+                                                                                             
+saveRDS(analysisTibble, file = 'data/AnalysesData.rds')
 
 ```
 
-#### 2. 1.1. Data cleaning and filtering for Analysis A
+#### 2. 1.1. Analysis A  Data
 
 Here, I zeroed down to the Systolic Blood Pressure measurements for sessions 1 and 2 as the paired outcome variables for analysis A. This was co-selected with the SEQN columns just to ensure that systolic blood pressure is paired for each individual in the chosen population.
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 AnalysisData <- readRDS('data/AnalysesData.rds')
- analysisA_data <- AnalysisData%>% select(SEQN,BPXOSY1,BPXOSY2)%>% drop_na()%>%
-  filter(BPXOSY1 >0, BPXOSY2 > 0)
+ analysisA_data <- AnalysisData%>% select(BPXOSY1,BPXOSY2)
 saveRDS(analysisA_data, file = 'data/AnalysisA.rds')
 ```
 
-#### 2.1.2. Analysis B Data Cleaning, re-coding and filtering
+#### 2.1.2. Analysis B Data 
 
 Here I used already downloaded demographics and downloaded examination datasets (body measurement data) and then combined the two data sets for this analysis.
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 AnalysesData <- readRDS('data/AnalysesData.rds')
-# Select relevant variables and filter complete cases
+# Select relevant variables for Analysis B
 analysisB_data <-AnalysesData %>% 
-  select(RIAGENDR, BMXBMI)%>%
-  filter(complete.cases( RIAGENDR, BMXBMI))%>%
-  mutate(Gender = ifelse(RIAGENDR == "Male", 1,2))%>% 
-  rename(BMI = BMXBMI)# Add readable gender labels
-analysisB_data$Gender <- as.factor(analysisB_data$Gender)
-analysisB_data <- analysisB_data[,-1]
-#taking alot at the summary stats of the analysis B data
+  select(Gender, BMI)
+ 
 saveRDS(analysisB_data, "data/analysisB.rds")
 ```
 
-#### 2.1.3. Analysis C Data Cleaning, re-coding, and filtering
+#### 2.1.3. Analysis C Data 
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 AnalysesData <- readRDS('data/AnalysesData.rds')
 
 analysisC_data <- AnalysesData%>%
-  select(SEQN,RIDRETH3,BMXBMI)%>%rename(Race = RIDRETH3, BMI = BMXBMI)
-
-analysisC_data <- analysisC_data%>% 
-  mutate(Race = factor(
-    Race,
-    levels = c("Mexican American","Other Hispanic","Non-Hispanic White",    "Non-Hispanic Black","Non-Hispanic Asian"),
-    labels = c("Mexican","Hispanic", "White","Black", "Asian")))%>%filter(complete.cases(Race,BMI))%>% filter(BMI > 0)
+  select(Race,BMI)
 length(unique(analysisC_data$BMI))
 
 saveRDS(analysisC_data, 'data/analysisC.rds')
 
 ```
 
-#### 2.1.4. Analysis D Data cleaning, filtering and re-coding
+#### 2.1.4. Analysis D Data 
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
-# Filter and recode SMQ020 for 'Yes' and 'No' only
 AnalysesData <- readRDS('data/AnalysesData.rds')
-analysisD_data <- AnalysesData %>% rename(Smoking = SMQ020, BMI = BMXBMI)%>%
-  select(Smoking,BMI) %>%                 # Select relevant columns
-  filter(Smoking %in% c('Yes', 'No'), complete.cases(Smoking,BMI)) %>% filter(BMI > 0)%>%# Keep 'Yes' and 'No'.
-  mutate(
-    Smoking = ifelse(Smoking =="Yes","Smoker","Non_Smoker"),    # Recode 'Yes' to 'Smoker' and 'No' to 'Non-Smoker'
-    Obesity = ifelse(BMI >= 30, "Obese", "Non_Obese") # Define obesity based on BMI
-  )%>%
-  mutate(Smoking = factor(Smoking, levels = c("Smoker","Non_Smoker")),
-         Obesity = factor(Obesity, levels = c("Obese","Non_Obese")))
+analysisD_data <- AnalysesData %>% 
+  select(Smoking,Obesity) 
   
 saveRDS(analysisD_data, 'data/analysisD.rds')
 
@@ -156,17 +146,7 @@ saveRDS(analysisD_data, 'data/analysisD.rds')
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 AnalysesData <- readRDS('data/AnalysesData.rds')
 analysisE_data <- AnalysesData %>%
-  select(SEQN,RIDRETH3,DMDEDUC2) %>%
-  filter( RIDRETH3 %in% c('Mexican American', 'Other Hispanic','Non-Hispanic White','Non-Hispanic Black','Non-Hispanic Asian'),DMDEDUC2 %in% c('Less than 9th grade','9-11th grade (Includes 12th grade with no diploma)','High school graduate/GED or equivalent','Some college or AA degree','College graduate or above'), complete.cases(RIDRETH3,DMDEDUC2))%>%
-  mutate(Race = factor(
-    RIDRETH3,
-    levels = c("Mexican American","Other Hispanic","Non-Hispanic White",    "Non-Hispanic Black","Non-Hispanic Asian"),
-    labels = c("Mexican","Hispanic", "White","Black", "Asian")),
-    Education = factor(
-      DMDEDUC2,
-      levels = c("Less than 9th grade","9-11th grade (Includes 12th grade with no diploma)", "High school graduate/GED or equivalent", "Some college or AA degree","College graduate or above"),
-      labels = c( "less_9th_grade","9_12th_grade", "High_school","Some_College", "College_graduate" )
-    ))%>% select(Race, Education)
+  select(Race, Education)
 saveRDS(analysisE_data, 'data/analysisE.rds')
 
 ```
@@ -188,9 +168,10 @@ variable_description <- tibble::tribble(
 variable_description |> kbl() |> kable_styling()
 ```
 
-### 3.2. Analytic Tibble  
+### 3.2. Analytic Tibble
 
 ```{r}
+AnalysesData <- readRDS('data/AnalysesData.rds')
 describe(AnalysesData[,-1])
 ```
 
@@ -454,7 +435,7 @@ print(boot_ci)
 
 ### **4.4. Conclusions**
 
-From the results of the Wilcoxon signed rank, We observe that The p-value is very small (0.009), which is far below the common significance level (α=0.05), which implies that the true median difference between Systolic blood pressure values for the 2 oscillometric readings is not equal to zero. And hence there is a statistically significant difference in the paired samples (BPXOSY1 and BPXOSY2). The bootstrap analysis further confirms that there is a significant difference between the paired samples. The mean difference is estimated to be between 0.0004 and 0.0026 with 95% confidence, which is above zero. This supports the conclusion that the two paired systolic blood pressure are statistically different.
+From the results of the Wilcoxon signed rank, We observe that The p-value is very small (0.004), which is far below the common significance level (α=0.05), which implies that the true median difference between Systolic blood pressure values for the 2 oscillometric readings is not equal to zero. And hence there is a statistically significant difference in the paired samples (BPXOSY1 and BPXOSY2). The bootstrap analysis further confirms that there is a significant difference between the paired samples. The mean difference is estimated to be between 0.0005 and 0.0028 with 95% confidence, which is above zero. This supports the conclusion that the two paired systolic blood pressure are statistically different.
 
 ## 5. Analysis B
 
@@ -624,7 +605,7 @@ I used the Boxplot/Violin plot to display the mean difference for better compari
 
 ### **5.4. Conclusions**
 
-The mean BMI for males was 29.571(sd = 6.631), and the mean BMI for females was 30.858 (sd = 8.493). The Wilcoxon rank-sum test indicated that there is a significant difference between mean BM1 between males and females (p \<0.05). Bootstrap resampling provided a confidence interval of \[-1.555, -1.014\], since the confidence bounds lie below 0 and are both negative indicate that the male group has a significantly lower mean than the female group.
+The mean BMI for males was 29.571(sd = 6.631), and the mean BMI for females was 30.858 (sd = 8.493). The Wilcoxon rank-sum test indicated that there is a significant difference between mean BM1 between males and females (p \<0.05). Bootstrap resampling provided a confidence interval of \[-1.607, -1.012\], since the confidence bounds lie below 0 and are both negative indicate that the male group has a significantly lower mean than the female group.
 
 ## 6. Analysis D
 
@@ -655,6 +636,7 @@ Refer to the codebook in section 3 for the description of the variable SMQ020 an
 #### **6.2.1. Data Summaries**
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
+analysisD_data <- readRDS('data/analysisD.rds')
 analysisD_data |>
 tabyl(Smoking,Obesity) |>
 adorn_totals("row") |>
@@ -685,7 +667,7 @@ ggplot(analysisD_data, aes(x = Smoking, fill = Obesity))+
         plot.title = element_text(face = "bold", hjust = 0.5, size =14))
 ```
 
-The analysis examined the association between smoking status (smoker vs. non-smoker) and obesity (obese vs. non-obese) using NHANES 2017-March 2020 data. The contingency table revealed a total of3217 smokers and 4515 non-smokers, 3390 obese people and 4342 non-obese people.
+The analysis examined the association between smoking status (smoker vs. non-smoker) and obesity (obese vs. non-obese) using NHANES 2017-March 2020 data. The contingency table revealed a total of2755 smokers and 3914 non-smokers, 2928 obese people and 3741 non-obese people.
 
 ##### **6.2.2.2. Mosaicplot from Contingency Table**
 
@@ -698,7 +680,7 @@ mosaicplot(
   
 ```
 
-Now, it’s helpful to show our 2 x 2 table. We see there were 1,442 (44.8%) of obese smokers among 3217 smokers and 1948 ( 43.1%) obese people among 4515 non-smokers.
+Now, it’s helpful to show our 2 x 2 table. We see there were 1,233 (44.8%) of obese smokers among 2755 smokers and 1948 ( 43.3%) obese people among 3914 non-smokers.
 
 ### 6.3. Main Analysis
 
@@ -719,11 +701,11 @@ Finally, we can obtain our estimate of relative risk, by pushing the relevant da
 twoby2(analysisD_data$Smoking, analysisD_data$Obesity, conf.level = 0.90)
 ```
 
-The risk of being Obese for smokers relative to non-smokers is 1.0389 (90% CI:0.9955,1.0843), which implies that smokers are 3.89% more likely to be obese compared to non-smokers and since the 90% confidence intervals includes 1, this result is not statistically significant.
+The risk of being Obese for smokers relative to non-smokers is 1.0335 (90% CI:0.9870,1.0821), which implies that smokers are 3.35% more likely to be obese compared to non-smokers and since the 90% confidence intervals includes 1, this result is not statistically significant.
 
-The Odds of being obese for smokers relative to non-smokers is 1.0705 (90% CI: 0.9918,1.1556). This implies that smokers have 7.05% higher odds of being obese compared to non-smokers. The confidence interval includes 1, indicating no statistical significance. The conditional maximum likelihood estimate odds ratio (MLE Odds Ratio) is 1.0705 (90%CI:0.9907,1.1568). This is consistent with the sample Odds Ratio, confirming that there is no statistically significant association.
+The Odds of being obese for smokers relative to non-smokers is 1.0606 (90% CI: 0.9767,1.1516). This implies that smokers have 6.06% higher odds of being obese compared to non-smokers. The confidence interval includes 1, indicating no statistical significance. The conditional maximum likelihood estimate odds ratio (MLE Odds Ratio) is 1.0605 (90%CI:0.9755,1.1531). This is consistent with the sample Odds Ratio, confirming that there is no statistically significant association.
 
-Additionally, the absolute difference in probability of being obese between smokers and non-smokers is 0.0168(90%CI: -0.002,0.0356), which highlights that smokers have a 1.68% higher probability of being obese compared to non-smokers. Further highlighting that there is no statistically significant association between smoking status and obesity as is also t indicated by exact p-value (p =0.1431) and asymptotic p-value (p=0.1424) being greater than 0.05 and the chi-square test (p=0.149).
+Additionally, the absolute difference in probability of being obese between smokers and non-smokers is 0.0145(90%CI: -0.0058,0.0348), which highlights that smokers have a 1.68% higher probability of being obese compared to non-smokers. Further highlighting that there is no statistically significant association between smoking status and obesity as is also t indicated by exact p-value (p =0.2404) and asymptotic p-value (p=0.2491) being greater than 0.05 and the chi-square test (p=0.149).
 
 ### 6.4. Conclusions.
 
@@ -774,7 +756,7 @@ adorn_pct_formatting() |>
 adorn_ns(position = "front")%>% kable()%>%kable_styling()
 ```
 
-It was observed that Mexican American had the least education with at least 26.4% having 9th grade or below whereas Non-Hispanic Asians were the most educated with at least 55.5% of all Non-Hispanic Asian being a college graduate. This can be clearly visualized on the bar plot and the mosaic plots below.
+It was observed that Mexican American had the least education with at least 24.6% having 9th grade or below whereas Non-Hispanic Asians were the most educated with at least 56.7% of all Non-Hispanic Asian being a college graduate. This can be clearly visualized on the bar plot and the mosaic plots below.
 
 #### 7.2.2. Visualization
 
