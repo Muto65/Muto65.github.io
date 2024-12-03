@@ -5362,10 +5362,10 @@ window.Quarto = {
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;SEQN&quot;</span>,  <span class="st">&quot;ID&quot;</span>,   <span class="st">&quot;Quant&quot;</span>,   <span class="st">&quot; Respondent sequence number&quot;</span>,</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Gender&quot;</span>,  <span class="st">&quot;Analysis B Variable&quot;</span>, <span class="st">&quot;Binary&quot;</span>, <span class="st">&quot;RIAGENDR&quot;</span>,</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RIDAGEYR&quot;</span>, <span class="st">&quot;Used to select Adult persons aged 21-79 years&quot;</span>,<span class="st">&quot;Quant&quot;</span>,<span class="st">&quot;RIDAGEYR&quot;</span>,   <span class="st">&quot;Education&quot;</span>,   <span class="st">&quot;Analysis E variable&quot;</span>,  <span class="st">&quot;X-cat&quot;</span> ,  <span class="st">&quot;DMDEDUC2&quot;</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Race/Ethnicity&quot;</span>, <span class="st">&quot;Analysis E variable&quot;</span>,  <span class="st">&quot;Categorical&quot;</span>, <span class="st">&quot;RIDRETH3 &quot;</span>, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Race/Ethnicity&quot;</span>, <span class="st">&quot;Analysis E variable&quot;</span>,  <span class="st">&quot;X-cat&quot;</span>, <span class="st">&quot;RIDRETH3 &quot;</span>, </span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;BPXOSY1 &quot;</span>,   <span class="st">&quot;Analysis A-variable&quot;</span>,<span class="st">&quot;Quant&quot;</span>, <span class="st">&quot;BPXOSY1&quot;</span>,</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;BPXOSY2&quot;</span>,<span class="st">&quot;Analysis A-variable&quot;</span>,  <span class="st">&quot;Quant&quot;</span>, <span class="st">&quot;BPXOSY2&quot;</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;BMI&quot;</span>,<span class="st">&quot;Analysis variable&quot;</span>, <span class="st">&quot;Quant&quot;</span>, <span class="st">&quot;BMXBMI&quot;</span>,<span class="st">&quot;Smoking&quot;</span>, <span class="st">&quot;Analysis D-variable&quot;</span>,  <span class="st">&quot;Binary&quot;</span>, <span class="st">&quot;SMQ020&quot;</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;BMI&quot;</span>,<span class="st">&quot;Analysis variable&quot;</span>, <span class="st">&quot;Quant&quot;</span>, <span class="st">&quot;BMXBMI&quot;</span>,<span class="st">&quot;Smoking&quot;</span>, <span class="st">&quot;Analysis D-variable&quot;</span>,  <span class="st">&quot;Binary&quot;</span>, <span class="st">&quot;SMQ020&quot;</span>,<span class="st">&quot;Obesity&quot;</span>, <span class="st">&quot;Analysis Variable&quot;</span>, <span class="st">&quot;Binary&quot;</span>,<span class="st">&quot;N/A&quot;</span>)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>variable_description <span class="sc">|&gt;</span> <span class="fu">kbl</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
@@ -5405,7 +5405,7 @@ window.Quarto = {
 <tr class="odd">
 <td style="text-align: left;">Race/Ethnicity</td>
 <td style="text-align: left;">Analysis E variable</td>
-<td style="text-align: left;">Categorical</td>
+<td style="text-align: left;">X-cat</td>
 <td style="text-align: left;">RIDRETH3</td>
 </tr>
 <tr class="even">
@@ -5431,6 +5431,12 @@ window.Quarto = {
 <td style="text-align: left;">Analysis D-variable</td>
 <td style="text-align: left;">Binary</td>
 <td style="text-align: left;">SMQ020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesity</td>
+<td style="text-align: left;">Analysis Variable</td>
+<td style="text-align: left;">Binary</td>
+<td style="text-align: left;">N/A</td>
 </tr>
 </tbody>
 </table>

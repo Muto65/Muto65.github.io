@@ -161,10 +161,10 @@ variable_description <- tibble::tribble(
   "SEQN",  "ID",   "Quant",   " Respondent sequence number",
   "Gender",  "Analysis B Variable", "Binary", "RIAGENDR",
   "RIDAGEYR", "Used to select Adult persons aged 21-79 years","Quant","RIDAGEYR",   "Education",   "Analysis E variable",  "X-cat" ,  "DMDEDUC2",
-  "Race/Ethnicity", "Analysis E variable",  "Categorical", "RIDRETH3 ", 
+  "Race/Ethnicity", "Analysis E variable",  "X-cat", "RIDRETH3 ", 
   "BPXOSY1 ",   "Analysis A-variable","Quant", "BPXOSY1",
   "BPXOSY2","Analysis A-variable",  "Quant", "BPXOSY2",
-  "BMI","Analysis variable", "Quant", "BMXBMI","Smoking", "Analysis D-variable",  "Binary", "SMQ020")
+  "BMI","Analysis variable", "Quant", "BMXBMI","Smoking", "Analysis D-variable",  "Binary", "SMQ020","Obesity", "Analysis Variable", "Binary","N/A")
 variable_description |> kbl() |> kable_styling()
 ```
 
