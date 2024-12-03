@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Bosco Bakwatanisa">
-<meta name="dcterms.date" content="2024-12-02">
+<meta name="dcterms.date" content="2024-12-03">
 
 <title>Exploring Sociodemographic and Health Associations in the NHANES 2017–March 2020 Dataset: Insights from Multivariable and Comparative Analyses – Bosco Bakwatanisa</title>
 <style>
@@ -5206,7 +5206,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-12-02</p>
+      <p class="date">2024-12-03</p>
     </div>
   </div>
   
@@ -5462,19 +5462,11 @@ window.Quarto = {
 <section id="analytic-tibble" class="level3">
 <h3 class="anchored" data-anchor-id="analytic-tibble">3.2. Analytic Tibble</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(AnalysesData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(AnalysesData[,<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>AnalysesData 
+<pre><code>AnalysesData[, -1] 
 
- 9  Variables      8428  Observations
---------------------------------------------------------------------------------
-SEQN 
-       n  missing distinct     Info     Mean      Gmd      .05      .10 
-    8428        0     8428        1   117076     5185   110109   110898 
-     .25      .50      .75      .90      .95 
-  113186   117047   120983   123290   124057 
-
-lowest : 109266 109267 109271 109273 109274, highest: 124815 124817 124818 124821 124822
+ 8  Variables      8428  Observations
 --------------------------------------------------------------------------------
 RIAGENDR 
        n  missing distinct 

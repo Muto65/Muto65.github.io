@@ -191,7 +191,7 @@ variable_description |> kbl() |> kable_styling()
 ### 3.2. Analytic Tibble  
 
 ```{r}
-describe(AnalysesData)
+describe(AnalysesData[,-1])
 ```
 
 ## **4. Analysis A**
