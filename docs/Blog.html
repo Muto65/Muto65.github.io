@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Bosco Bakwatanisa">
-<meta name="dcterms.date" content="2024-11-30">
+<meta name="dcterms.date" content="2024-12-03">
 
-<title>Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard – Bosco Bakwatanisa</title>
+<title>Exploring Data Insights: Exploring assiciations between Sociodemographic risk factors and Health Outcome through an Interactive Dashboard – Bosco Bakwatanisa</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,32 +160,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#study-1-blood-pressure-and-health-insights" id="toc-study-1-blood-pressure-and-health-insights" class="nav-link active" data-scroll-target="#study-1-blood-pressure-and-health-insights">Study 1: Blood Pressure and Health Insights</a></li>
-  <li><a href="#research-focus" id="toc-research-focus" class="nav-link" data-scroll-target="#research-focus">Research Focus</a></li>
-  <li><a href="#steps-undertaken" id="toc-steps-undertaken" class="nav-link" data-scroll-target="#steps-undertaken">Steps Undertaken</a>
+  <li><a href="#conceptualizing-the-dashboard" id="toc-conceptualizing-the-dashboard" class="nav-link active" data-scroll-target="#conceptualizing-the-dashboard">Conceptualizing the Dashboard</a>
   <ul class="collapse">
-  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning:</a></li>
-  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics:</a></li>
-  <li><a href="#statistical-testing" id="toc-statistical-testing" class="nav-link" data-scroll-target="#statistical-testing">Statistical Testing:</a></li>
-  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings:</a></li>
+  <li><a href="#hypotheses-tested" id="toc-hypotheses-tested" class="nav-link" data-scroll-target="#hypotheses-tested">Hypotheses Tested</a></li>
+  <li><a href="#analysis-that-a-user-can-perform" id="toc-analysis-that-a-user-can-perform" class="nav-link" data-scroll-target="#analysis-that-a-user-can-perform">Analysis that a user can perform</a></li>
+  <li><a href="#dashboard-design-steps" id="toc-dashboard-design-steps" class="nav-link" data-scroll-target="#dashboard-design-steps">Dashboard Design steps</a></li>
   </ul></li>
-  <li><a href="#study-2-bmi-smoking-and-education-insights" id="toc-study-2-bmi-smoking-and-education-insights" class="nav-link" data-scroll-target="#study-2-bmi-smoking-and-education-insights">Study 2: BMI, Smoking, and Education Insights</a>
-  <ul class="collapse">
-  <li><a href="#research-focus-1" id="toc-research-focus-1" class="nav-link" data-scroll-target="#research-focus-1">Research Focus</a></li>
-  <li><a href="#steps-undertaken-1" id="toc-steps-undertaken-1" class="nav-link" data-scroll-target="#steps-undertaken-1">Steps Undertaken</a>
-  <ul class="collapse">
-  <li><a href="#data-cleaning-1" id="toc-data-cleaning-1" class="nav-link" data-scroll-target="#data-cleaning-1">Data Cleaning:</a></li>
-  <li><a href="#key-findings-1" id="toc-key-findings-1" class="nav-link" data-scroll-target="#key-findings-1">Key Findings:</a></li>
-  <li><a href="#interactive-dashboard-bringing-the-analyses-to-life-purpose" id="toc-interactive-dashboard-bringing-the-analyses-to-life-purpose" class="nav-link" data-scroll-target="#interactive-dashboard-bringing-the-analyses-to-life-purpose">Interactive Dashboard: Bringing the Analyses to Life Purpose</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#building-the-dashboard-tools-used" id="toc-building-the-dashboard-tools-used" class="nav-link" data-scroll-target="#building-the-dashboard-tools-used">Building the Dashboard Tools Used:</a>
-  <ul class="collapse">
-  <li><a href="#dynamic-visualizations" id="toc-dynamic-visualizations" class="nav-link" data-scroll-target="#dynamic-visualizations">Dynamic Visualizations:</a></li>
-  <li><a href="#summary-tables" id="toc-summary-tables" class="nav-link" data-scroll-target="#summary-tables">Summary Tables:</a></li>
-  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment:</a></li>
-  </ul></li>
-  <li><a href="#bringing-it-all-together" id="toc-bringing-it-all-together" class="nav-link" data-scroll-target="#bringing-it-all-together">Bringing It All Together</a></li>
   </ul>
 </nav>
     </div>
@@ -194,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exploring Data Insights: Conducting Study 1, Study 2, and Building an Interactive Dashboard</h1>
+<h1 class="title">Exploring Data Insights: Exploring assiciations between Sociodemographic risk factors and Health Outcome through an Interactive Dashboard</h1>
   <div class="quarto-categories">
     <div class="quarto-category">[Blog]</div>
   </div>
@@ -214,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-11-30</p>
+      <p class="date">2024-12-03</p>
     </div>
   </div>
   
@@ -226,94 +206,44 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data analysis often goes beyond just crunching numbers—it’s a story of discovery and visualization. This blog dives into Study 1, Study 2, and the development of an interactive dashboard, offering a window into how structured analyses and tools like Quarto and Shiny brought data to life.</p>
-<section id="study-1-blood-pressure-and-health-insights" class="level2">
-<h2 class="anchored" data-anchor-id="study-1-blood-pressure-and-health-insights">Study 1: Blood Pressure and Health Insights</h2>
+<p>Welcome to my blog! This post introduces the <strong>Study1 Dashboard</strong>, a comprehensive and interactive tool designed to explore hypotheses, visualize data, and test statistical models. This dashboard was inspired by a desire to simplify data analysis while making the results accessible to both experts and non-experts.</p>
+<p>In this post, I’ll walk you through the process of building the dashboard, the hypotheses tested, the types of analyses performed, and the key findings. Along the way, I’ll share my reflections and challenges faced during the development processStudy 1: Blood Pressure and Health Insights</p>
+<section id="conceptualizing-the-dashboard" class="level2">
+<h2 class="anchored" data-anchor-id="conceptualizing-the-dashboard">Conceptualizing the Dashboard</h2>
+<p>The goal was to create an interactive environment where users could dynamically filter data, visualize relationships, and view statistical results for specific hypotheses. The dataset used came from the 2018-March 2020 NHANES survey, focusing on metrics such as <strong>blood pressure</strong>, <strong>body mass index (BMI)</strong>, <strong>smoking status</strong>, <strong>Race</strong>, <strong>Gender</strong> and <strong>education levels</strong>.</p>
+<section id="hypotheses-tested" class="level3">
+<h3 class="anchored" data-anchor-id="hypotheses-tested">Hypotheses Tested</h3>
+<p>Is there a significant difference between the first and second systolic blood pressure measurements? How does BMI vary by gender? Is there an association between smoking status and obesity? What is the relationship between race/ethnicity and education levels?</p>
 </section>
-<section id="research-focus" class="level2">
-<h2 class="anchored" data-anchor-id="research-focus">Research Focus</h2>
-<p>Study 1 explored systolic blood pressure readings to uncover variability between paired measurements. Using data from the NHANES 2017–March 2020 dataset, the aim was to identify trends, outliers, and potential biases between two oscillometric readings.</p>
+<section id="analysis-that-a-user-can-perform" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-that-a-user-can-perform">Analysis that a user can perform</h3>
+<section id="blood-pressure-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="blood-pressure-analysis">Blood Pressure Analysis</h4>
+<p>Using the paired systolic blood pressure readings, we tested for differences using Wilcoxon Signed-Rank Test, a non-parametric method, given the lack of normality. Scatter plots and Paired boxplots were used to compare the first and secend systolic blood pressure and observed significant differences, indicating high variability in measurements and users can visualize the statistical summeries using the drop down from our interactive dashboard to visualize the data sumarries, association plots and statistical test results.</p>
 </section>
-<section id="steps-undertaken" class="level2">
-<h2 class="anchored" data-anchor-id="steps-undertaken">Steps Undertaken</h2>
-<section id="data-cleaning" class="level3">
-<h3 class="anchored" data-anchor-id="data-cleaning">Data Cleaning:</h3>
-<p>The dataset was filtered to ensure valid readings for both BPXOSY1 (first reading) and BPXOSY2 (second reading). Missing values and extreme outliers were removed.</p>
+<section id="bmi-and-gender-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="bmi-and-gender-analysis">BMI and Gender Analysis</h4>
+<p>We tested whether BMI differs significantly between males and females using Wilcoxon Rank-Sum Test, users can select a arrange of BMI values ranging from 15 to 50 and the look at the statistical variations within this range and as well as assessing the differences in mean BMI between the two genders, Users can also interactively visualize the data distribution changes using Boxplots, density plots from the dashboard tab.A key finding that one can observe is that Females had a statistically significantly higher average BMI than males.</p>
 </section>
-<section id="descriptive-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics:</h3>
-<p>Key metrics such as mean, standard deviation, and interquartile range were calculated. Histograms and boxplots provided a clear visualization of distribution differences.</p>
+<section id="smoking-and-obesity" class="level4">
+<h4 class="anchored" data-anchor-id="smoking-and-obesity">Smoking and Obesity</h4>
+<p>Using our interactive dashboard, user can also interrogate the relationship Smoking Status and obesity by using the drop down, and explore data summaries, test statistic results, plots. A key findings was that we did not observe a statistically significant association between smoking and obesity.</p>
 </section>
-<section id="statistical-testing" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-testing">Statistical Testing:</h3>
-<p>A Wilcoxon signed-rank test assessed if the differences between BPXOSY1 and BPXOSY2 were statistically significant. Bootstrap confidence intervals validated the results.</p>
+<section id="race-and-education-levels" class="level4">
+<h4 class="anchored" data-anchor-id="race-and-education-levels">Race and Education Levels</h4>
+<p>To investigate relationships between race and education levels, we used Chi-Square Test of Independence and evaluated whether these variables were dependent.Through our interactive dashboard, one can explore the education distribution across the race/ethnicity using Bar plots for example, we can compute data summaries for each education level within the test dataset. A notable finding is that there were statistically significant differences for example, non-Hispanic Asians were overrepresented at higher education levels and Mexican Americans were overrepresented at lower education levels. #### Results and Conclusions Our Interactive Dashboard provided actionable insights across multiple hypotheses. The findings align with broader public health trends, such as disparities in education levels and gender-based differences in BMI. However, certain analyses (e.g., smoking and obesity) suggested null results, encouraging further exploration with additional confounders.</p>
 </section>
-<section id="key-findings" class="level3">
-<h3 class="anchored" data-anchor-id="key-findings">Key Findings:</h3>
-<p>Statistically significant differences between the two readings were observed, likely reflecting measurement variability or physiological changes during sessions.</p>
-</section>
-</section>
-<section id="study-2-bmi-smoking-and-education-insights" class="level1">
-<h1>Study 2: BMI, Smoking, and Education Insights</h1>
-<section id="research-focus-1" class="level2">
-<h2 class="anchored" data-anchor-id="research-focus-1">Research Focus</h2>
-<p>Study 2 broadened the scope, investigating relationships between:</p>
-<p>Body Mass Index (BMI) by Gender Smoking Status and Obesity Race and Education Levels</p>
-</section>
-<section id="steps-undertaken-1" class="level2">
-<h2 class="anchored" data-anchor-id="steps-undertaken-1">Steps Undertaken</h2>
-<section id="data-cleaning-1" class="level3">
-<h3 class="anchored" data-anchor-id="data-cleaning-1">Data Cleaning:</h3>
-<p>Each variable of interest (e.g., BMI, Smoking, Education) was filtered to ensure completeness. BMI thresholds categorized participants as obese or non-obese, while education levels were stratified across racial groups.</p>
-<section id="visualization-and-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="visualization-and-analysis">Visualization and Analysis:</h4>
-<p>Gender vs.&nbsp;BMI:</p>
-<p>Boxplots and density plots highlighted BMI distributions across genders. A Wilcoxon rank-sum test revealed statistically significant differences between male and female BMI. Smoking and Obesity: Contingency tables were constructed for smoking status and obesity categories. A Chi-square test measured the association, with mosaic plots visualizing trends. Race and Education: A Chi-square test examined relationships between racial groups and educational attainment. Heatmaps of standardized residuals emphasized over- and under-representation in education levels across racial categories.</p>
+<section id="reflections" class="level4">
+<h4 class="anchored" data-anchor-id="reflections">Reflections</h4>
+<p>This was both a technical and intellectual challenge. It provided me with an opportunity to integrate statistical rigor with user-centric design. As a next step, I plan to extend the dashboard to include predictive modeling and longitudinal data analysis.</p>
 </section>
 </section>
-<section id="key-findings-1" class="level3">
-<h3 class="anchored" data-anchor-id="key-findings-1">Key Findings:</h3>
-<p>Significant gender differences in BMI were detected, with females having higher average BMI. No strong statistical association was found between smoking status and obesity. Racial disparities in education attainment were evident, with Non-Hispanic Asians being overrepresented in higher education.</p>
-</section>
-<section id="interactive-dashboard-bringing-the-analyses-to-life-purpose" class="level3">
-<h3 class="anchored" data-anchor-id="interactive-dashboard-bringing-the-analyses-to-life-purpose">Interactive Dashboard: Bringing the Analyses to Life Purpose</h3>
-<p>The dashboard provides an interactive interface for exploring the results from Study 1 and Study 2, enabling stakeholders to visualize trends dynamically and tailor insights to their needs.</p>
-</section>
-</section>
-</section>
-<section id="building-the-dashboard-tools-used" class="level1">
-<h1>Building the Dashboard Tools Used:</h1>
-<p>Shiny for interactivity. R for backend data manipulation and visualization. Quarto for embedding the dashboard into a website. Dashboard Features:</p>
-<p>Analysis Selection: Users choose between Blood Pressure, BMI, Smoking vs.&nbsp;Obesity, or Race vs.&nbsp;Education analyses.</p>
-<section id="dynamic-visualizations" class="level3">
-<h3 class="anchored" data-anchor-id="dynamic-visualizations">Dynamic Visualizations:</h3>
-<p>Scatter plots, boxplots, and bar charts update based on user inputs (e.g., gender, BMI ranges, race filters).</p>
-</section>
-<section id="summary-tables" class="level3">
-<h3 class="anchored" data-anchor-id="summary-tables">Summary Tables:</h3>
-<p>Key statistics for each analysis are displayed in a tabular format. Statistical Results: Outputs from tests like Wilcoxon rank-sum or Chi-square tests are presented for deeper insights.</p>
-</section>
-<section id="deployment" class="level2">
-<h2 class="anchored" data-anchor-id="deployment">Deployment:</h2>
-<p>The app was deployed using ShinyApps.io. The interactive dashboard was then embedded into a Quarto website hosted on GitHub Pages.</p>
-<p>Technical Challenges and Solutions:</p>
-<ul>
-<li>Managing dependencies: Ensured all required libraries and datasets were properly installed and loaded.</li>
-</ul>
-<!-- -->
-<ul>
-<li><p>Visual consistency: Fine-tuned plot dimensions and styling for a professional appearance.</p></li>
-<li><p>Embedding in Quarto: Used an iframe to integrate the Shiny app seamlessly into the website.</p></li>
-</ul>
-</section>
-</section>
-<section id="bringing-it-all-together" class="level1">
-<h1>Bringing It All Together</h1>
-<p>By combining the rigor of statistical analyses with the flexibility of interactive dashboards, this project illustrates the power of data storytelling. Study 1 and Study 2 delved into vital health metrics, revealing significant patterns and relationships. The dashboard turned these findings into an engaging, user-centric tool that bridges the gap between raw data and actionable insights.</p>
-<p>Whether you’re an academic, policymaker, or health advocate, the Study 1 Dashboard invites you to explore and understand the data that shapes our health narratives. Visit the interactive dashboard or explore the full analyses on the Quarto website.</p>
-<p>This blog serves as a testament to the role of data science in unraveling complex stories and making them accessible to everyone. Stay tuned for future updates and explorations!</p>
+<section id="dashboard-design-steps" class="level3">
+<h3 class="anchored" data-anchor-id="dashboard-design-steps">Dashboard Design steps</h3>
+<p>The dashboard was built using Shiny in R and deployed using shinyapp.io. It was designed in such away that it enables users to customize analyses using dropdwons and toggles to filter subsets of data for the analyses they are interested in. Each hypothesis was supported by intuitive visualizations including scatter plots, bar charts, and boxplots, with test results such as p-values and confidence intervals and data summaries displayed in real-time. The dashboard was then integrated into my Quarto-based website hosted on Github pages.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

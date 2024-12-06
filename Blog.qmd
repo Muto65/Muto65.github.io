@@ -39,7 +39,8 @@ A key findings was that we did not observe a statistically significant associati
 
 #### Race and Education Levels
 To investigate relationships between race and education levels, we used Chi-Square Test of Independence and evaluated whether these variables were dependent.Through our interactive dashboard, one can explore the education distribution across the race/ethnicity using Bar plots for example, we can compute data summaries for each education level within the test dataset. 
-A notable finding is that there were statistically significant differences for example, non-Hispanic Asians were overrepresented at higher education levels and Mexican Americans were overrepresented at lower education levels. 
+A notable finding is that there were statistically significant differences for example, non-Hispanic Asians were overrepresented at higher education levels and Mexican Americans were overrepresented at lower education levels.
+
 #### Results and Conclusions
 Our Interactive Dashboard provided actionable insights across multiple hypotheses. The findings align with broader public health trends, such as disparities in education levels and gender-based differences in BMI. However, certain analyses (e.g., smoking and obesity) suggested null results, encouraging further exploration with additional confounders.
 
