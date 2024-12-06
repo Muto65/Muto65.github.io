@@ -65,7 +65,7 @@ Data is obtained from the 2017-March 2020 survey data through the nhanesA packag
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 # pull in data from P_BPXO from NHANES and save it
 
-BMX_raw <- nhanes("P_BMX")|> tibble() 
+BMX_raw <- nhanes("P_BMXO")|> tibble() 
 saveRDS(BMX_raw, file = "data/P_BMX.rds")
 demo_raw <- nhanes('P_DEMO') |> tibble()
 saveRDS(demo_raw, file = "data/P_DEMO.rds")
