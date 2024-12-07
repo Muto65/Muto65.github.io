@@ -225,7 +225,7 @@ In order to have a clear understanding of the data variables in terms data distr
   geom_histogram(fill = "slateblue", col = "white",
                  bins = 20) + 
   labs(title = "Systolic BP First Reading in `NHANES`",
-       x = "Systolic BP First Reading (mm Hg)")+
+       x = "Systolic BP First Reading (mm Hg)")+  theme_classic(base_size = 10) +
    theme(
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -236,7 +236,7 @@ p2 <-ggplot(analysisA_data, aes(x = BPXOSY2)) +
   geom_histogram(fill = "orange", col = "white",
                  bins = 20) + 
   labs(title = "Systolic BP Second Reading in `NHANES`",
-       x = "Systolic BP Second Reading (mm Hg)")+
+       x = "Systolic BP Second Reading (mm Hg)")+  theme_classic(base_size = 10) +
   theme(
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -247,7 +247,7 @@ p2 <-ggplot(analysisA_data, aes(x = BPXOSY2)) +
   geom_boxplot(fill = "slateblue", outlier.size = 2,
                outlier.color = "slateblue") +
   #coord_flip() + 
-  labs(y = "Systolic BP First Reading(`BPXOSY1`)")+
+  labs(y = "Systolic BP First Reading(`BPXOSY1`)")+  theme_classic(base_size = 10) +
    theme(
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -259,7 +259,7 @@ p2 <-ggplot(analysisA_data, aes(x = BPXOSY2)) +
   geom_boxplot(fill = "orange", outlier.size = 2,
                outlier.color = "orange") +
   #coord_flip() + 
-  labs(y = "Systolic BP Second Reading (`BPXOSY2`)")+
+  labs(y = "Systolic BP Second Reading (`BPXOSY2`)")+  theme_classic(base_size = 10) +
    theme(
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -271,14 +271,14 @@ ggsave("Histogram_and_Boxplots.png")
 
 ```
 
-From the visualizations above, the data
+From the visualizations above, the data was not normally distributed and therefore, I explored using log-transformation to normalize our data distribution and below are histograms for the log-transformed data.
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6}
 
 p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1))) +
   geom_histogram(fill = "slateblue", col = "white",
                  bins = 20) + 
-  labs(title = "LogTransformed-Systolic BP First Reading in `NHANES`",
+  labs(title = "LogTransformed-SBP 1stReading in`NHANES`",
        x = "log(Systolic BP First Reading (mm Hg))")+
    theme_classic(base_size = 10) +
   theme(
@@ -290,7 +290,7 @@ p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1))) +
 p2 <-ggplot(analysisA_data, aes(x = log(BPXOSY2))) +
   geom_histogram(fill = "orange", col = "white",
                  bins = 20) + 
-  labs(title = "Systolic BP Second Reading in `NHANES`",
+  labs(title = "LogTransformedSBP 2nd-Reading in`NHANES`",
        x = "log(Systolic BP Second Reading(mm Hg))")+
    theme_classic(base_size = 10) +
   theme(
@@ -365,7 +365,7 @@ From the Q-Q plot we see that our data is still right skewed even after log-tran
 
 ##### 4.2.1.3 Scatter Plot Paired Sample Box plots
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6, fig.width=8}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6}
 
 # Scatter plot of paired data
 p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1), y = log(BPXOSY2))) +
@@ -373,7 +373,7 @@ p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1), y = log(BPXOSY2))) +
   geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
   labs(title = "SBP(1st Reading vs 2nd Reading)",
        x = "BPXOSY1 (First Reading)", y = "BPXOSY2 (Second Reading)") +
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 10) +
   theme(
         axis.text = element_text(face = "bold",size = 9),
         axis.title.y = element_text(face = "bold", size = 9),
@@ -474,7 +474,7 @@ analysisB_data %>%
     SD_BMI = sd(BMI),
     IQR_BMI = IQR(BMI),
     n = n()
-  )%>% kable(digits = 3)%>% kable_styling()
+  )%>% kable(digits = 3)%>% kable_styling(bootstrap_options = "striped", full_width = F)
 
 ```
 
@@ -548,7 +548,7 @@ From the histogram and the Q-Q Normal plot, we observe that Body Mass index is r
 set.seed(112724)
 #perform Wilcoxon Rank-sum test
 wilcox_test = wilcox.test(BMI ~ Gender, data = analysisB_data)
-glance(wilcox_test)%>% kable(digits = 3)%>% kable_styling()
+glance(wilcox_test)%>% kable(digits = 3)%>% kable_styling(bootstrap_options = "striped", full_width = F)
 
 ```
 
