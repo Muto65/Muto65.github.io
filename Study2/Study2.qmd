@@ -63,9 +63,7 @@ The key predictor for this analysis is Gender. Quite often gender physiological 
 Data is obtained from the 2017-March 2020 survey data through the nhanesA package, This package allows you to access data from demographics data, experimental data, Questionnaires among others.How we gather all the data used on the analysis is shown in the code section below.
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
-# pull in data from P_BPXO from NHANES and save it
-
-BMX_raw <- nhanes("P_BMXO")|> tibble() 
+BMX_raw <- nhanes("P_BMX")|> tibble() 
 saveRDS(BMX_raw, file = "data/P_BMX.rds")
 demo_raw <- nhanes('P_DEMO') |> tibble()
 saveRDS(demo_raw, file = "data/P_DEMO.rds")
@@ -73,22 +71,22 @@ SMQ_raw <- nhanes("P_SMQ")|> tibble()
 saveRDS(SMQ_raw, file = 'data/SMQ.rds')
 demo_raw <- readRDS("data/P_DEMO.rds")
 BMX_raw<- readRDS("data/P_BMX.rds")
-DEMO <- demo_raw%>%
+DEMO <- demo_raw %>%
   select(SEQN,RIDSTATR,RIAGENDR,RIDAGEYR,RIDRETH3 )
 
 BMXBMI <- BMX_raw%>%select(SEQN,BMXBMI)
 analysis_tibble<- left_join(DEMO, BMXBMI, by = "SEQN")
 SMQ_raw <- readRDS("data/SMQ.rds")
-smoke_data <- SMQ_raw%>% select(SEQN,SMQ020)
+smoke_data <- SMQ_raw %>% select(SEQN,SMQ020)
 Analysis2Data <- left_join(analysis_tibble, smoke_data, by = "SEQN")
 
-analysis2Data <- Analysis2Data%>% filter( RIDAGEYR >=21 &  RIDAGEYR<= 79)%>%
-  rename(BMI = BMXBMI, Age = RIDAGEYR, Gender =RIAGENDR, Race = RIDRETH3, Smoking = SMQ020 )%>%
+analysis2Data <- Analysis2Data %>% filter( RIDAGEYR >=21 &  RIDAGEYR<= 79) %>%
+  rename(BMI = BMXBMI, Age = RIDAGEYR, Gender =RIAGENDR, Race = RIDRETH3, Smoking = SMQ020) %>%
   mutate(Race = factor(
     Race,
     levels = c("Mexican American","Other Hispanic","Non-Hispanic White",    "Non-Hispanic Black","Non-Hispanic Asian"),
-    labels = c("Mexican","Hispanic", "White","Black", "Asian")),Gender = ifelse(Gender == "Male", 1,2))%>%filter(BMI > 0)%>%filter(Smoking %in% c('Yes', 'No')) %>%  mutate(
-    Smoking = ifelse(Smoking =="Yes","Smoker","Non_Smoker"))%>% select(SEQN, Age, Gender, Race, Smoking, BMI)%>% mutate(Gender = factor(
+    labels = c("Mexican","Hispanic", "White","Black", "Asian")),Gender = ifelse(Gender == "Male", 1,2))%>%filter(BMI > 0) %>% filter(Smoking %in% c('Yes', 'No')) %>%  mutate(
+    Smoking = ifelse(Smoking =="Yes","Smoker","Non_Smoker")) %>% select(SEQN, Age, Gender, Race, Smoking, BMI)%>% mutate(Gender = factor(
       Gender, levels = c(1,2),labels =c("Male","Female")),Smoking = factor(Smoking,levels = c("Smoker","Non_Smoker"), labels =c("Smoker","Non_Smoker")
     ))
 
