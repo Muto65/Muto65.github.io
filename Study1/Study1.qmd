@@ -47,10 +47,11 @@ knitr::opts_chunk$set(comment=NA)
 
 I downloaded the Blood Pressure data and Demographics data from 2017-March 2020 NHANES data
 
-```{r echo=TRUE, warning=FALSE, message=FALSE}
+
+<!--```{r echo=TRUE, warning=FALSE, message=FALSE}
 # pull in data from P_BPXO from NHANES and save it
 
- bp_raw <- nhanes('P_BPXO') |> tibble()
+bp_raw <- nhanes('P_BPX') |> tibble()
 demo_raw <- nhanes('P_DEMO') |> tibble()
 saveRDS(demo_raw, file = "data/P_DEMO.rds")
 saveRDS(bp_raw, file = "data/P_BPXO.rds")
@@ -93,7 +94,7 @@ analysisTibble <- AnalysisData%>% select(SEQN, RIDAGEYR,RIAGENDR, BMXBMI,RIDRETH
 saveRDS(analysisTibble, file = 'data/AnalysesData.rds')
 
 ```
-
+-->
 #### 2. 1.1. Analysis A Data
 
 Here, I zeroed down to the Systolic Blood Pressure measurements for sessions 1 and 2 as the paired outcome variables for analysis A. This was co-selected with the SEQN columns just to ensure that systolic blood pressure is paired for each individual in the chosen population.
@@ -165,7 +166,7 @@ variable_description <- tibble::tribble(
   "BPXOSY1 ",   "Analysis A-variable","Quant", "BPXOSY1",
   "BPXOSY2","Analysis A-variable",  "Quant", "BPXOSY2",
   "BMI","Analysis variable", "Quant", "BMXBMI","Smoking", "Analysis D-variable",  "Binary", "SMQ020","Obesity", "Analysis Variable", "Binary","N/A")
-variable_description |> kbl() |> kable_styling()
+variable_description |> kbl() |> kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 ### 3.2. Analytic Tibble
@@ -218,7 +219,7 @@ In order to have a clear understanding of the data variables in terms data distr
 
 ##### **4.2.1.1. Histogram and Boxplot**
 
-```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.height=9}
+```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.height=6}
 
  p1 <- ggplot(analysisA_data, aes(x = BPXOSY1)) +
   geom_histogram(fill = "slateblue", col = "white",
@@ -272,7 +273,7 @@ ggsave("Histogram_and_Boxplots.png")
 
 From the visualizations above, the data
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=9}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6}
 
 p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1))) +
   geom_histogram(fill = "slateblue", col = "white",
@@ -331,7 +332,7 @@ ggsave("LogTransHistogram_and_Boxplots.png")
 
 ##### 4.2.1.2. Q-Q Plot
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.height=7}
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.height=6}
 
 p1 <-ggplot(analysisA_data, aes(sample = log(BPXOSY1))) +
   geom_qq(col = "slateblue") + 
@@ -364,7 +365,7 @@ From the Q-Q plot we see that our data is still right skewed even after log-tran
 
 ##### 4.2.1.3 Scatter Plot Paired Sample Box plots
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6, fig.width=9}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6, fig.width=8}
 
 # Scatter plot of paired data
 p1 <-ggplot(analysisA_data, aes(x = log(BPXOSY1), y = log(BPXOSY2))) +
@@ -483,7 +484,7 @@ analysisB_data %>%
 
 Here, I use a histogram, Q-Q plot, Boxplot, and the density plot to visualize the data distribution and assessment for normality.
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=8}
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6}
 
 p1 <-ggplot(analysisB_data, aes(x = BMI)) +
   geom_histogram(fill = "slateblue", col = "white",
@@ -502,7 +503,7 @@ p2 <- ggplot(analysisB_data, aes(sample = BMI)) +
   geom_qq_line(col = "magenta") + 
   theme(aspect.ratio = 1) + 
   labs(title = "Normal Q-Q: NHANES BMI")+
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 10) +
   theme(legend.position = "none",
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -514,7 +515,7 @@ p3 <-ggplot(analysisB_data, aes(x = Gender, y = BMI, fill = Gender)) +
   labs(title = "Comparison of BMI by Gender",
        x = "Gender",
        y = "Body Mass Index (BMI)") +
-theme_classic(base_size = 12) +
+theme_classic(base_size = 10) +
   theme(legend.position = "left",
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -526,7 +527,7 @@ p4 <-ggplot(analysisB_data, aes(x = BMI, fill = Gender)) +
   labs(title = "BMI Distribution by Gender",
        x = "Body Mass Index (BMI)",
        y = "Density") +
- theme_classic(base_size = 12) +
+ theme_classic(base_size = 10) +
   theme(legend.position = "left",
         axis.text = element_text(face = "bold",size = 10),
         axis.title.y = element_text(face = "bold", size = 10),
@@ -581,7 +582,7 @@ print(boot_ci)
 
 I used the Boxplot/Violin plot to display the mean difference for better comparison
 
-```{r echo=TRUE, warning=FALSE, message=FALSE ,fig.height=7}
+```{r echo=TRUE, warning=FALSE, message=FALSE ,fig.height=6}
 
   ggplot(analysisB_data, aes(x = Gender, y = BMI, fill = Gender)) +
   geom_violin(trim = FALSE, alpha = 0.4, color = "coral", lwd = 0.5) + 
@@ -593,7 +594,7 @@ I used the Boxplot/Violin plot to display the mean difference for better compari
        caption = "Data Source: NHANES 2017-March 2020",
        x = "Gender", 
        y = "Body Mass Index (BMI)") +
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 10) +
   theme(legend.position = "none",
         axis.text = element_text(face = "bold",size = 12),
         axis.title.y = element_text(face = "bold", size = 12),
@@ -642,14 +643,14 @@ tabyl(Smoking,Obesity) |>
 adorn_totals("row") |>
 adorn_percentages("row") |>
 adorn_pct_formatting() |>
-adorn_ns(position = "front")%>% kable()%>%kable_styling()
+adorn_ns(position = "front")%>% kable()%>%kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 #### **6.2.2. Data Visualization**
 
 ##### 6.2.2.1. Bar plot
 
-```{r echo=TRUE, warning=FALSE, message=FALSE,fig.height=7}
+```{r echo=TRUE, warning=FALSE, message=FALSE,fig.height=6}
 analysisD_data <- readRDS("data/analysisD.rds")
 ggplot(analysisD_data, aes(x = Smoking, fill = Obesity))+
   geom_bar(position = "dodge")+
@@ -659,7 +660,7 @@ ggplot(analysisD_data, aes(x = Smoking, fill = Obesity))+
     y = "Count",
     fill = "Obesity"
   )+
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 10) +
   theme(legend.position = "right",
         axis.title.y = element_text(face = "bold", size = 12),
         axis.text = element_text(face ="bold", size = 12),
@@ -689,7 +690,7 @@ Now, it’s helpful to show our 2 x 2 table. We see there were 1,233 (44.8%) of 
 ```{r echo=TRUE,, warning=FALSE, message=FALSE}
 #contigency_table <- analysisD_data %>% tabyl(Smoking, Obesity)
 chiSq_test <-chisq.test(contigency_table)
-glance(chiSq_test) %>% kable(digits = 3) %>% kable_styling()
+glance(chiSq_test) %>% kable(digits = 3) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 
 ```
 
@@ -753,7 +754,7 @@ tabyl(Race,Education) |>
 adorn_totals("row") |>
 adorn_percentages("row") |>
 adorn_pct_formatting() |>
-adorn_ns(position = "front")%>% kable()%>%kable_styling(bootstrap_options = TRUE, )
+adorn_ns(position = "front")%>% kable()%>%kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 It was observed that Mexican American had the least education with at least 24.6% having 9th grade or below whereas Non-Hispanic Asians were the most educated with at least 56.7% of all Non-Hispanic Asian being a college graduate. This can be clearly visualized on the bar plot and the mosaic plots below.
@@ -774,7 +775,7 @@ ggplot(analysisE_data, aes(x = Race, fill = Education))+
     y = "Count",
     fill = "Education level"
   )+
-  theme_classic(base_size = 14) +
+  theme_classic(base_size = 10) +
   theme(legend.position = "left",
         axis.title.y = element_text(face = "bold", size = 12),
         axis.text = element_text(face ="bold", size = 12),
@@ -812,7 +813,7 @@ Basically, I applied the Chi-Square Test of independence to assess whether there
 analysisE_contigency_table <- analysisE_data %>% tabyl(Race, Education)
 cell_counts <- as.data.frame(analysisE_contigency_table)
 analysisE_chisq <- chisq.test(analysisE_contigency_table)
-analysisE_chisq %>% glance() %>% kable()%>%kable_styling()
+analysisE_chisq %>% glance() %>% kable()%>%kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
@@ -822,7 +823,7 @@ print(residuals)
 
 #### 7.3.2. Convert residuals to a Heatmap
 
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=7 }
+```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=6 }
 residuals_df <- as.data.frame(residuals)
 colnames(residuals_df) <- c("Race", "Education", "Residual")
 
@@ -830,7 +831,7 @@ ggplot(residuals_df, aes(x = Education, y = Race, fill = Residual)) +
   geom_tile(color = "white") +
   scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
   labs(title = "Standardized Residuals Heatmap", x = "Education Level", y = "Race") +
-   theme_classic(base_size = 12) +
+   theme_classic(base_size = 10) +
   theme(legend.position = "left",
         axis.title.y = element_text(face = "bold", size = 12),
         axis.text = element_text(face ="bold", size = 12),
