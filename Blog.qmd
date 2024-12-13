@@ -12,13 +12,13 @@ format:
 editor: visual
 ---
 
-Welcome to my blog! This post introduces the **Study1 Dashboard**, a comprehensive and interactive tool designed to explore hypotheses, visualize data, and test statistical models. This dashboard was inspired by a desire to simplify data analysis while making the results accessible to both experts and non-experts.
+Welcome to my blog! This post introduces the **MyNHANESDashboard**, a comprehensive and interactive tool designed to explore hypotheses, visualize data, and test statistical models. This dashboard was inspired by a desire to simplify data analysis while making the results accessible to both experts and non-experts.
 
 In this post, I’ll walk you through the process of building the dashboard, the hypotheses tested, the types of analyses performed, and the key findings. Along the way, I’ll share my reflections and challenges faced during the development process.
 
 ## 1. Conceptualizing the Dashboard
 
-The **Study1 Dashboard** was designed to provide an interactive environment where users can dynamically filter data, visualize relationships, and view statistical results for specific hypotheses. Using data from the 2017-March 2020 NHANES survey, we focused on key metrics including blood pressure, body mass index (BMI), smoking status, race, gender, and education levels.
+The **MyNHANESDashboard** was designed to provide an interactive environment where users can dynamically filter data, visualize relationships, and view statistical results for specific hypotheses. Using data from the 2017-March 2020 NHANES survey, we focused on key metrics including blood pressure, body mass index (BMI), smoking status, race, gender, and education levels.
 
 The aim was to enable users to:
 
@@ -28,9 +28,62 @@ The aim was to enable users to:
 
 -   Visualize results interactively.
 
+### 1.1. Data Preparation
+
+The code chuck commented out below was used to download the data from the 2017-March 2020 NHANES survey that was used to create the datasets used for this dashboard.
+
+````{=html}
+<!--```{r echo=TRUE, warning=FALSE, message=FALSE}
+# pull in data from P_BPXO from NHANES and save it
+
+bp_raw <- nhanes('P_BPX') |> tibble()
+demo_raw <- nhanes('P_DEMO') |> tibble()
+saveRDS(demo_raw, file = "data/P_DEMO.rds")
+saveRDS(bp_raw, file = "data/P_BPXO.rds")
+
+# Now that data are saved, I can just read in the tibble
+
+bp_raw <- readRDS(file = "data/P_BPXO.rds")
+demo_raw <- readRDS("data/P_DEMO.rds")
+DEMO <- demo_raw%>%
+  select(., SEQN,RIAGENDR,RIDAGEYR,DMDEDUC2,RIDRETH3 )
+BPX <- bp_raw%>%
+  select(., SEQN, BPXOSY1,BPXOSY2)
+Analysis_1Data <- left_join(DEMO, BPX, by = "SEQN")
+BMX_raw <- nhanes("P_BMX")|> tibble()   # Body measurements dataset
+saveRDS(BMX_raw, file = "data/P_BMX.rds")
+# Merge datasets on SEQN (participant ID)
+saveRDS(Analysis_1Data,file = 'data/AnalysisA.rds')
+BMX_raw<- readRDS("data/P_BMX.rds")
+BMXBMI <- BMX_raw%>%select(SEQN,BMXBMI)
+AnalysisB_data <- left_join(Analysis_1Data, BMXBMI, by = "SEQN")
+saveRDS(AnalysisB_data, file = "data/AnalysisB_data.rds")
+#Analysis C uses same dataset as above
+#analysisD data download
+SMQ_raw <- nhanes("P_SMQ")
+AnalysisB_data <- readRDS('data/AnalysisB_data.rds')
+smoke_data <- SMQ_raw%>% select(SEQN,SMQ020)
+AnalysisD_data <- left_join(AnalysisB_data, smoke_data, by = "SEQN")
+AnalysisData <- AnalysisD_data%>% filter( RIDAGEYR >=21 &  RIDAGEYR<= 79)
+analysisTibble <- AnalysisData%>% select(SEQN, RIDAGEYR,RIAGENDR, BMXBMI,RIDRETH3,DMDEDUC2,SMQ020,BPXOSY1,BPXOSY2)%>% drop_na()%>%
+  filter(BPXOSY1 >0, BPXOSY2 > 0, BMXBMI >0, SMQ020 %in% c("Yes","No"), RIDRETH3 %in% c('Mexican American', 'Other Hispanic','Non-Hispanic White','Non-Hispanic Black','Non-Hispanic Asian'),
+         DMDEDUC2 %in% c('Less than 9th grade','9-11th grade (Includes 12th grade with no diploma)','High school graduate/GED or equivalent','Some college or AA degree','College graduate or above'))%>% 
+  rename(Gender  =RIAGENDR,Age = RIDAGEYR, BMI =BMXBMI, Race =RIDRETH3, Education = DMDEDUC2, Smoking = SMQ020)%>% 
+  mutate(Gender = ifelse(Gender=="Male",1,2),Race = factor(Race,levels = c("Mexican American","Other Hispanic","Non-Hispanic White","Non-Hispanic Black","Non-Hispanic Asian"),
+                                                           labels = c("Mexican","Hispanic", "White","Black", "Asian")), Smoking = ifelse(Smoking=="Yes","Smoker","Non_Smoker"),Obesity =  ifelse(BMI >=30, "Obese","Non_Obese"),
+         Education = factor(
+           Education,
+           levels = c("Less than 9th grade","9-11th grade (Includes 12th grade with no diploma)", "High school graduate/GED or equivalent", "Some college or AA degree","College graduate or above"),
+           labels = c( "less_9th_grade","9_12th_grade", "High_school","Some_College", "College_graduate" )))%>% mutate(Smoking = factor(Smoking, levels = c("Smoker","Non_Smoker")), Obesity = factor(Obesity, levels = c("Obese","Non_Obese")), Gender = factor(Gender, levels = c(1,2)))
+                                                                              saveRDS(analysisTibble, file = 'data/AnalysesData.rds')              AnalysisData <- readRDS('data/AnalysesData.rds') analysisA_data <- AnalysisData%>% select(BPXOSY1,BPXOSY2) analysisB_data <-AnalysesData %>% select(Gender, BMI) analysisD_data <- AnalysesData %>% select(Smoking,Obesity) analysisE_data <- AnalysesData %>% select(Race, Education) saveRDS(analysisA_data, file = 'data/AnalysisA.rds') saveRDS(analysisB_data, "data/analysisB.rds") saveRDS(analysisD_data, 'data/analysisD.rds') saveRDS(analysisE_data, 'data/analysisE.rds')
+
+```
+-->
+````
+
 ### 1.1. Data Codebook
 
-Here, I describe the data used in my analyses
+The data set was downloaded from 2017-March 2020 NHANES data and curated for this dashboard's analyses.
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, install.packages('datawizard')}
 library(datawizard)
@@ -67,7 +120,7 @@ Using the paired systolic blood pressure readings, we tested for differences usi
 
 ### 3.2. BMI and Gender Analysis
 
-We tested whether BMI differs significantly between males and females using Wilcoxon Rank-Sum Test, users can select a arrange of BMI values ranging from 15 to 50 and the look at the statistical variations within this range and as well as assessing the differences in mean BMI between the two genders, Users can also interactively visualize the data distribution changes using Boxplots, density plots from the dashboard tab.A key finding that one can observe is that Females had a statistically significantly higher average BMI than males.
+We tested whether BMI differs significantly between males and females using Wilcoxon Rank-Sum Test, users can select a arrange of BMI values ranging from 15 to 50 and the look at the statistical variations within this range and as well as assessing the differences in mean BMI between the two genders, Users can also interactively visualize the data distribution changes using Box plots, density plots from the dashboard tab.A key finding that one can observe is that Females had a statistically significantly higher average BMI than males.
 
 ### 3.3. Smoking and Obesity
 
@@ -79,7 +132,7 @@ To investigate relationships between race and education levels, we used Chi-Squa
 
 ## 4. Results and Conclusions
 
-The **Study1 Dashboard** successfully provided actionable insights into multiple hypotheses, demonstrating its potential as a valuable tool for exploring sociodemographic and health-related data. By integrating dynamic filtering, intuitive visualizations, and robust statistical analyses, the dashboard allowed users to identify significant patterns and relationships across various metrics.
+The **MyNHANESDashboard** successfully provided actionable insights into multiple hypotheses, demonstrating its potential as a valuable tool for exploring socio-demographic and health-related data. By integrating dynamic filtering, intuitive visualizations, and robust statistical analyses, the dashboard allowed users to identify significant patterns and relationships across various metrics.
 
 Key findings highlighted broader public health trends:
 
@@ -93,7 +146,7 @@ While some hypotheses yielded clear results, others produced null findings that 
 
 The dashboard not only confirmed expected trends but also served as a springboard for deeper inquiry. For example, null findings in the smoking-obesity analysis point to potential limitations in the dataset or the complexity of interactions between behavioral and physiological factors. These results emphasize the need for multifaceted approaches in public health research to fully understand these relationships.
 
-In conclusion, the **Study1 Dashboard** demonstrated its utility as an interactive platform for hypothesis testing, offering both clarity and depth in its analyses. Its findings provide a foundation for future studies, particularly in areas where trends and null results warrant further exploration. By equipping users with the ability to explore relationships dynamically, the dashboard bridges the gap between data complexity and actionable insights, paving the way for informed decision-making in public health and beyond.
+In conclusion, the **MyNHANESDashboard** demonstrated its utility as an interactive platform for hypothesis testing, offering both clarity and depth in its analyses. Its findings provide a foundation for future studies, particularly in areas where trends and null results warrant further exploration. By equipping users with the ability to explore relationships dynamically, the dashboard bridges the gap between data complexity and actionable insights, paving the way for informed decision-making in public health and beyond.
 
 ## 5. Dashboard Design steps
 
@@ -103,7 +156,7 @@ The design process began with identifying key focus areas for analysis, which in
 
 ### 5.2. Select Libraries
 
-To support the dashboard's functionality, several libraries were chosen for their specific capabilities. Core libraries included `shiny` for creating interactivity, `tidyverse` for data manipulation, and `DT` for displaying interactive tables. For visualization, `ggplot2`, `patchwork`, and `gridExtra` were employed to create custom, multipanel plots. Statistical analysis was conducted using `broom`, `boot`, and `epitools`, ensuring the inclusion of robust testing and diagnostics.
+To support the dashboard's functionality, several libraries were chosen for their specific capabilities. Core libraries included `shiny` for creating interactivity, `tidyverse` for data manipulation, and `DT` for displaying interactive tables. For visualization, `ggplot2`, `patchwork`, and `gridExtra` were employed to create custom, multi-panel plots. Statistical analysis was conducted using `broom`, `boot`, and `epitools`, ensuring the inclusion of robust testing and diagnostics.
 
 ### 5.3. User Interface Design
 
