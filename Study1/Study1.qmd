@@ -47,7 +47,7 @@ knitr::opts_chunk$set(comment=NA)
 
 I downloaded the Blood Pressure data and Demographics data from 2017-March 2020 NHANES data
 
-
+````{=html}
 <!--```{r echo=TRUE, warning=FALSE, message=FALSE}
 # pull in data from P_BPXO from NHANES and save it
 
@@ -95,6 +95,8 @@ saveRDS(analysisTibble, file = 'data/AnalysesData.rds')
 
 ```
 -->
+````
+
 #### 2. 1.1. Analysis A Data
 
 Here, I zeroed down to the Systolic Blood Pressure measurements for sessions 1 and 2 as the paired outcome variables for analysis A. This was co-selected with the SEQN columns just to ensure that systolic blood pressure is paired for each individual in the chosen population.

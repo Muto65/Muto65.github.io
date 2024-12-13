@@ -61,6 +61,7 @@ The key predictor for this analysis is Gender. Quite often gender physiological 
 
 Data is obtained from the 2017-March 2020 survey data through the nhanesA package, This package allows you to access data from demographics data, experimental data, Questionnaires among others.How we gather all the data used on the analysis is shown in the code section below.
 
+````{=html}
 <!---```{r echo=TRUE, warning=FALSE, message=FALSE, }
 
 BMX_raw <- nhanes("P_BMX")|> tibble() 
@@ -93,6 +94,7 @@ saveRDS(analysis2Data, file = 'data/Analyses2Data.rds')
 
 ```
 --->
+````
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 analysis2Data <- readRDS('data/Analyses2Data.rds')
@@ -468,7 +470,7 @@ p1 <- ggplot(Residual_Big, aes(sample = .resid)) +
  p1+p2
 ```
 
-From the q-Q plot, we observed that for the small Model, the residuals more closely to the theoretical quantile line,suggesting better adherence to the normality assumption, implying a better fit, whereas the big model show deviation from the theoretical quantile line, particularly at the extremes, suggesting a lack of normality in the residuals, highlighting the presence of potential outliers affecting the distribution. 
+From the q-Q plot, we observed that for the small Model, the residuals more closely to the theoretical quantile line,suggesting better adherence to the normality assumption, implying a better fit, whereas the big model show deviation from the theoretical quantile line, particularly at the extremes, suggesting a lack of normality in the residuals, highlighting the presence of potential outliers affecting the distribution.
 
 ### 9.3.3. Scale-Location Plot
 
@@ -507,7 +509,7 @@ p2 <- ggplot(Residual_Small, aes(x = .fitted, y = .std.resid)) +
 p1+p2
 ```
 
-The Scale-Laction plot for the big model(left) indicates heteroscedasticity, as the spread of residuals varies with fitted values, and the red trendline is not flat, suggesting non-constant variance. Conversely, the small model (right) shows a consistent spread of residuals around the red line, indicating more uniform variance but limited variability in fitted values. These results suggest that while the small model has a simpler structure, the Big Model may suffer from issues related to over-fitting. 
+The Scale-Laction plot for the big model(left) indicates heteroscedasticity, as the spread of residuals varies with fitted values, and the red trendline is not flat, suggesting non-constant variance. Conversely, the small model (right) shows a consistent spread of residuals around the red line, indicating more uniform variance but limited variability in fitted values. These results suggest that while the small model has a simpler structure, the Big Model may suffer from issues related to over-fitting.
 
 ### 9.3.4. Residuals vs. Leverage Plot
 
@@ -553,7 +555,8 @@ p2 <- ggplot(small_model_influence, aes(x = Leverage, y = Residuals, size = Cook
         plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
 p1+p2
 ```
-The Residuals vs Leverage plot for the Big Model shows a wide spread of residuals with varying leverage values, indicating potential influential poitns that could disproportionately impact the model's fit. Cook's Distance circles suggest the presence of points with moderate influence, though none appear to be extreme outliers. In contrast, the small model demonstrates a more clustered pattern of residuals and leverage, with minimal influential points, reflecting its simplicity and robustness against leverage but potentially lacking complexity to capture variability. 
+
+The Residuals vs Leverage plot for the Big Model shows a wide spread of residuals with varying leverage values, indicating potential influential poitns that could disproportionately impact the model's fit. Cook's Distance circles suggest the presence of points with moderate influence, though none appear to be extreme outliers. In contrast, the small model demonstrates a more clustered pattern of residuals and leverage, with minimal influential points, reflecting its simplicity and robustness against leverage but potentially lacking complexity to capture variability.
 
 ## 9.4. Comparing the Models
 
@@ -659,7 +662,8 @@ p2 <- ggplot(testing_data, aes(x = Pred_Small, y = BMI)) +
 p1+p2
 
 ```
-The Predicted vs. Observed plots reveal that the Big Model has a wider spread of predicted values relative to the observed BMI, indicating that it captures some variability though not with high precision, as evidenced by the clustering at lower BMI values. The small model on the other hand showed a more constrained range of predicted values, tightly clustered around a narrow band hence failing to account for the variability in BMI. Although, the big model provided a slightly better predictions on the testing data, both models inadequately capture the variation in the data. 
+
+The Predicted vs. Observed plots reveal that the Big Model has a wider spread of predicted values relative to the observed BMI, indicating that it captures some variability though not with high precision, as evidenced by the clustering at lower BMI values. The small model on the other hand showed a more constrained range of predicted values, tightly clustered around a narrow band hence failing to account for the variability in BMI. Although, the big model provided a slightly better predictions on the testing data, both models inadequately capture the variation in the data.
 
 ## 10.3. Summarizing the Errors
 

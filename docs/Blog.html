@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Bosco Bakwatanisa">
-<meta name="dcterms.date" content="2024-12-06">
-
+<meta name="dcterms.date" content="2024-12-11">
 <title>Exploring Data Insights: Exploring assiciations between Sociodemographic risk factors and Health Outcome through an Interactive Dashboard – Bosco Bakwatanisa</title>
 <style>
 code{white-space: pre-wrap;}
@@ -22,8 +19,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -40,8 +70,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -66,21 +95,15 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./img/IMG_6931.JPG" alt="" class="navbar-logo">
-    </a>
+    <img src="./img/IMG_6931.JPG" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Bosco Bakwatanisa</span>
     </a>
@@ -91,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link active" href="./Blog.html" aria-current="page"> 
 <span class="menu-text">Blog</span></a>
   </li>  
@@ -128,8 +151,8 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Study2Dashboard</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
     <a class="nav-link" href="https://x.com/bakwatanisamuto?s=11&amp;t=G0DoPfVhmPjJTooCrau8vA"> <i class="bi bi-x" role="img">
 </i> 
 <span class="menu-text"></span></a>
@@ -145,35 +168,51 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#conceptualizing-the-dashboard" id="toc-conceptualizing-the-dashboard" class="nav-link active" data-scroll-target="#conceptualizing-the-dashboard">Conceptualizing the Dashboard</a>
+<li>
+<a href="#conceptualizing-the-dashboard" id="toc-conceptualizing-the-dashboard" class="nav-link active" data-scroll-target="#conceptualizing-the-dashboard">1. Conceptualizing the Dashboard</a>
   <ul class="collapse">
-  <li><a href="#hypotheses-tested" id="toc-hypotheses-tested" class="nav-link" data-scroll-target="#hypotheses-tested">Hypotheses Tested</a></li>
-  <li><a href="#analysis-that-a-user-can-perform" id="toc-analysis-that-a-user-can-perform" class="nav-link" data-scroll-target="#analysis-that-a-user-can-perform">Analysis that a user can perform</a></li>
-  <li><a href="#dashboard-design-steps" id="toc-dashboard-design-steps" class="nav-link" data-scroll-target="#dashboard-design-steps">Dashboard Design steps</a></li>
-  </ul></li>
+<li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">1.1. Data Preparation</a></li>
+  <li><a href="#data-codebook" id="toc-data-codebook" class="nav-link" data-scroll-target="#data-codebook">1.1. Data Codebook</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#hypotheses-tested" id="toc-hypotheses-tested" class="nav-link" data-scroll-target="#hypotheses-tested">2. Hypotheses Tested</a></li>
+  <li>
+<a href="#analysis-that-a-user-can-perform" id="toc-analysis-that-a-user-can-perform" class="nav-link" data-scroll-target="#analysis-that-a-user-can-perform">3. Analysis that a user can perform</a>
+  <ul class="collapse">
+<li><a href="#blood-pressure-analysis" id="toc-blood-pressure-analysis" class="nav-link" data-scroll-target="#blood-pressure-analysis">3.1 Blood Pressure Analysis</a></li>
+  <li><a href="#bmi-and-gender-analysis" id="toc-bmi-and-gender-analysis" class="nav-link" data-scroll-target="#bmi-and-gender-analysis">3.2. BMI and Gender Analysis</a></li>
+  <li><a href="#smoking-and-obesity" id="toc-smoking-and-obesity" class="nav-link" data-scroll-target="#smoking-and-obesity">3.3. Smoking and Obesity</a></li>
+  <li><a href="#race-and-education-levels" id="toc-race-and-education-levels" class="nav-link" data-scroll-target="#race-and-education-levels">3.4. Race and Education Levels</a></li>
+  </ul>
+</li>
+  <li><a href="#results-and-conclusions" id="toc-results-and-conclusions" class="nav-link" data-scroll-target="#results-and-conclusions">4. Results and Conclusions</a></li>
+  <li>
+<a href="#dashboard-design-steps" id="toc-dashboard-design-steps" class="nav-link" data-scroll-target="#dashboard-design-steps">5. Dashboard Design steps</a>
+  <ul class="collapse">
+<li><a href="#define-objectives-and-data-needs" id="toc-define-objectives-and-data-needs" class="nav-link" data-scroll-target="#define-objectives-and-data-needs">5.1. Define Objectives and Data Needs</a></li>
+  <li><a href="#select-libraries" id="toc-select-libraries" class="nav-link" data-scroll-target="#select-libraries">5.2. Select Libraries</a></li>
+  <li><a href="#user-interface-design" id="toc-user-interface-design" class="nav-link" data-scroll-target="#user-interface-design">5.3. User Interface Design</a></li>
+  <li><a href="#server-logic" id="toc-server-logic" class="nav-link" data-scroll-target="#server-logic">5.4. Server Logic</a></li>
+  <li><a href="#enhanced-usability" id="toc-enhanced-usability" class="nav-link" data-scroll-target="#enhanced-usability">5.5. Enhanced Usability</a></li>
+  <li><a href="#deployment-and-integration" id="toc-deployment-and-integration" class="nav-link" data-scroll-target="#deployment-and-integration">5.6. Deployment and Integration</a></li>
+  </ul>
+</li>
+  <li><a href="#reflections" id="toc-reflections" class="nav-link" data-scroll-target="#reflections">6. Reflections</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content column-page-left" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Exploring Data Insights: Exploring assiciations between Sociodemographic risk factors and Health Outcome through an Interactive Dashboard</h1>
   <div class="quarto-categories">
     <div class="quarto-category">[Blog]</div>
@@ -194,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-12-06</p>
+      <p class="date">2024-12-11</p>
     </div>
   </div>
   
@@ -203,55 +242,205 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><p>Welcome to my blog! This post introduces the <strong>Study1 Dashboard</strong>, a comprehensive and interactive tool designed to explore hypotheses, visualize data, and test statistical models. This dashboard was inspired by a desire to simplify data analysis while making the results accessible to both experts and non-experts.</p>
+<p>In this post, I’ll walk you through the process of building the dashboard, the hypotheses tested, the types of analyses performed, and the key findings. Along the way, I’ll share my reflections and challenges faced during the development process.</p>
+<section id="conceptualizing-the-dashboard" class="level2"><h2 class="anchored" data-anchor-id="conceptualizing-the-dashboard">1. Conceptualizing the Dashboard</h2>
+<p>The <strong>Study1 Dashboard</strong> was designed to provide an interactive environment where users can dynamically filter data, visualize relationships, and view statistical results for specific hypotheses. Using data from the 2017-March 2020 NHANES survey, we focused on key metrics including blood pressure, body mass index (BMI), smoking status, race, gender, and education levels.</p>
+<p>The aim was to enable users to:</p>
+<ul>
+<li><p>Explore trends and relationships in the data.</p></li>
+<li><p>Test hypotheses using statistical methods.</p></li>
+<li><p>Visualize results interactively.</p></li>
+</ul>
+<section id="data-preparation" class="level3"><h3 class="anchored" data-anchor-id="data-preparation">1.1. Data Preparation</h3>
+<p>The code chuck commented out below was used to download the data from the 2017-March 2020 NHANES survey that was used to create the datasets used for this dashboard.</p>
+<!--```{r echo=TRUE, warning=FALSE, message=FALSE}
+# pull in data from P_BPXO from NHANES and save it
 
+bp_raw <- nhanes('P_BPX') |> tibble()
+demo_raw <- nhanes('P_DEMO') |> tibble()
+saveRDS(demo_raw, file = "data/P_DEMO.rds")
+saveRDS(bp_raw, file = "data/P_BPXO.rds")
 
-<p>Welcome to my blog! This post introduces the <strong>Study1 Dashboard</strong>, a comprehensive and interactive tool designed to explore hypotheses, visualize data, and test statistical models. This dashboard was inspired by a desire to simplify data analysis while making the results accessible to both experts and non-experts.</p>
-<p>In this post, I’ll walk you through the process of building the dashboard, the hypotheses tested, the types of analyses performed, and the key findings. Along the way, I’ll share my reflections and challenges faced during the development process Study 1: Blood Pressure and Health Insights</p>
-<section id="conceptualizing-the-dashboard" class="level2">
-<h2 class="anchored" data-anchor-id="conceptualizing-the-dashboard">Conceptualizing the Dashboard</h2>
-<p>The goal was to create an interactive environment where users could dynamically filter data, visualize relationships, and view statistical results for specific hypotheses. The dataset used came from the 2017-March 2020 NHANES survey, focusing on metrics such as <strong>blood pressure</strong>, <strong>body mass index (BMI)</strong>, <strong>smoking status</strong>, <strong>Race</strong>, <strong>Gender</strong> and <strong>education levels</strong>.</p>
-<section id="hypotheses-tested" class="level3">
-<h3 class="anchored" data-anchor-id="hypotheses-tested">Hypotheses Tested</h3>
-<p>Is there a significant difference between the first and second systolic blood pressure measurements? How does BMI vary by gender? Is there an association between smoking status and obesity? What is the relationship between race/ethnicity and education levels?</p>
-</section>
-<section id="analysis-that-a-user-can-perform" class="level3">
-<h3 class="anchored" data-anchor-id="analysis-that-a-user-can-perform">Analysis that a user can perform</h3>
-<section id="blood-pressure-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="blood-pressure-analysis">Blood Pressure Analysis</h4>
-<p>Using the paired systolic blood pressure readings, we tested for differences using Wilcoxon Signed-Rank Test, a non-parametric method, given the lack of normality. Scatter plots and Paired boxplots were used to compare the first and secend systolic blood pressure and observed significant differences, indicating high variability in measurements and users can visualize the statistical summeries using the drop down from our interactive dashboard to visualize the data sumarries, association plots and statistical test results.</p>
-</section>
-<section id="bmi-and-gender-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="bmi-and-gender-analysis">BMI and Gender Analysis</h4>
+# Now that data are saved, I can just read in the tibble
+
+bp_raw <- readRDS(file = "data/P_BPXO.rds")
+demo_raw <- readRDS("data/P_DEMO.rds")
+DEMO <- demo_raw%>%
+  select(., SEQN,RIAGENDR,RIDAGEYR,DMDEDUC2,RIDRETH3 )
+BPX <- bp_raw%>%
+  select(., SEQN, BPXOSY1,BPXOSY2)
+Analysis_1Data <- left_join(DEMO, BPX, by = "SEQN")
+BMX_raw <- nhanes("P_BMX")|> tibble()   # Body measurements dataset
+saveRDS(BMX_raw, file = "data/P_BMX.rds")
+# Merge datasets on SEQN (participant ID)
+saveRDS(Analysis_1Data,file = 'data/AnalysisA.rds')
+BMX_raw<- readRDS("data/P_BMX.rds")
+BMXBMI <- BMX_raw%>%select(SEQN,BMXBMI)
+AnalysisB_data <- left_join(Analysis_1Data, BMXBMI, by = "SEQN")
+saveRDS(AnalysisB_data, file = "data/AnalysisB_data.rds")
+#Analysis C uses same dataset as above
+#analysisD data download
+SMQ_raw <- nhanes("P_SMQ")
+AnalysisB_data <- readRDS('data/AnalysisB_data.rds')
+smoke_data <- SMQ_raw%>% select(SEQN,SMQ020)
+AnalysisD_data <- left_join(AnalysisB_data, smoke_data, by = "SEQN")
+AnalysisData <- AnalysisD_data%>% filter( RIDAGEYR >=21 &  RIDAGEYR<= 79)
+analysisTibble <- AnalysisData%>% select(SEQN, RIDAGEYR,RIAGENDR, BMXBMI,RIDRETH3,DMDEDUC2,SMQ020,BPXOSY1,BPXOSY2)%>% drop_na()%>%
+  filter(BPXOSY1 >0, BPXOSY2 > 0, BMXBMI >0, SMQ020 %in% c("Yes","No"), RIDRETH3 %in% c('Mexican American', 'Other Hispanic','Non-Hispanic White','Non-Hispanic Black','Non-Hispanic Asian'),
+         DMDEDUC2 %in% c('Less than 9th grade','9-11th grade (Includes 12th grade with no diploma)','High school graduate/GED or equivalent','Some college or AA degree','College graduate or above'))%>% 
+  rename(Gender  =RIAGENDR,Age = RIDAGEYR, BMI =BMXBMI, Race =RIDRETH3, Education = DMDEDUC2, Smoking = SMQ020)%>% 
+  mutate(Gender = ifelse(Gender=="Male",1,2),Race = factor(Race,levels = c("Mexican American","Other Hispanic","Non-Hispanic White","Non-Hispanic Black","Non-Hispanic Asian"),
+                                                           labels = c("Mexican","Hispanic", "White","Black", "Asian")), Smoking = ifelse(Smoking=="Yes","Smoker","Non_Smoker"),Obesity =  ifelse(BMI >=30, "Obese","Non_Obese"),
+         Education = factor(
+           Education,
+           levels = c("Less than 9th grade","9-11th grade (Includes 12th grade with no diploma)", "High school graduate/GED or equivalent", "Some college or AA degree","College graduate or above"),
+           labels = c( "less_9th_grade","9_12th_grade", "High_school","Some_College", "College_graduate" )))%>% mutate(Smoking = factor(Smoking, levels = c("Smoker","Non_Smoker")), Obesity = factor(Obesity, levels = c("Obese","Non_Obese")), Gender = factor(Gender, levels = c(1,2)))
+                                                                              saveRDS(analysisTibble, file = 'data/AnalysesData.rds')              AnalysisData <- readRDS('data/AnalysesData.rds') analysisA_data <- AnalysisData%>% select(BPXOSY1,BPXOSY2) analysisB_data <-AnalysesData %>% select(Gender, BMI) analysisD_data <- AnalysesData %>% select(Smoking,Obesity) analysisE_data <- AnalysesData %>% select(Race, Education) saveRDS(analysisA_data, file = 'data/AnalysisA.rds') saveRDS(analysisB_data, "data/analysisB.rds") saveRDS(analysisD_data, 'data/analysisD.rds') saveRDS(analysisE_data, 'data/analysisE.rds')
+
+```
+-->
+</section><section id="data-codebook" class="level3"><h3 class="anchored" data-anchor-id="data-codebook">1.1. Data Codebook</h3>
+<p>The data set was downloaded from 2017-March 2020 NHANES data and curated for this dashboard’s analyses.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/datawizard/">datawizard</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="va">variable_description</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">Variable_Name</span>, <span class="op">~</span><span class="va">Role_in_Analysis</span>,<span class="op">~</span><span class="va">Type</span>, <span class="op">~</span><span class="va">Original_Code</span>, </span>
+<span>  <span class="st">"SEQN"</span>,  <span class="st">"ID"</span>,   <span class="st">"Quant"</span>,   <span class="st">" Respondent sequence number"</span>,</span>
+<span>  <span class="st">"Gender"</span>,  <span class="st">"Analysis B Variable"</span>, <span class="st">"Binary"</span>, <span class="st">"RIAGENDR"</span>,</span>
+<span>  <span class="st">"RIDAGEYR"</span>, <span class="st">"Used to select Adult persons aged 21-79 years"</span>,<span class="st">"Quant"</span>,<span class="st">"RIDAGEYR"</span>,   <span class="st">"Education"</span>,   <span class="st">"Analysis E variable"</span>,  <span class="st">"X-cat"</span> ,  <span class="st">"DMDEDUC2"</span>,</span>
+<span>  <span class="st">"Race/Ethnicity"</span>, <span class="st">"Analysis E variable"</span>,  <span class="st">"X-cat"</span>, <span class="st">"RIDRETH3 "</span>, </span>
+<span>  <span class="st">"BPXOSY1 "</span>,   <span class="st">"Analysis A-variable"</span>,<span class="st">"Quant"</span>, <span class="st">"BPXOSY1"</span>,</span>
+<span>  <span class="st">"BPXOSY2"</span>,<span class="st">"Analysis A-variable"</span>,  <span class="st">"Quant"</span>, <span class="st">"BPXOSY2"</span>,</span>
+<span>  <span class="st">"BMI"</span>,<span class="st">"Analysis variable"</span>, <span class="st">"Quant"</span>, <span class="st">"BMXBMI"</span>,<span class="st">"Smoking"</span>, <span class="st">"Analysis D-variable"</span>,  <span class="st">"Binary"</span>, <span class="st">"SMQ020"</span>,<span class="st">"Obesity"</span>, <span class="st">"Analysis Variable"</span>, <span class="st">"Binary"</span>,<span class="st">"N/A"</span><span class="op">)</span></span>
+<span><span class="va">variable_description</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="st">"striped"</span>, full_width <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable_Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Role_in_Analysis</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Type</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Original_Code</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SEQN</td>
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;">Quant</td>
+<td style="text-align: left;">Respondent sequence number</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gender</td>
+<td style="text-align: left;">Analysis B Variable</td>
+<td style="text-align: left;">Binary</td>
+<td style="text-align: left;">RIAGENDR</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIDAGEYR</td>
+<td style="text-align: left;">Used to select Adult persons aged 21-79 years</td>
+<td style="text-align: left;">Quant</td>
+<td style="text-align: left;">RIDAGEYR</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Education</td>
+<td style="text-align: left;">Analysis E variable</td>
+<td style="text-align: left;">X-cat</td>
+<td style="text-align: left;">DMDEDUC2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Race/Ethnicity</td>
+<td style="text-align: left;">Analysis E variable</td>
+<td style="text-align: left;">X-cat</td>
+<td style="text-align: left;">RIDRETH3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BPXOSY1</td>
+<td style="text-align: left;">Analysis A-variable</td>
+<td style="text-align: left;">Quant</td>
+<td style="text-align: left;">BPXOSY1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BPXOSY2</td>
+<td style="text-align: left;">Analysis A-variable</td>
+<td style="text-align: left;">Quant</td>
+<td style="text-align: left;">BPXOSY2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BMI</td>
+<td style="text-align: left;">Analysis variable</td>
+<td style="text-align: left;">Quant</td>
+<td style="text-align: left;">BMXBMI</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: left;">Analysis D-variable</td>
+<td style="text-align: left;">Binary</td>
+<td style="text-align: left;">SMQ020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesity</td>
+<td style="text-align: left;">Analysis Variable</td>
+<td style="text-align: left;">Binary</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>and</p>
+</section></section><section id="hypotheses-tested" class="level2"><h2 class="anchored" data-anchor-id="hypotheses-tested">2. Hypotheses Tested</h2>
+<p>The following hypotheses were central to the dashboard’s functionality:</p>
+<ol type="1">
+<li><p>Is there a significant difference between the first and second systolic blood pressure measurements?</p></li>
+<li><p>How does BMI vary by gender?</p></li>
+<li><p>Is there an association between smoking status and obesity?</p></li>
+<li><p>What is the relationship between race/ethnicity and education levels?</p></li>
+</ol></section><section id="analysis-that-a-user-can-perform" class="level2"><h2 class="anchored" data-anchor-id="analysis-that-a-user-can-perform">3. Analysis that a user can perform</h2>
+<section id="blood-pressure-analysis" class="level3"><h3 class="anchored" data-anchor-id="blood-pressure-analysis">3.1 Blood Pressure Analysis</h3>
+<p>Using the paired systolic blood pressure readings, we tested for differences using Wilcoxon Signed-Rank Test, a non-parametric method, given the lack of normality. Scatter plots and Paired boxplots were used to compare the first and second systolic blood pressure and observed significant differences, indicating high variability in measurements and users can visualize the statistical summaries using the drop down from our interactive dashboard to visualize the data summaries, association plots and statistical test results.</p>
+</section><section id="bmi-and-gender-analysis" class="level3"><h3 class="anchored" data-anchor-id="bmi-and-gender-analysis">3.2. BMI and Gender Analysis</h3>
 <p>We tested whether BMI differs significantly between males and females using Wilcoxon Rank-Sum Test, users can select a arrange of BMI values ranging from 15 to 50 and the look at the statistical variations within this range and as well as assessing the differences in mean BMI between the two genders, Users can also interactively visualize the data distribution changes using Boxplots, density plots from the dashboard tab.A key finding that one can observe is that Females had a statistically significantly higher average BMI than males.</p>
-</section>
-<section id="smoking-and-obesity" class="level4">
-<h4 class="anchored" data-anchor-id="smoking-and-obesity">Smoking and Obesity</h4>
+</section><section id="smoking-and-obesity" class="level3"><h3 class="anchored" data-anchor-id="smoking-and-obesity">3.3. Smoking and Obesity</h3>
 <p>Using our interactive dashboard, user can also interrogate the relationship Smoking Status and obesity by using the drop down, and explore data summaries, test statistic results, plots. A key findings was that we did not observe a statistically significant association between smoking and obesity.</p>
-</section>
-<section id="race-and-education-levels" class="level4">
-<h4 class="anchored" data-anchor-id="race-and-education-levels">Race and Education Levels</h4>
+</section><section id="race-and-education-levels" class="level3"><h3 class="anchored" data-anchor-id="race-and-education-levels">3.4. Race and Education Levels</h3>
 <p>To investigate relationships between race and education levels, we used Chi-Square Test of Independence and evaluated whether these variables were dependent.Through our interactive dashboard, one can explore the education distribution across the race/ethnicity using Bar plots for example, we can compute data summaries for each education level within the test dataset. A notable finding is that there were statistically significant differences for example, non-Hispanic Asians were overrepresented at higher education levels and Mexican Americans were overrepresented at lower education levels.</p>
-</section>
-<section id="results-and-conclusions" class="level4">
-<h4 class="anchored" data-anchor-id="results-and-conclusions">Results and Conclusions</h4>
-<p>Our Interactive Dashboard provided actionable insights across multiple hypotheses. The findings align with broader public health trends, such as disparities in education levels and gender-based differences in BMI. However, certain analyses (e.g., smoking and obesity) suggested null results, encouraging further exploration with additional confounders.</p>
-</section>
-<section id="reflections" class="level4">
-<h4 class="anchored" data-anchor-id="reflections">Reflections</h4>
+</section></section><section id="results-and-conclusions" class="level2"><h2 class="anchored" data-anchor-id="results-and-conclusions">4. Results and Conclusions</h2>
+<p>The <strong>Study1 Dashboard</strong> successfully provided actionable insights into multiple hypotheses, demonstrating its potential as a valuable tool for exploring sociodemographic and health-related data. By integrating dynamic filtering, intuitive visualizations, and robust statistical analyses, the dashboard allowed users to identify significant patterns and relationships across various metrics.</p>
+<p>Key findings highlighted broader public health trends:</p>
+<ul>
+<li><p><strong>Disparities in Education Levels</strong>: Analysis revealed significant associations between race/ethnicity and education levels, reflecting known disparities. For instance, non-Hispanic Asians were overrepresented in higher education levels, while Mexican Americans showed higher representation at lower education levels. These findings align with socioeconomic trends observed in public health literature and underscore the importance of addressing educational inequities as a social determinant of health.</p></li>
+<li><p><strong>Gender-Based Differences in BMI</strong>: The analysis confirmed a statistically significant difference in BMI between males and females, with females exhibiting higher average BMI. This observation aligns with established research suggesting differences in body composition, lifestyle factors, and hormonal influences between genders.</p></li>
+</ul>
+<p>While some hypotheses yielded clear results, others produced null findings that invite further exploration:</p>
+<ul>
+<li>
+<strong>Smoking and Obesity</strong>: No statistically significant association was observed between smoking status and obesity. While this may suggest a lack of direct correlation in the NHANES dataset, it also highlights the need to examine additional confounding factors, such as physical activity levels, dietary habits, and socioeconomic status, which could mediate or mask potential relationships.</li>
+</ul>
+<p>The dashboard not only confirmed expected trends but also served as a springboard for deeper inquiry. For example, null findings in the smoking-obesity analysis point to potential limitations in the dataset or the complexity of interactions between behavioral and physiological factors. These results emphasize the need for multifaceted approaches in public health research to fully understand these relationships.</p>
+<p>In conclusion, the <strong>Study1 Dashboard</strong> demonstrated its utility as an interactive platform for hypothesis testing, offering both clarity and depth in its analyses. Its findings provide a foundation for future studies, particularly in areas where trends and null results warrant further exploration. By equipping users with the ability to explore relationships dynamically, the dashboard bridges the gap between data complexity and actionable insights, paving the way for informed decision-making in public health and beyond.</p>
+</section><section id="dashboard-design-steps" class="level2"><h2 class="anchored" data-anchor-id="dashboard-design-steps">5. Dashboard Design steps</h2>
+<section id="define-objectives-and-data-needs" class="level3"><h3 class="anchored" data-anchor-id="define-objectives-and-data-needs">5.1. Define Objectives and Data Needs</h3>
+<p>The design process began with identifying key focus areas for analysis, which included blood pressure comparisons, BMI differences, smoking-obesity relationships, and race-education associations. These focus areas informed the selection of datasets from the NHANES survey. The datasets were pre-processed and stored in <code>.rds</code> files to facilitate efficient integration into the dashboard.</p>
+</section><section id="select-libraries" class="level3"><h3 class="anchored" data-anchor-id="select-libraries">5.2. Select Libraries</h3>
+<p>To support the dashboard’s functionality, several libraries were chosen for their specific capabilities. Core libraries included <code>shiny</code> for creating interactivity, <code>tidyverse</code> for data manipulation, and <code>DT</code> for displaying interactive tables. For visualization, <code>ggplot2</code>, <code>patchwork</code>, and <code>gridExtra</code> were employed to create custom, multipanel plots. Statistical analysis was conducted using <code>broom</code>, <code>boot</code>, and <code>epitools</code>, ensuring the inclusion of robust testing and diagnostics.</p>
+</section><section id="user-interface-design" class="level3"><h3 class="anchored" data-anchor-id="user-interface-design">5.3. User Interface Design</h3>
+<p>The dashboard was structured with a clear and intuitive layout to enhance usability. The <strong>Sidebar Panel</strong> featured drop down menus and sliders that allowed users to dynamically filter data and customize their analyses. Conditional inputs were employed to display relevant options based on the selected analysis type. The <strong>Main Panel</strong> was organized into tabs, enabling users to seamlessly navigate between summary tables, plots, statistical results, and datasets.</p>
+</section><section id="server-logic" class="level3"><h3 class="anchored" data-anchor-id="server-logic">5.4. Server Logic</h3>
+<p>Reactive programming formed the backbone of the server logic, enabling the dashboard to dynamically filter and process data based on user inputs. Outputs were customized for each analysis type:</p>
+<ul>
+<li><p>Visualizations included scatter plots, boxplots, and bar charts tailored to specific data relationships.</p></li>
+<li><p>Statistical tests provided real-time outputs, such as p-values and confidence intervals.</p></li>
+<li><p>Interactive tables allowed users to explore both raw and filtered datasets.</p></li>
+</ul></section><section id="enhanced-usability" class="level3"><h3 class="anchored" data-anchor-id="enhanced-usability">5.5. Enhanced Usability</h3>
+<p>To further enhance the user experience, conditional UI elements ensured that users were only presented with options relevant to their selected analysis. Multi-panel visualizations were utilized to clearly illustrate relationships between variables, making complex data relationships easier to understand.</p>
+</section><section id="deployment-and-integration" class="level3"><h3 class="anchored" data-anchor-id="deployment-and-integration">5.6. Deployment and Integration</h3>
+<p>The dashboard was deployed using ShinyApps.io, providing broad accessibility to users. Additionally, it was integrated into a Quarto-based website hosted on GitHub Pages. This integration ensured seamless updates and sharing, enabling users to interact with the dashboard within a broader context of documentation and analysis results.</p>
+</section></section><section id="reflections" class="level2"><h2 class="anchored" data-anchor-id="reflections">6. Reflections</h2>
 <p>This was both a technical and intellectual challenge. It provided me with an opportunity to integrate statistical rigor with user-centric design. As a next step, I plan to extend the dashboard to include predictive modeling and longitudinal data analysis.</p>
-</section>
-</section>
-<section id="dashboard-design-steps" class="level3">
-<h3 class="anchored" data-anchor-id="dashboard-design-steps">Dashboard Design steps</h3>
-<p>The dashboard was built using Shiny in R and deployed using shinyapp.io. It was designed in such away that it enables users to customize analyses using dropdwons and toggles to filter subsets of data for the analyses they are interested in. Each hypothesis was supported by intuitive visualizations including scatter plots, bar charts, and boxplots, with test results such as p-values and confidence intervals and data summaries displayed in real-time. The dashboard was then integrated into my Quarto-based website hosted on Github pages.</p>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -672,8 +861,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p><span class="faux-block">© 2024 Bosco Bakwatanisa CC BY-SA 4.0</span></p>
 </div>   
@@ -685,8 +873,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-
-
 
 
 </body></html>

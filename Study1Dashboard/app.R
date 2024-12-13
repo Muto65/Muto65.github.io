@@ -1,5 +1,6 @@
 #My shinyapp
 library(shiny)
+library(DT)
 library(forcats)
 library(boot)
 library(ggplot2)
@@ -10,15 +11,14 @@ library(naniar)
 library(datawizard)
 library(patchwork)
 library(gridExtra)
-library(broom.mixed)
+library(broom)
 library(Epi)
 library(vcd)
 library(xfun)
 library(epitools)
 library(rsconnect)
 library(tidyverse)
-theme_set(theme_light())  
-knitr::opts_chunk$set(comment=NA)
+
 # Load the data
 analysisA_data <- readRDS("data/AnalysisA.rds")
 analysisB_data <- readRDS("data/analysisB.rds")
@@ -57,7 +57,8 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Summary", tableOutput("summary_table")),
         tabPanel("Plot", plotOutput("main_plot")),
-        tabPanel("Statistical Results", verbatimTextOutput("stat_results"))
+        tabPanel("Statistical Results", verbatimTextOutput("stat_results")),
+        tabPanel("Dataset", DT::dataTableOutput("data_table")) 
       )
     )
   )
@@ -214,7 +215,7 @@ server <- function(input, output) {
           axis.title.x = element_text(face = "bold", size = 10),
           plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
     } else if (input$analysis_type == "race_education") {
-    ggplot(data, aes(x = Race, fill = Education)) +
+      ggplot(data, aes(x = Race, fill = Education)) +
         geom_bar(position = "dodge") +
         labs(title = "Race vs Education",
              x = "Race/Ethnicity", y = "Count") +
@@ -223,7 +224,7 @@ server <- function(input, output) {
           axis.title.y = element_text(face = "bold", size = 10),
           axis.title.x = element_text(face = "bold", size = 10),
           plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
-   
+      
     }
   })
   
@@ -263,16 +264,30 @@ server <- function(input, output) {
     data <- filtered_data()
     if (input$analysis_type == "bp_analysis") {
       # Wilcoxon signed-rank test
-      wilcox.test(data$BPXOSY1, data$BPXOSY2, paired = TRUE)%>% glance()%>% kable(digits = 3)%>%kable_styling()
+      wilcox.test(data$BPXOSY1, data$BPXOSY2, paired = TRUE)
     } else if (input$analysis_type == "bmi_gender") {
       # Wilcoxon rank-sum test
-      wilcox.test(BMI ~ Gender, data = data)%>% glance()%>% kable(digits = 3)%>%kable_styling()
+      wilcox.test(BMI ~ Gender, data = data)
     } else if (input$analysis_type == "smoking_obesity") {
       # Chi-square test
-      chisq.test(table(data$Smoking, data$Obesity))%>% glance()%>% kable(digits = 3)%>% kable_styling()
+      chisq.test(table(data$Smoking, data$Obesity))
     } else if (input$analysis_type == "race_education") {
       # Chi-square test
-      chisq.test(table(data$Race, data$Education))%>% glance()%>% kable(digits = 3)%>% kable_styling()
+      chisq.test(table(data$Race, data$Education))
+      
+    }
+  })
+  
+  # Dataset Tab
+  output$data_table <- DT::renderDataTable({
+    if (input$analysis_type == "bp_analysis") {
+      analysisA_data
+    } else if (input$analysis_type == "bmi_gender") {
+      analysisB_data
+    } else if (input$analysis_type == "smoking_obesity") {
+      analysisD_data
+    } else if (input$analysis_type == "race_education") {
+      analysisE_data
     }
   })
 }
